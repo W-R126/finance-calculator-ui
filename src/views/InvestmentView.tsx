@@ -19,7 +19,7 @@ export const InvestmentView = (props: Props) => {
                     totalChange={245}
                     predictedChange={2500}
                 />
-                <RangeInput minValue={0} maxValue={100} label="Range Input Component" />
+                <RangeInput minValue={0} maxValue={100} label="Range Input Component" unit="£" />
             </Container>
         </React.Fragment>
     );

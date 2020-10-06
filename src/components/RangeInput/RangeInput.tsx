@@ -1,16 +1,25 @@
-import {Grid, Input, Slider, Typography} from '@material-ui/core';
+import {Grid, Input, InputAdornment, Slider, Typography} from '@material-ui/core';
 import {css} from 'emotion';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 interface Props {
     minValue: number;
     maxValue: number;
 
+    unit?: string;
     label: string;
+
+    valueChanged?: (value: number) => void;
 }
 
 export const RangeInput = (props: Props) => {
-    const [value, setValue] = useState<number | string | Array<number | string>>(props.minValue);
+    const [value, setValue] = useState<number | string | Array<number | string>>((props.minValue + props.maxValue) / 2);
+
+    useEffect(() => {
+        if (props.valueChanged !== undefined) {
+            props.valueChanged(typeof value === 'number' ? value : 0);
+        }
+    }, [value]);
 
     const handleSliderChange = (event: any, newValue: number | number[]) => {
         setValue(newValue);
@@ -58,6 +67,7 @@ export const RangeInput = (props: Props) => {
                     className={css`
                         width: 100%;
                     `}
+                    endAdornment={props.unit ? <InputAdornment position="end">{props.unit}</InputAdornment> : undefined}
                 />
             </Grid>
             <Grid item xs={12}>
