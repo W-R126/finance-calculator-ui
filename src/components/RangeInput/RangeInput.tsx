@@ -1,4 +1,4 @@
-import {Grid, Input, InputAdornment, Slider, Typography} from '@material-ui/core';
+import {Grid, InputAdornment, OutlinedInput, Slider, Typography} from '@material-ui/core';
 import {css} from 'emotion';
 import React, {useEffect, useState} from 'react';
 
@@ -19,7 +19,7 @@ export const RangeInput = (props: Props) => {
         if (props.valueChanged !== undefined) {
             props.valueChanged(typeof value === 'number' ? value : 0);
         }
-    }, [value]);
+    }, [value, props]);
 
     const handleSliderChange = (event: any, newValue: number | number[]) => {
         setValue(newValue);
@@ -40,7 +40,15 @@ export const RangeInput = (props: Props) => {
     return (
         <Grid container spacing={0}>
             <Grid item xs={8}>
-                <Typography gutterBottom>{props.label}</Typography>
+                <Typography
+                    className={css`
+                        font-size: 18px;
+                    `}
+                    variant="subtitle2"
+                    component="p"
+                >
+                    {props.label}
+                </Typography>
             </Grid>
             <Grid
                 item
@@ -51,7 +59,7 @@ export const RangeInput = (props: Props) => {
                     justify-content: flex-end;
                 `}
             >
-                <Input
+                <OutlinedInput
                     value={value}
                     margin="dense"
                     onChange={handleInputChange}
