@@ -4,18 +4,6 @@ import {InvestmentInfo} from '../components/InvestmentInfo/InvestmentInfo';
 import {NavBar} from '../components/NavBar/NavBar';
 import {RangeInput} from '../components/RangeInput/RangeInput';
 
-const CenterBox = styled(Box)({
-    textAlign: 'center',
-    color: '#3461ff',
-    padding: '1rem',
-});
-
-const Header = () => (
-    <CenterBox>
-        <Typography variant="h5">Results</Typography>
-    </CenterBox>
-);
-
 interface Props {}
 
 export const InvestmentView = (props: Props) => {
@@ -36,3 +24,15 @@ export const InvestmentView = (props: Props) => {
         </React.Fragment>
     );
 };
+
+const CenterBox = styled(Box)({
+    textAlign: 'center',
+    color: '#3461ff',
+    padding: '1rem',
+});
+
+const Header = () => (
+    <CenterBox>
+        <Typography variant="h5">Results</Typography>
+    </CenterBox>
+);

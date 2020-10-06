@@ -1,11 +1,6 @@
 import {AppBar, Button, styled, Toolbar} from '@material-ui/core';
 import React from 'react';
 
-const StyledToolbar = styled(Toolbar)({
-    justifyContent: 'flex-end',
-    backgroundColor: '#3461ff',
-});
-
 interface Props {}
 
 export const NavBar = (props: Props) => {
@@ -17,3 +12,8 @@ export const NavBar = (props: Props) => {
         </AppBar>
     );
 };
+
+const StyledToolbar = styled(Toolbar)({
+    justifyContent: 'flex-end',
+    backgroundColor: '#3461ff',
+});
