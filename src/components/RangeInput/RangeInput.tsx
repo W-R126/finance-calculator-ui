@@ -98,7 +98,7 @@ export const RangeInput = (props: Props) => {
                     onChange={handleInputChange}
                     onBlur={handleBlur}
                     inputProps={{
-                        step: 10,
+                        step: Math.floor((props.maxValue - props.minValue) * 0.05),
                         min: props.minValue,
                         max: props.maxValue,
                         type: 'number',
