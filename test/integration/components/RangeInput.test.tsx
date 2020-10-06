@@ -8,4 +8,12 @@ describe('RangeInput.tsx', () => {
 
         screen.getByText('hello world');
     });
+    test('default value should be mean value', () => {
+        const minValue = -76;
+        const maxValue = 300;
+
+        render(<RangeInput minValue={minValue} maxValue={maxValue} label={'label'} />);
+        const wrapper = screen.getByTestId('input');
+        expect(wrapper).toHaveAttribute('value', `${(minValue + maxValue) / 2}`);
+    });
 });

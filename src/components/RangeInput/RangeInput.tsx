@@ -53,6 +53,7 @@ export const RangeInput = (props: Props) => {
                         max: props.maxValue,
                         type: 'number',
                         'aria-labelledby': 'range-input',
+                        'data-testid': 'input',
                     }}
                     className={css`
                         width: 100%;
