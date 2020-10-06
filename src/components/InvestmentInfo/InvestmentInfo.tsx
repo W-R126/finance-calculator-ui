@@ -2,14 +2,6 @@ import {Box, styled, Typography} from '@material-ui/core';
 import * as format from '../../helpers/formatNumber';
 import React from 'react';
 
-const PositiveChange = styled(Typography)({
-    color: '#00cd08',
-});
-
-const PredicatedValue = styled(Typography)({
-    color: '#3461ff',
-});
-
 interface Props {
     annualChangePercent: number;
     annualChange: number;
@@ -44,3 +36,11 @@ export const InvestmentInfo = (props: Props) => {
         </Box>
     );
 };
+
+const PositiveChange = styled(Typography)({
+    color: '#00cd08',
+});
+
+const PredicatedValue = styled(Typography)({
+    color: '#3461ff',
+});
