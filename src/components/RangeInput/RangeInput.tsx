@@ -8,6 +8,7 @@ interface Props {
 
     unit?: string;
     label: string;
+    label2?: string;
 
     valueChanged?: (value: number) => void;
 }
@@ -39,7 +40,15 @@ export const RangeInput = (props: Props) => {
 
     return (
         <Grid container spacing={0}>
-            <Grid item xs={8}>
+            <Grid
+                item
+                xs={6}
+                className={css`
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                `}
+            >
                 <Typography
                     className={css`
                         font-size: 18px;
@@ -52,7 +61,31 @@ export const RangeInput = (props: Props) => {
             </Grid>
             <Grid
                 item
-                xs={4}
+                xs={3}
+                className={css`
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: flex-end;
+                `}
+            >
+                {props.label2 !== undefined && (
+                    <Typography
+                        className={css`
+                            font-size: 18px;
+                            color: #3461ff;
+                            text-align: right;
+                            padding-right: 1rem;
+                        `}
+                        variant="subtitle2"
+                        component="p"
+                    >
+                        {props.label2}
+                    </Typography>
+                )}
+            </Grid>
+            <Grid
+                item
+                xs={3}
                 className={css`
                     display: flex;
                     flex-direction: column;
@@ -65,7 +98,7 @@ export const RangeInput = (props: Props) => {
                     onChange={handleInputChange}
                     onBlur={handleBlur}
                     inputProps={{
-                        step: 10,
+                        step: Math.floor((props.maxValue - props.minValue) * 0.05),
                         min: props.minValue,
                         max: props.maxValue,
                         type: 'number',
@@ -79,7 +112,13 @@ export const RangeInput = (props: Props) => {
                 />
             </Grid>
             <Grid item xs={12}>
-                <Slider value={typeof value === 'number' ? value : 0} onChange={handleSliderChange} aria-labelledby="input-slider" />
+                <Slider
+                    value={typeof value === 'number' ? value : 0}
+                    onChange={handleSliderChange}
+                    aria-labelledby="input-slider"
+                    min={props.minValue}
+                    max={props.maxValue}
+                />
             </Grid>
         </Grid>
     );

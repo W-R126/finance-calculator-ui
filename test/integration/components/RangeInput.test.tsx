@@ -15,6 +15,12 @@ describe('RangeInput.tsx', () => {
         screen.getByText('$');
     });
 
+    test(`should display label2 if provided`, () => {
+        render(<RangeInput minValue={-76} maxValue={300} label="hello world" label2="this is label 2" unit="$" />);
+
+        screen.getByText('this is label 2');
+    });
+
     test('default value should be mean value', () => {
         const minValue = -76;
         const maxValue = 300;
