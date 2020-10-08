@@ -1,7 +1,7 @@
 import {Box, styled, Typography} from '@material-ui/core';
-import * as format from '../../helpers/formatNumber';
+import * as format from '../../../helpers/formatNumber';
 import React, {useContext} from 'react';
-import {CurrencyContext} from '../../views/InvestmentView';
+import {CurrencyContext} from '..';
 
 interface Props {
     annualChangePercent: number;

@@ -1,17 +1,30 @@
-import {Box, Button, Container} from '@material-ui/core';
+import {Box, Button, Container, duration} from '@material-ui/core';
 import React, {useState} from 'react';
-import {InvestmentInfo} from '../../components/InvestmentInfo/InvestmentInfo';
+import {InvestmentInfo} from './InvestmentInfo/InvestmentInfo';
 import {NavBar} from '../../components/NavBar/NavBar';
 import {buttonBox} from './InvestmentView.styles';
+import {InvestmentParameters, PeriodUnit} from './InvestmentView.types';
 
 export const CurrencyContext = React.createContext('$');
+
+const mockedParameters: InvestmentParameters = {
+    initialDeposit: 1800,
+    systematicDeposit: 40,
+    frequency: 3,
+    frequencyUnit: PeriodUnit.WEEKS,
+    duration: 2,
+    durationUnit: PeriodUnit.DAYS,
+    ROE: 20,
+};
 
 interface Props {}
 
 export const InvestmentView = (props: Props) => {
     const [submitting, setSubmitting] = useState(false);
-    const [parameters, setParameters] = useState([]);
-    const onSubmit = () => {};
+    const [parameters, setParameters] = useState<InvestmentParameters>(mockedParameters);
+    const onSubmit = () => {
+        console.log(parameters);
+    };
 
     return (
         <React.Fragment>
