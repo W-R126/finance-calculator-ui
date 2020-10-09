@@ -14,3 +14,11 @@ export interface InvestmentParameters {
     durationUnit: PeriodUnit;
     ROE: number;
 }
+
+export interface InvestmentResultTypes {
+    annualChangePercent: number;
+    annualChange: number;
+    totalChangePercent: number;
+    totalChange: number;
+    predictedChange: number;
+}
