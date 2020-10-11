@@ -71,7 +71,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                 value={frequency}
                 setValue={setFrequency}
             />
-            <RadioPeriodSelector periodUnit={frequencyUnit} setPeriodUnit={setFrequencyUnit} />
+            <RadioPeriodSelector periodUnit={frequencyUnit} onChange={setFrequencyUnit} />
             <RangeInput
                 minValue={0}
                 maxValue={10}
@@ -81,7 +81,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                 value={duration}
                 setValue={setDuration}
             />
-            <RadioPeriodSelector periodUnit={durationUnit} setPeriodUnit={setDurationUnit} />
+            <RadioPeriodSelector periodUnit={durationUnit} onChange={setDurationUnit} />
             <RangeInput minValue={0} maxValue={100} label="ROE" unit="%" value={ROE} setValue={setROE} />
         </>
     );

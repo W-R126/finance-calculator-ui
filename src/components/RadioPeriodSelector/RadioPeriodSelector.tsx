@@ -4,13 +4,12 @@ import {PeriodUnit} from '../../views/InvestmentView/InvestmentView.types';
 
 interface Props {
     periodUnit: PeriodUnit;
-    setPeriodUnit: React.Dispatch<React.SetStateAction<PeriodUnit>>;
+    onChange: React.Dispatch<React.SetStateAction<PeriodUnit>>;
 }
 
-export const RadioPeriodSelector = (props: Props) => {
-    const {periodUnit, setPeriodUnit} = props;
+export const RadioPeriodSelector: React.FC<Props> = ({periodUnit, onChange}: Props) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPeriodUnit(event.target.value as PeriodUnit);
+        onChange(event.target.value as PeriodUnit);
     };
 
     return (
