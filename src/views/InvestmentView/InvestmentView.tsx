@@ -26,39 +26,34 @@ const mockedParameters: InvestmentParameters = {
     ROE: 20,
 };
 
-interface Props {}
-
-export const InvestmentView = (props: Props) => {
+export const InvestmentView: React.FC = () => {
     const [submitting, setSubmitting] = useState(false);
     const [parameters, setParameters] = useState<InvestmentParameters>(mockedParameters);
 
-    const onSubmit = async () => {
+    const handleSubmit = async () => {
         setSubmitting(true);
         await new Promise(resolve => setTimeout(resolve, 500));
         setSubmitting(false);
-        console.log(parameters);
     };
 
     return (
-        <React.Fragment>
-            <CurrencyContext.Provider value={defaultCurrency}>
-                <NavBar />
-                <Container maxWidth="sm">
-                    <InvestmentInfo parameters={parameters} setParameters={setParameters} results={mockedResults} />
-                    <Box className={buttonBox}>
-                        <Button
-                            type={'submit'}
-                            disabled={submitting}
-                            variant={'contained'}
-                            color={'primary'}
-                            style={{borderRadius: 25}}
-                            onClick={onSubmit}
-                        >
-                            SAVE TO PORTFOLIO
-                        </Button>
-                    </Box>
-                </Container>
-            </CurrencyContext.Provider>
-        </React.Fragment>
+        <CurrencyContext.Provider value={defaultCurrency}>
+            <NavBar />
+            <Container maxWidth="sm">
+                <InvestmentInfo parameters={parameters} setParameters={setParameters} results={mockedResults} />
+                <Box className={buttonBox}>
+                    <Button
+                        type={'submit'}
+                        disabled={submitting}
+                        variant={'contained'}
+                        color={'primary'}
+                        style={{borderRadius: 25}}
+                        onClick={handleSubmit}
+                    >
+                        SAVE TO PORTFOLIO
+                    </Button>
+                </Box>
+            </Container>
+        </CurrencyContext.Provider>
     );
 };
