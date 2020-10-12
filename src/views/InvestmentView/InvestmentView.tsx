@@ -3,7 +3,8 @@ import React, {useState} from 'react';
 import {InvestmentInfo} from './InvestmentInfo/InvestmentInfo';
 import {NavBar} from '../../components/NavBar/NavBar';
 import {buttonBox} from './InvestmentView.styles';
-import {InvestmentParameters, InvestmentResultTypes, PeriodUnit} from './InvestmentView.types';
+import {InvestmentParameters, InvestmentResultTypes} from './InvestmentView.types';
+import {PeriodUnit} from '../../components/RadioPeriodSelector/RadioPeriodSelector.types';
 
 const mockedResults: InvestmentResultTypes = {
     annualChangePercent: 12,
