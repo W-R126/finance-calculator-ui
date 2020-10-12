@@ -2,12 +2,12 @@ import React from 'react';
 import {FormControl, RadioGroup, FormControlLabel, Radio} from '@material-ui/core';
 import {PeriodUnit} from '../../views/InvestmentView/InvestmentView.types';
 
-interface Props {
+interface RadioPeriodSelectorProps {
     periodUnit: PeriodUnit;
     onChange: React.Dispatch<React.SetStateAction<PeriodUnit>>;
 }
 
-export const RadioPeriodSelector: React.FC<Props> = ({periodUnit, onChange}: Props) => {
+export const RadioPeriodSelector: React.FC<RadioPeriodSelectorProps> = ({periodUnit, onChange}) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         onChange(event.target.value as PeriodUnit);
     };

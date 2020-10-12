@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Grid, InputAdornment, OutlinedInput, Slider, Typography} from '@material-ui/core';
 import {css} from 'emotion';
 
@@ -10,20 +10,12 @@ interface Props {
     label: string;
     label2?: string;
 
-    valueChanged?: (value: number) => void;
-
     value: number;
     setValue: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const RangeInput = (props: Props) => {
     const {value, setValue} = props;
-
-    useEffect(() => {
-        if (props.valueChanged !== undefined) {
-            props.valueChanged(typeof value === 'number' ? value : 0);
-        }
-    }, [value, props]);
 
     const handleSliderChange = (event: any, newValue: number | number[]) => {
         setValue(newValue as number);

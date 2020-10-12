@@ -1,8 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {RadioPeriodSelector} from '../../../components/RadioPeriodSelector/RadioPeriodSelector';
 import {RangeInput} from '../../../components/RangeInput/RangeInput';
 import {Separator} from '../../../components/Separator/Separator';
-import {CurrencyContext} from '../InvestmentView';
+import {currencyUnit} from '../InvestmentView.constants';
 import {InvestmentParameters, InvestmentResultTypes} from '../InvestmentView.types';
 import {InvestmentResults} from './InvestmentResults';
 
@@ -13,7 +13,7 @@ interface Props {
 }
 
 export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, results}) => {
-    const currencyContext = useContext(CurrencyContext);
+    const currency = currencyUnit;
 
     const [initialDeposit, setInitialDeposit] = useState(parameters.initialDeposit);
     const [systematicDeposit, setSystematicDeposit] = useState(parameters.systematicDeposit);
@@ -50,7 +50,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                 minValue={0}
                 maxValue={4000}
                 label="initial deposit"
-                unit={currencyContext}
+                unit={currency}
                 value={initialDeposit}
                 setValue={setInitialDeposit}
             />
@@ -58,7 +58,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                 minValue={0}
                 maxValue={100}
                 label="systematic deposit"
-                unit={currencyContext}
+                unit={currency}
                 value={systematicDeposit}
                 setValue={setSystematicDeposit}
             />

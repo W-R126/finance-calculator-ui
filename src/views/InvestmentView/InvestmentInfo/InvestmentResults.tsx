@@ -1,7 +1,7 @@
 import {Box, styled, Typography} from '@material-ui/core';
 import * as format from '../../../helpers/formatNumber';
-import React, {useContext} from 'react';
-import {CurrencyContext} from '..';
+import React from 'react';
+import {currencyUnit} from './../InvestmentView.constants';
 
 interface Props {
     annualChangePercent: number;
@@ -13,32 +13,38 @@ interface Props {
     predictedChange: number;
 }
 
-export const InvestmentResults = (props: Props) => {
-    const currencyContext = useContext(CurrencyContext);
+export const InvestmentResults: React.FC<Props> = ({
+    annualChangePercent,
+    annualChange,
+    totalChangePercent,
+    totalChange,
+    predictedChange,
+}) => {
+    const currency = currencyUnit;
 
     return (
         <Box>
             <Box display="flex" justifyContent="space-between" px="2rem">
                 <Typography>Annual change</Typography>
                 <PositiveChange variant="h6">
-                    {format.asPercentage(props.annualChangePercent)} {props.annualChange}
-                    {currencyContext}
+                    {format.asPercentage(annualChangePercent)} {annualChange}
+                    {currency}
                 </PositiveChange>
             </Box>
 
             <Box display="flex" justifyContent="space-between" px="2rem">
                 <Typography>Total change</Typography>
                 <PositiveChange variant="h6">
-                    {format.asPercentage(props.totalChangePercent)} {props.totalChange}
-                    {currencyContext}
+                    {format.asPercentage(totalChangePercent)} {totalChange}
+                    {currency}
                 </PositiveChange>
             </Box>
 
             <Box display="flex" justifyContent="space-between" px="2rem">
                 <Typography>Predicted value</Typography>
                 <PredicatedValue variant="h4">
-                    {props.predictedChange}
-                    {currencyContext}
+                    {predictedChange}
+                    {currency}
                 </PredicatedValue>
             </Box>
         </Box>

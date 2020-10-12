@@ -5,9 +5,6 @@ import {NavBar} from '../../components/NavBar/NavBar';
 import {buttonBox} from './InvestmentView.styles';
 import {InvestmentParameters, InvestmentResultTypes, PeriodUnit} from './InvestmentView.types';
 
-const defaultCurrency = '$';
-export const CurrencyContext = React.createContext(defaultCurrency);
-
 const mockedResults: InvestmentResultTypes = {
     annualChangePercent: 12,
     annualChange: 256,
@@ -37,7 +34,7 @@ export const InvestmentView: React.FC = () => {
     };
 
     return (
-        <CurrencyContext.Provider value={defaultCurrency}>
+        <>
             <NavBar />
             <Container maxWidth="sm">
                 <InvestmentInfo parameters={parameters} setParameters={setParameters} results={mockedResults} />
@@ -54,6 +51,6 @@ export const InvestmentView: React.FC = () => {
                     </Button>
                 </Box>
             </Container>
-        </CurrencyContext.Provider>
+        </>
     );
 };
