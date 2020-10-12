@@ -1,6 +1,6 @@
+import React from 'react';
 import {Grid, InputAdornment, OutlinedInput, Slider, Typography} from '@material-ui/core';
 import {css} from 'emotion';
-import React, {useEffect, useState} from 'react';
 
 interface Props {
     minValue: number;
@@ -10,24 +10,19 @@ interface Props {
     label: string;
     label2?: string;
 
-    valueChanged?: (value: number) => void;
+    value: number;
+    setValue: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const RangeInput = (props: Props) => {
-    const [value, setValue] = useState<number | string | Array<number | string>>((props.minValue + props.maxValue) / 2);
-
-    useEffect(() => {
-        if (props.valueChanged !== undefined) {
-            props.valueChanged(typeof value === 'number' ? value : 0);
-        }
-    }, [value, props]);
+    const {value, setValue} = props;
 
     const handleSliderChange = (event: any, newValue: number | number[]) => {
-        setValue(newValue);
+        setValue(newValue as number);
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(event.target.value === '' ? '' : Number(event.target.value));
+        setValue(event.target.value === '' ? 0 : Number(event.target.value));
     };
 
     const handleBlur = () => {

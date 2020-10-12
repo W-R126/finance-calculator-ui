@@ -1,6 +1,7 @@
 import {Box, styled, Typography} from '@material-ui/core';
-import * as format from '../../helpers/formatNumber';
+import * as format from '../../../helpers/formatNumber';
 import React from 'react';
+import {currencyUnit} from './../InvestmentView.constants';
 
 interface Props {
     annualChangePercent: number;
@@ -12,26 +13,39 @@ interface Props {
     predictedChange: number;
 }
 
-export const InvestmentInfo = (props: Props) => {
+export const InvestmentResults: React.FC<Props> = ({
+    annualChangePercent,
+    annualChange,
+    totalChangePercent,
+    totalChange,
+    predictedChange,
+}) => {
+    const currency = currencyUnit;
+
     return (
         <Box>
             <Box display="flex" justifyContent="space-between" px="2rem">
                 <Typography>Annual change</Typography>
                 <PositiveChange variant="h6">
-                    {format.asPercentage(props.annualChangePercent)} {props.annualChange}£
+                    {format.asPercentage(annualChangePercent)} {annualChange}
+                    {currency}
                 </PositiveChange>
             </Box>
 
             <Box display="flex" justifyContent="space-between" px="2rem">
                 <Typography>Total change</Typography>
                 <PositiveChange variant="h6">
-                    {format.asPercentage(props.totalChangePercent)} {props.totalChange}£
+                    {format.asPercentage(totalChangePercent)} {totalChange}
+                    {currency}
                 </PositiveChange>
             </Box>
 
             <Box display="flex" justifyContent="space-between" px="2rem">
                 <Typography>Predicted value</Typography>
-                <PredicatedValue variant="h4">{props.predictedChange}£</PredicatedValue>
+                <PredicatedValue variant="h4">
+                    {predictedChange}
+                    {currency}
+                </PredicatedValue>
             </Box>
         </Box>
     );
