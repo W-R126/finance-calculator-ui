@@ -1,5 +1,5 @@
 import {Box, Button, CircularProgress, Container} from '@material-ui/core';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {InvestmentInfo} from './InvestmentInfo/InvestmentInfo';
 import {NavBar} from '../../components/NavBar/NavBar';
 import {buttonBox} from './InvestmentView.styles';
@@ -21,6 +21,12 @@ const mockedParameters: InvestmentParameters = {
 export const InvestmentView: React.FC = () => {
     const [parameters, setParameters] = useState<InvestmentParameters>(mockedParameters);
     const [data, fetchData, isFetching] = useInvestmentsAPI();
+
+    useEffect(() => {
+        if (data === null && !isFetching) {
+            fetchData(parameters);
+        }
+    }, [fetchData, parameters, data, isFetching]);
 
     const handleSubmit = async () => {
         fetchData(parameters);
