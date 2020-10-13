@@ -9,9 +9,7 @@ interface RadioPeriodSelectorProps {
 
 export const RadioPeriodSelector: React.FC<RadioPeriodSelectorProps> = ({periodUnit, onChange}) => {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (onChange !== undefined) {
-            onChange(event.target.value as PeriodUnit);
-        }
+        onChange(event.target.value as PeriodUnit);
     };
 
     return (
