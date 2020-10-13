@@ -1,6 +1,6 @@
 import React from 'react';
 import {FormControl, RadioGroup, FormControlLabel, Radio} from '@material-ui/core';
-import {PeriodUnit} from '../../views/InvestmentView/InvestmentView.types';
+import {PeriodUnit} from './RadioPeriodSelector.types';
 
 interface RadioPeriodSelectorProps {
     periodUnit: PeriodUnit;
