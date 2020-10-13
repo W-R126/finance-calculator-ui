@@ -10,10 +10,13 @@ export function useInvestmentsAPI(): [InvestmentResultTypes | null, (params: Inv
     useEffect(() => {
         if (params) {
             setFetching(true);
-            getInvestmentCalculation(params).then(values => {
-                setData(values);
-                setFetching(false);
-            });
+            getInvestmentCalculation(params)
+                .then(values => {
+                    setData(values);
+                })
+                .finally(() => {
+                    setFetching(false);
+                });
         }
     }, [params]);
 
