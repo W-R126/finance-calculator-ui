@@ -1,18 +1,12 @@
-import {Box, Button, Container} from '@material-ui/core';
+import {Box, Button, CircularProgress, Container} from '@material-ui/core';
 import React, {useState} from 'react';
 import {InvestmentInfo} from './InvestmentInfo/InvestmentInfo';
 import {NavBar} from '../../components/NavBar/NavBar';
 import {buttonBox} from './InvestmentView.styles';
-import {InvestmentParameters, InvestmentResultTypes} from './InvestmentView.types';
 import {PeriodUnit} from '../../components/RadioPeriodSelector/RadioPeriodSelector.types';
-
-const mockedResults: InvestmentResultTypes = {
-    annualChangePercent: 12,
-    annualChange: 256,
-    totalChangePercent: 12,
-    totalChange: 256,
-    predictedChange: 2400,
-};
+import {InvestmentParameters, InvestmentResultTypes} from '../../api/investmentsAPI';
+import {useInvestmentsAPI} from '../../hooks/useInvestmentsAPI';
+import {Separator} from '../../components/Separator/Separator';
 
 const mockedParameters: InvestmentParameters = {
     initialDeposit: 1800,
@@ -25,24 +19,28 @@ const mockedParameters: InvestmentParameters = {
 };
 
 export const InvestmentView: React.FC = () => {
-    const [submitting, setSubmitting] = useState(false);
     const [parameters, setParameters] = useState<InvestmentParameters>(mockedParameters);
+    const [data, fetchData, isFetching] = useInvestmentsAPI();
 
     const handleSubmit = async () => {
-        setSubmitting(true);
-        await new Promise(resolve => setTimeout(resolve, 500));
-        setSubmitting(false);
+        fetchData(parameters);
     };
 
     return (
         <>
             <NavBar />
             <Container maxWidth="sm">
-                <InvestmentInfo parameters={parameters} setParameters={setParameters} results={mockedResults} />
+                {isFetching && (
+                    <Box textAlign="center">
+                        <Separator text="Results" />
+                        <CircularProgress />
+                    </Box>
+                )}
+                <InvestmentInfo parameters={parameters} setParameters={setParameters} results={data} />
                 <Box className={buttonBox}>
                     <Button
                         type={'submit'}
-                        disabled={submitting}
+                        disabled={isFetching}
                         variant={'contained'}
                         color={'primary'}
                         style={{borderRadius: 25}}

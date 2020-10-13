@@ -1,0 +1,24 @@
+import {useEffect, useState} from 'react';
+import {getInvestmentCalculation, InvestmentParameters, InvestmentResultTypes} from '../api/investmentsAPI';
+
+export function useInvestmentsAPI(): [InvestmentResultTypes | null, (params: InvestmentParameters) => void, boolean] {
+    const [isFetching, setFetching] = useState(false);
+    const [data, setData] = useState<InvestmentResultTypes | null>(null);
+    const [params, setParams] = useState<InvestmentParameters | null>(null);
+
+    useEffect(() => {
+        if (params) {
+            setFetching(true);
+            getInvestmentCalculation(params).then(values => {
+                setData(values);
+                setFetching(false);
+            });
+        }
+    }, [params]);
+
+    const fetchData = (parameters: InvestmentParameters) => {
+        setParams(parameters);
+    };
+
+    return [data, fetchData, isFetching];
+}

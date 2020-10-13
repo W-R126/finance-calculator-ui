@@ -3,13 +3,13 @@ import {RadioPeriodSelector} from '../../../components/RadioPeriodSelector/Radio
 import {RangeInput} from '../../../components/RangeInput/RangeInput';
 import {Separator} from '../../../components/Separator/Separator';
 import {currencyUnit} from '../InvestmentView.constants';
-import {InvestmentParameters, InvestmentResultTypes} from '../InvestmentView.types';
 import {InvestmentResults} from './InvestmentResults';
+import {InvestmentParameters, InvestmentResultTypes} from '../../../api/investmentsAPI';
 
 interface Props {
     parameters: InvestmentParameters;
     setParameters: React.Dispatch<React.SetStateAction<InvestmentParameters>>;
-    results: InvestmentResultTypes;
+    results: InvestmentResultTypes | null;
 }
 
 export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, results}) => {
@@ -37,14 +37,18 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
 
     return (
         <>
-            <Separator text="Results" />
-            <InvestmentResults
-                annualChangePercent={results.annualChangePercent}
-                annualChange={results.annualChange}
-                totalChangePercent={results.totalChangePercent}
-                totalChange={results.totalChange}
-                predictedChange={results.predictedChange}
-            />
+            {results !== null && (
+                <>
+                    <Separator text="Results" />
+                    <InvestmentResults
+                        annualChangePercent={results.annualChangePercent}
+                        annualChange={results.annualChange}
+                        totalChangePercent={results.totalChangePercent}
+                        totalChange={results.totalChange}
+                        predictedChange={results.predictedChange}
+                    />
+                </>
+            )}
             <Separator text="Parameters" />
             <RangeInput
                 minValue={0}
