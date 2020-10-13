@@ -37,7 +37,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
 
     return (
         <>
-            {results !== null && (
+            {results && (
                 <>
                     <Separator text="Results" />
                     <InvestmentResults
