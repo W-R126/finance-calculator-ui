@@ -4,7 +4,7 @@ import {InvestmentInfo} from './InvestmentInfo/InvestmentInfo';
 import {NavBar} from '../../components/NavBar/NavBar';
 import {buttonBox} from './InvestmentView.styles';
 import {PeriodUnit} from '../../components/RadioPeriodSelector/RadioPeriodSelector.types';
-import {InvestmentParameters, InvestmentResultTypes} from '../../api/investmentsAPI';
+import {InvestmentParameters} from '../../api/investmentsAPI';
 import {useInvestmentsAPI} from '../../hooks/useInvestmentsAPI';
 import {Separator} from '../../components/Separator/Separator';
 
