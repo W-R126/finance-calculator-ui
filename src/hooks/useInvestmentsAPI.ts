@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
-import {getInvestmentCalculation, InvestmentParameters, InvestmentResultTypes} from '../api/investmentsAPI';
+import {getInvestmentCalculation} from '../api/investmentsAPI';
+import {InvestmentParameters, InvestmentResultTypes} from '../api/investmentsAPI.types';
 
 export function useInvestmentsAPI(): [InvestmentResultTypes | null, (params: InvestmentParameters) => void, boolean] {
     const [isFetching, setFetching] = useState(false);

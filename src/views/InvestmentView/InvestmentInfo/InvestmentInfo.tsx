@@ -4,7 +4,7 @@ import {RangeInput} from '../../../components/RangeInput/RangeInput';
 import {Separator} from '../../../components/Separator/Separator';
 import {currencyUnit} from '../InvestmentView.constants';
 import {InvestmentResults} from './InvestmentResults';
-import {InvestmentParameters, InvestmentResultTypes} from '../../../api/investmentsAPI';
+import {InvestmentParameters, InvestmentResultTypes} from '../../../api/investmentsAPI.types';
 
 interface Props {
     parameters: InvestmentParameters;
