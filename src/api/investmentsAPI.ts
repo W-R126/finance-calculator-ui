@@ -4,8 +4,8 @@ import {InvestmentParameters, InvestmentResultTypes} from './investmentsAPI.type
 export function getInvestmentCalculation(params: InvestmentParameters): Promise<InvestmentResultTypes> {
     console.log(JSON.stringify(params));
     return axios({
-        method: 'get',
-        url: 'https://fin-calc-service.metis-team.sit.fintechchallenge.pl/investments/calculate',
+        method: 'post',
+        url: '/investments/calculate',
         data: params,
     }).then(response => response.data);
 }
