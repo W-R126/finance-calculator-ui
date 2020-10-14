@@ -22,7 +22,15 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
     const [frequencyUnit, setFrequencyUnit] = useState(parameters.frequencyUnit);
     const [duration, setDuration] = useState(parameters.duration);
     const [durationUnit, setDurationUnit] = useState(parameters.durationUnit);
-    const [ROI, setROI] = useState(parameters.returnOfInvestment);
+    const [returnOfInvestment, setReturnOfInvestment] = useState(parameters.returnOfInvestment);
+
+    const calculatePredictedChange = (
+        _initialDepositValue: number,
+        _systematicDepositValue: number,
+        _durationInYears: number,
+        _frequenceInYear: number,
+        _rateOfReturnValue: number,
+    ) => _initialDepositValue + _systematicDepositValue * (_durationInYears / _frequenceInYear) + _rateOfReturnValue;
 
     useEffect(() => {
         setParameters({
@@ -34,9 +42,9 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
             duration: duration,
             durationUnit: durationUnit,
             durationInYears: inYears(duration, durationUnit),
-            returnOfInvestment: ROI,
+            returnOfInvestment: returnOfInvestment,
         });
-    }, [setParameters, initialDeposit, systematicDeposit, frequency, frequencyUnit, duration, durationUnit, ROI]);
+    }, [setParameters, initialDeposit, systematicDeposit, frequency, frequencyUnit, duration, durationUnit, returnOfInvestment]);
 
     return (
         <>
@@ -46,52 +54,54 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                     <InvestmentResults
                         totalChangePercent={results.rateOfReturnPercentage}
                         totalChange={results.rateOfReturnValue}
-                        predictedChange={
-                            results.initialDepositValue +
-                            results.systematicDepositValue * (results.durationInYears / results.frequenceInYear) +
-                            results.rateOfReturnValue
-                        }
+                        predictedChange={calculatePredictedChange(
+                            results.initialDepositValue,
+                            results.systematicDepositValue,
+                            results.durationInYears,
+                            results.frequenceInYear,
+                            results.rateOfReturnValue,
+                        )}
                     />
                 </>
             )}
             <Separator text="Parameters" />
             <RangeInput
                 minValue={0}
-                maxValue={4000}
+                maxValue={5000}
                 label="initial deposit"
                 unit={currency}
                 value={initialDeposit}
-                setValue={setInitialDeposit}
+                onChange={setInitialDeposit}
             />
             <RangeInput
                 minValue={0}
-                maxValue={100}
+                maxValue={250}
                 label="systematic deposit"
                 unit={currency}
                 value={systematicDeposit}
-                setValue={setSystematicDeposit}
+                onChange={setSystematicDeposit}
             />
             <RangeInput
                 minValue={0}
-                maxValue={4}
+                maxValue={20}
                 label="frequency"
                 label2="every"
                 unit={frequencyUnit}
                 value={frequency}
-                setValue={setFrequency}
+                onChange={setFrequency}
             />
             <RadioPeriodSelector periodUnit={frequencyUnit} onChange={setFrequencyUnit} />
             <RangeInput
                 minValue={0}
-                maxValue={10}
+                maxValue={20}
                 label="duration"
                 label2="for"
                 unit={durationUnit}
                 value={duration}
-                setValue={setDuration}
+                onChange={setDuration}
             />
             <RadioPeriodSelector periodUnit={durationUnit} onChange={setDurationUnit} />
-            <RangeInput minValue={0} maxValue={100} label="ROE" unit="%" value={ROI} setValue={setROI} />
+            <RangeInput minValue={0} maxValue={100} label="ROE" unit="%" value={returnOfInvestment} onChange={setReturnOfInvestment} />
         </>
     );
 };

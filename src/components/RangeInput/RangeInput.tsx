@@ -11,11 +11,11 @@ interface Props {
     label2?: string;
 
     value: number;
-    setValue: React.Dispatch<React.SetStateAction<number>>;
+    onChange: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const RangeInput = (props: Props) => {
-    const {value, setValue} = props;
+    const {value, onChange: setValue} = props;
 
     const handleSliderChange = (event: any, newValue: number | number[]) => {
         setValue(newValue as number);
@@ -56,7 +56,7 @@ export const RangeInput = (props: Props) => {
             </Grid>
             <Grid
                 item
-                xs={3}
+                xs={2}
                 className={css`
                     display: flex;
                     flex-direction: column;
@@ -80,7 +80,7 @@ export const RangeInput = (props: Props) => {
             </Grid>
             <Grid
                 item
-                xs={3}
+                xs={4}
                 className={css`
                     display: flex;
                     flex-direction: column;
