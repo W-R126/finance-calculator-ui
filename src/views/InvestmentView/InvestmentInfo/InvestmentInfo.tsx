@@ -3,48 +3,57 @@ import {RadioPeriodSelector} from '../../../components/RadioPeriodSelector/Radio
 import {RangeInput} from '../../../components/RangeInput/RangeInput';
 import {Separator} from '../../../components/Separator/Separator';
 import {currencyUnit} from '../InvestmentView.constants';
-import {InvestmentParameters, InvestmentResultTypes} from '../InvestmentView.types';
 import {InvestmentResults} from './InvestmentResults';
+import {InvestmentParameters, InvestmentResultTypes} from '../../../api/investmentsAPI.types';
+import {inYears} from '../../../helpers/inYears';
 
 interface Props {
     parameters: InvestmentParameters;
     setParameters: React.Dispatch<React.SetStateAction<InvestmentParameters>>;
-    results: InvestmentResultTypes;
+    results: InvestmentResultTypes | null;
 }
 
 export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, results}) => {
     const currency = currencyUnit;
 
-    const [initialDeposit, setInitialDeposit] = useState(parameters.initialDeposit);
-    const [systematicDeposit, setSystematicDeposit] = useState(parameters.systematicDeposit);
+    const [initialDeposit, setInitialDeposit] = useState(parameters.initialDepositValue);
+    const [systematicDeposit, setSystematicDeposit] = useState(parameters.systematicDepositValue);
     const [frequency, setFrequency] = useState(parameters.frequency);
     const [frequencyUnit, setFrequencyUnit] = useState(parameters.frequencyUnit);
     const [duration, setDuration] = useState(parameters.duration);
     const [durationUnit, setDurationUnit] = useState(parameters.durationUnit);
-    const [ROE, setROE] = useState(parameters.ROE);
+    const [ROI, setROI] = useState(parameters.returnOfInvestment);
 
     useEffect(() => {
         setParameters({
-            initialDeposit: initialDeposit,
-            systematicDeposit: systematicDeposit,
+            initialDepositValue: initialDeposit,
+            systematicDepositValue: systematicDeposit,
             frequency: frequency,
             frequencyUnit: frequencyUnit,
+            frequenceInYear: inYears(frequency, frequencyUnit),
             duration: duration,
             durationUnit: durationUnit,
-            ROE: ROE,
+            durationInYears: inYears(duration, durationUnit),
+            returnOfInvestment: ROI,
         });
-    }, [setParameters, initialDeposit, systematicDeposit, frequency, frequencyUnit, duration, durationUnit, ROE]);
+    }, [setParameters, initialDeposit, systematicDeposit, frequency, frequencyUnit, duration, durationUnit, ROI]);
 
     return (
         <>
-            <Separator text="Results" />
-            <InvestmentResults
-                annualChangePercent={results.annualChangePercent}
-                annualChange={results.annualChange}
-                totalChangePercent={results.totalChangePercent}
-                totalChange={results.totalChange}
-                predictedChange={results.predictedChange}
-            />
+            {results && (
+                <>
+                    <Separator text="Results" />
+                    <InvestmentResults
+                        totalChangePercent={results.rateOfReturnPercentage}
+                        totalChange={results.rateOfReturnValue}
+                        predictedChange={
+                            results.initialDepositValue +
+                            results.systematicDepositValue * (results.durationInYears / results.frequenceInYear) +
+                            results.rateOfReturnValue
+                        }
+                    />
+                </>
+            )}
             <Separator text="Parameters" />
             <RangeInput
                 minValue={0}
@@ -82,7 +91,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                 setValue={setDuration}
             />
             <RadioPeriodSelector periodUnit={durationUnit} onChange={setDurationUnit} />
-            <RangeInput minValue={0} maxValue={100} label="ROE" unit="%" value={ROE} setValue={setROE} />
+            <RangeInput minValue={0} maxValue={100} label="ROE" unit="%" value={ROI} setValue={setROI} />
         </>
     );
 };

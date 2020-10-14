@@ -1,54 +1,61 @@
-import {Box, Button, Container} from '@material-ui/core';
-import React, {useState} from 'react';
+import {Box, Button, CircularProgress, Container} from '@material-ui/core';
+import React, {useEffect, useState} from 'react';
 import {InvestmentInfo} from './InvestmentInfo/InvestmentInfo';
 import {NavBar} from '../../components/NavBar/NavBar';
 import {buttonBox} from './InvestmentView.styles';
-import {InvestmentParameters, InvestmentResultTypes} from './InvestmentView.types';
 import {PeriodUnit} from '../../components/RadioPeriodSelector/RadioPeriodSelector.types';
-
-const mockedResults: InvestmentResultTypes = {
-    annualChangePercent: 12,
-    annualChange: 256,
-    totalChangePercent: 12,
-    totalChange: 256,
-    predictedChange: 2400,
-};
+import {useInvestmentsAPI} from '../../hooks/useInvestmentsAPI';
+import {Separator} from '../../components/Separator/Separator';
+import {InvestmentParameters} from '../../api/investmentsAPI.types';
+import {inYears} from '../../helpers/inYears';
 
 const mockedParameters: InvestmentParameters = {
-    initialDeposit: 1800,
-    systematicDeposit: 40,
+    initialDepositValue: 1800,
+    systematicDepositValue: 40,
     frequency: 3,
     frequencyUnit: PeriodUnit.WEEKS,
+    frequenceInYear: inYears(3, PeriodUnit.WEEKS),
     duration: 2,
     durationUnit: PeriodUnit.DAYS,
-    ROE: 20,
+    durationInYears: inYears(2, PeriodUnit.DAYS),
+    returnOfInvestment: 20,
 };
 
 export const InvestmentView: React.FC = () => {
-    const [submitting, setSubmitting] = useState(false);
     const [parameters, setParameters] = useState<InvestmentParameters>(mockedParameters);
+    const [data, fetchData, isFetching] = useInvestmentsAPI();
+
+    useEffect(() => {
+        if (data === null && !isFetching) {
+            fetchData(parameters);
+        }
+    }, [fetchData, parameters, data, isFetching]);
 
     const handleSubmit = async () => {
-        setSubmitting(true);
-        await new Promise(resolve => setTimeout(resolve, 500));
-        setSubmitting(false);
+        fetchData(parameters);
     };
 
     return (
         <>
             <NavBar />
             <Container maxWidth="sm">
-                <InvestmentInfo parameters={parameters} setParameters={setParameters} results={mockedResults} />
+                {isFetching && (
+                    <Box textAlign="center">
+                        <Separator text="Results" />
+                        <CircularProgress />
+                    </Box>
+                )}
+                <InvestmentInfo parameters={parameters} setParameters={setParameters} results={data} />
                 <Box className={buttonBox}>
                     <Button
                         type={'submit'}
-                        disabled={submitting}
+                        disabled={isFetching}
                         variant={'contained'}
                         color={'primary'}
                         style={{borderRadius: 25}}
                         onClick={handleSubmit}
                     >
-                        SAVE TO PORTFOLIO
+                        SUBMIT
                     </Button>
                 </Box>
             </Container>
