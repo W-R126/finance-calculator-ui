@@ -1,19 +1,23 @@
 import {PeriodUnit} from '../components/RadioPeriodSelector/RadioPeriodSelector.types';
 
 export interface InvestmentParameters {
-    initialDeposit: number;
-    systematicDeposit: number;
+    initialDepositValue: number;
+    systematicDepositValue: number;
     frequency: number;
     frequencyUnit: PeriodUnit;
+    frequenceInYear: number;
     duration: number;
     durationUnit: PeriodUnit;
-    ROE: number;
+    durationInYears: number;
+    returnOfInvestment: number;
 }
 
 export interface InvestmentResultTypes {
-    annualChangePercent: number;
-    annualChange: number;
-    totalChangePercent: number;
-    totalChange: number;
-    predictedChange: number;
+    rateOfReturnPercentage: number;
+    rateOfReturnValue: number;
+    initialDepositValue: number;
+    systematicDepositValue: number;
+    durationInYears: number;
+    frequenceInYear: number;
+    // initialDepositValue + systematicDepositValue * (durationInYears / frequenceInYear) + rateOfReturnValue;
 }

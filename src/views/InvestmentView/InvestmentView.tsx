@@ -7,15 +7,18 @@ import {PeriodUnit} from '../../components/RadioPeriodSelector/RadioPeriodSelect
 import {useInvestmentsAPI} from '../../hooks/useInvestmentsAPI';
 import {Separator} from '../../components/Separator/Separator';
 import {InvestmentParameters} from '../../api/investmentsAPI.types';
+import {inYears} from '../../helpers/inYears';
 
 const mockedParameters: InvestmentParameters = {
-    initialDeposit: 1800,
-    systematicDeposit: 40,
+    initialDepositValue: 1800,
+    systematicDepositValue: 40,
     frequency: 3,
     frequencyUnit: PeriodUnit.WEEKS,
+    frequenceInYear: inYears(3, PeriodUnit.WEEKS),
     duration: 2,
     durationUnit: PeriodUnit.DAYS,
-    ROE: 20,
+    durationInYears: inYears(2, PeriodUnit.DAYS),
+    returnOfInvestment: 20,
 };
 
 export const InvestmentView: React.FC = () => {
@@ -52,7 +55,7 @@ export const InvestmentView: React.FC = () => {
                         style={{borderRadius: 25}}
                         onClick={handleSubmit}
                     >
-                        SAVE TO PORTFOLIO
+                        SUBMIT
                     </Button>
                 </Box>
             </Container>

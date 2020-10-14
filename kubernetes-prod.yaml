@@ -23,7 +23,7 @@ spec:
                   imagePullPolicy: Always
                   env:
                       - name: API_BASE_PATH
-                        value: placeholder
+                        value: https://fin-calc-service.metis-team.prod.fintechchallenge.pl
                   ports:
                       - name: web
                         containerPort: 80
