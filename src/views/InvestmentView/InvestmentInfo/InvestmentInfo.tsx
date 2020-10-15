@@ -94,7 +94,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                 onChange={setDuration}
             />
             <RadioPeriodSelector periodUnit={durationUnit} onChange={setDurationUnit} />
-            <RangeInput minValue={0} maxValue={100} label="ROE" unit="%" value={returnOfInvestment} onChange={setReturnOfInvestment} />
+            <RangeInput minValue={0} maxValue={100} label="ROI" unit="%" value={returnOfInvestment} onChange={setReturnOfInvestment} />
         </>
     );
 };
