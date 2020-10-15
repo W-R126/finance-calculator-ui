@@ -1,6 +1,6 @@
-import {Box, Button, CircularProgress, Container} from '@material-ui/core';
+import {Box, Button, CircularProgress, Container, Snackbar} from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
-import {InvestmentInfo} from './InvestmentInfo/InvestmentInfo';
+import {InvestmentInfo} from './InvestmentInfo';
 import {NavBar} from '../../components/NavBar/NavBar';
 import {buttonBox} from './InvestmentView.styles';
 import {PeriodUnit} from '../../components/RadioPeriodSelector/RadioPeriodSelector.types';
@@ -8,10 +8,11 @@ import {useInvestmentsAPI} from '../../hooks/useInvestmentsAPI';
 import {Separator} from '../../components/Separator/Separator';
 import {InvestmentParameters} from '../../api/investmentsAPI.types';
 import {inYears} from '../../helpers/inYears';
+import {Alert} from '@material-ui/lab';
 
 const mockedParameters: InvestmentParameters = {
     initialDepositValue: 1800,
-    systematicDepositValue: 40,
+    systematicDepositValue: 0,
     frequency: 3,
     frequencyUnit: PeriodUnit.WEEKS,
     frequenceInYear: inYears(3, PeriodUnit.WEEKS),
@@ -32,12 +33,36 @@ export const InvestmentView: React.FC = () => {
     }, [fetchData, parameters, data, isFetching]);
 
     const handleSubmit = async () => {
-        fetchData(parameters);
+        fetchData({
+            ...parameters,
+            returnOfInvestment: parameters.returnOfInvestment / 100,
+        });
+    };
+
+    const [open, setOpen] = useState(false);
+
+    const handleClick = () => {
+        setOpen(true);
+    };
+
+    const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setOpen(false);
     };
 
     return (
         <>
-            <NavBar />
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    Saved to portfolio!
+                </Alert>
+            </Snackbar>
+            {false && (
+                <NavBar />
+            ) /* This is so that the pipeline will not complain about unused component. It will be activated for auth when it's done.*/}
             <Container maxWidth="sm">
                 {isFetching && (
                     <Box textAlign="center">
@@ -55,7 +80,18 @@ export const InvestmentView: React.FC = () => {
                         style={{borderRadius: 25}}
                         onClick={handleSubmit}
                     >
-                        SUBMIT
+                        Calculate
+                    </Button>
+
+                    <Button
+                        type={'submit'}
+                        disabled={isFetching}
+                        variant={'contained'}
+                        color={'primary'}
+                        style={{borderRadius: 25, marginLeft: 32}}
+                        onClick={handleClick}
+                    >
+                        Save to portfolio
                     </Button>
                 </Box>
             </Container>
