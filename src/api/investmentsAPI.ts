@@ -2,7 +2,6 @@ import axios from 'axios';
 import {InvestmentParameters, InvestmentResultTypes} from './investmentsAPI.types';
 
 export function getInvestmentCalculation(params: InvestmentParameters): Promise<InvestmentResultTypes> {
-    console.log(JSON.stringify(params));
     return axios({
         method: 'post',
         url: 'api/investments/calculate',
