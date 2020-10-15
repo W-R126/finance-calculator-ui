@@ -11,7 +11,7 @@ import {inYears} from '../../helpers/inYears';
 
 const mockedParameters: InvestmentParameters = {
     initialDepositValue: 1800,
-    systematicDepositValue: 40,
+    systematicDepositValue: 0,
     frequency: 3,
     frequencyUnit: PeriodUnit.WEEKS,
     frequenceInYear: inYears(3, PeriodUnit.WEEKS),

@@ -67,7 +67,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                 onChange={setInitialDeposit}
             />
             <RangeInput
-                minValue={1}
+                minValue={0}
                 maxValue={250}
                 label="systematic deposit"
                 unit={currency}
