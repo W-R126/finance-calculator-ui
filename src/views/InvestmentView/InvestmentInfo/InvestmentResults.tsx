@@ -12,25 +12,28 @@ interface Props {
 
 export const InvestmentResults: React.FC<Props> = ({totalChangePercent, totalChange, predictedChange}) => {
     const currency = currencyUnit;
+    const accurance = 2;
+
+    const round = (value: number) => Math.round(value * Math.pow(10, accurance)) / Math.pow(10, accurance);
 
     return (
-        <Box>
-            <Box display="flex" justifyContent="space-between" px="2rem">
+        <>
+            <Box display="flex" justifyContent="space-between">
                 <Typography>Total change</Typography>
                 <PositiveChange variant="h6">
-                    {format.asPercentage(totalChangePercent)} {totalChange}
+                    {format.asPercentage(totalChangePercent)} {round(totalChange)}
                     {currency}
                 </PositiveChange>
             </Box>
 
-            <Box display="flex" justifyContent="space-between" px="2rem">
+            <Box display="flex" justifyContent="space-between">
                 <Typography>Predicted value</Typography>
                 <PredicatedValue variant="h4">
-                    {predictedChange}
+                    {round(predictedChange)}
                     {currency}
                 </PredicatedValue>
             </Box>
-        </Box>
+        </>
     );
 };
 
