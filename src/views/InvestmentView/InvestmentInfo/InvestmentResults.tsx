@@ -1,7 +1,7 @@
 import {Box, styled, Typography} from '@material-ui/core';
 import * as format from '../../../helpers/formatNumber';
 import React from 'react';
-import {currencyUnit} from './../InvestmentView.constants';
+import {currencyUnit} from '../InvestmentView.constants';
 
 interface Props {
     totalChangePercent: number;
@@ -21,7 +21,7 @@ export const InvestmentResults: React.FC<Props> = ({totalChangePercent, totalCha
             <Box display="flex" justifyContent="space-between">
                 <Typography>Total change</Typography>
                 <PositiveChange variant="h6">
-                    {format.asPercentage(totalChangePercent)} {round(totalChange)}
+                    {format.asPercentage(totalChangePercent * 100)} {round(totalChange)}
                     {currency}
                 </PositiveChange>
             </Box>
