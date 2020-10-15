@@ -60,7 +60,7 @@ export const InvestmentView: React.FC = () => {
                         style={{borderRadius: 25}}
                         onClick={handleSubmit}
                     >
-                        SUBMIT
+                        Calculate
                     </Button>
                 </Box>
             </Container>
