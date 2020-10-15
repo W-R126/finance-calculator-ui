@@ -1,11 +1,10 @@
-import {Box, Button, CircularProgress, Container, Snackbar} from '@material-ui/core';
+import {Box, Button, Container, Snackbar} from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
 import {InvestmentInfo} from './InvestmentInfo';
 import {NavBar} from '../../components/NavBar/NavBar';
 import {buttonBox} from './InvestmentView.styles';
 import {PeriodUnit} from '../../components/RadioPeriodSelector/RadioPeriodSelector.types';
 import {useInvestmentsAPI} from '../../hooks/useInvestmentsAPI';
-import {Separator} from '../../components/Separator/Separator';
 import {InvestmentParameters} from '../../api/investmentsAPI.types';
 import {inYears} from '../../helpers/inYears';
 import {Alert} from '@material-ui/lab';
@@ -55,7 +54,7 @@ export const InvestmentView: React.FC = () => {
 
     return (
         <>
-            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Snackbar open={open} autoHideDuration={3000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="success">
                     Saved to portfolio!
                 </Alert>
@@ -64,12 +63,6 @@ export const InvestmentView: React.FC = () => {
                 <NavBar />
             ) /* This is so that the pipeline will not complain about unused component. It will be activated for auth when it's done.*/}
             <Container maxWidth="sm">
-                {isFetching && (
-                    <Box textAlign="center">
-                        <Separator text="Results" />
-                        <CircularProgress />
-                    </Box>
-                )}
                 <InvestmentInfo parameters={parameters} setParameters={setParameters} results={data} />
                 <Box className={buttonBox}>
                     <Button
