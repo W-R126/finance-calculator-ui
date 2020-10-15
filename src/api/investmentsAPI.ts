@@ -5,7 +5,7 @@ export function getInvestmentCalculation(params: InvestmentParameters): Promise<
     console.log(JSON.stringify(params));
     return axios({
         method: 'post',
-        url: '/investments/calculate',
+        url: 'api/investments/calculate',
         data: params,
     }).then(response => response.data);
 }

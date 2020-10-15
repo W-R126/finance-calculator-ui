@@ -55,5 +55,5 @@
     "devDependencies": {
         "cypress": "^5.3.0"
     },
-    "proxy": "http://localhost:8080"
+    "proxy": "https://fin-calc-service.metis-team.sit.fintechchallenge.pl"
 }
