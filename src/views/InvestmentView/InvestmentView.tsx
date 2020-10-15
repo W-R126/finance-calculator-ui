@@ -40,8 +40,9 @@ export const InvestmentView: React.FC = () => {
 
     return (
         <>
-            {false && <NavBar /> /* This is so that the pipeline will not complain about unused component. It will be activated for auth */}
-            when it's done.
+            {false && (
+                <NavBar />
+            ) /* This is so that the pipeline will not complain about unused component. It will be activated for auth when it's done.*/}
             <Container maxWidth="sm">
                 {isFetching && (
                     <Box textAlign="center">
