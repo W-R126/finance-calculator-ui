@@ -6,6 +6,7 @@ import {currencyUnit} from '../InvestmentView.constants';
 import {InvestmentResults} from './InvestmentResults';
 import {InvestmentParameters, InvestmentResultTypes} from '../../../api/investmentsAPI.types';
 import {inYears} from '../../../helpers/inYears';
+import {calculatePredictedChange} from './InvestmentInfo.helpers';
 
 interface Props {
     parameters: InvestmentParameters;
@@ -23,14 +24,6 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
     const [duration, setDuration] = useState(parameters.duration);
     const [durationUnit, setDurationUnit] = useState(parameters.durationUnit);
     const [returnOfInvestment, setReturnOfInvestment] = useState(parameters.returnOfInvestment);
-
-    const calculatePredictedChange = (
-        _initialDepositValue: number,
-        _systematicDepositValue: number,
-        _durationInYears: number,
-        _frequenceInYear: number,
-        _rateOfReturnValue: number,
-    ) => _initialDepositValue + _systematicDepositValue * (_durationInYears / _frequenceInYear) + _rateOfReturnValue;
 
     useEffect(() => {
         setParameters({

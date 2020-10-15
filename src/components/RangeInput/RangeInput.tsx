@@ -11,25 +11,37 @@ interface Props {
     label2?: string;
 
     value: number;
-    onChange: React.Dispatch<React.SetStateAction<number>>;
+    onChange: (value: number) => void;
 }
 
-export const RangeInput = (props: Props) => {
-    const {value, onChange: setValue} = props;
+export const RangeInput = ({value, onChange, minValue, maxValue, unit, label, label2}: Props) => {
+    const emitChange = (newValue: number) => {
+        if (value !== newValue) {
+            onChange(newValue);
+        }
+    };
 
-    const handleSliderChange = (event: any, newValue: number | number[]) => {
-        setValue(newValue as number);
+    const handleSliderChange = (event: React.ChangeEvent<{}>, newValue: number | number[]) => {
+        if (typeof newValue === 'number') {
+            emitChange(newValue);
+        }
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(event.target.value === '' ? 0 : Number(event.target.value));
+        const newValue = event.target.value;
+
+        if (newValue === '') {
+            emitChange(0);
+        } else if (typeof newValue === 'number') {
+            emitChange(newValue);
+        }
     };
 
     const handleBlur = () => {
-        if (value < props.minValue) {
-            setValue(props.minValue);
-        } else if (value > props.maxValue) {
-            setValue(props.maxValue);
+        if (value < minValue) {
+            onChange(minValue);
+        } else if (value > maxValue) {
+            onChange(maxValue);
         }
     };
 
@@ -51,7 +63,7 @@ export const RangeInput = (props: Props) => {
                     variant="subtitle2"
                     component="p"
                 >
-                    {props.label}
+                    {label}
                 </Typography>
             </Grid>
             <Grid
@@ -63,7 +75,7 @@ export const RangeInput = (props: Props) => {
                     justify-content: flex-end;
                 `}
             >
-                {props.label2 !== undefined && (
+                {label2 !== undefined && (
                     <Typography
                         className={css`
                             font-size: 18px;
@@ -74,7 +86,7 @@ export const RangeInput = (props: Props) => {
                         variant="subtitle2"
                         component="p"
                     >
-                        {props.label2}
+                        {label2}
                     </Typography>
                 )}
             </Grid>
@@ -93,9 +105,9 @@ export const RangeInput = (props: Props) => {
                     onChange={handleInputChange}
                     onBlur={handleBlur}
                     inputProps={{
-                        step: Math.floor((props.maxValue - props.minValue) * 0.05),
-                        min: props.minValue,
-                        max: props.maxValue,
+                        step: Math.floor((maxValue - minValue) * 0.05),
+                        min: minValue,
+                        max: maxValue,
                         type: 'number',
                         'aria-labelledby': 'range-input',
                         'data-testid': 'input',
@@ -103,7 +115,7 @@ export const RangeInput = (props: Props) => {
                     className={css`
                         width: 100%;
                     `}
-                    endAdornment={props.unit ? <InputAdornment position="end">{props.unit}</InputAdornment> : undefined}
+                    endAdornment={unit ? <InputAdornment position="end">{unit}</InputAdornment> : undefined}
                 />
             </Grid>
             <Grid item xs={12}>
@@ -111,8 +123,8 @@ export const RangeInput = (props: Props) => {
                     value={typeof value === 'number' ? value : 0}
                     onChange={handleSliderChange}
                     aria-labelledby="input-slider"
-                    min={props.minValue}
-                    max={props.maxValue}
+                    min={minValue}
+                    max={maxValue}
                 />
             </Grid>
         </Grid>
