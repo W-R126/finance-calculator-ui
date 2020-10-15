@@ -1,6 +1,6 @@
 import {Box, Button, CircularProgress, Container} from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
-import {InvestmentInfo} from './InvestmentInfo/InvestmentInfo';
+import {InvestmentInfo} from './InvestmentInfo';
 import {NavBar} from '../../components/NavBar/NavBar';
 import {buttonBox} from './InvestmentView.styles';
 import {PeriodUnit} from '../../components/RadioPeriodSelector/RadioPeriodSelector.types';
@@ -32,7 +32,10 @@ export const InvestmentView: React.FC = () => {
     }, [fetchData, parameters, data, isFetching]);
 
     const handleSubmit = async () => {
-        fetchData(parameters);
+        fetchData({
+            ...parameters,
+            returnOfInvestment: parameters.returnOfInvestment / 100,
+        });
     };
 
     return (

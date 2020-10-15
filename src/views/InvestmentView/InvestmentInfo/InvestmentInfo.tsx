@@ -59,7 +59,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
             )}
             <Separator text="Parameters" />
             <RangeInput
-                minValue={0}
+                minValue={1}
                 maxValue={5000}
                 label="initial deposit"
                 unit={currency}
@@ -67,7 +67,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                 onChange={setInitialDeposit}
             />
             <RangeInput
-                minValue={0}
+                minValue={1}
                 maxValue={250}
                 label="systematic deposit"
                 unit={currency}
@@ -75,7 +75,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                 onChange={setSystematicDeposit}
             />
             <RangeInput
-                minValue={0}
+                minValue={1}
                 maxValue={20}
                 label="frequency"
                 label2="every"
@@ -85,7 +85,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
             />
             <RadioPeriodSelector periodUnit={frequencyUnit} onChange={setFrequencyUnit} />
             <RangeInput
-                minValue={0}
+                minValue={1}
                 maxValue={20}
                 label="duration"
                 label2="for"
