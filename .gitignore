@@ -10,7 +10,8 @@
 /reports
 /logs
 /pacts
-
+/cypress/videos
+:
 # production
 /build
 

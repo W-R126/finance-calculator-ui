@@ -7,6 +7,7 @@ import {InvestmentResults} from './InvestmentResults';
 import {InvestmentParameters, InvestmentResultTypes} from '../../../api/investmentsAPI.types';
 import {inYears} from '../../../helpers/inYears';
 import {calculatePredictedChange} from './InvestmentInfo.helpers';
+import {Box, CircularProgress} from '@material-ui/core';
 
 interface Props {
     parameters: InvestmentParameters;
@@ -41,7 +42,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
 
     return (
         <>
-            {results && (
+            {results ? (
                 <>
                     <Separator text="Results" />
                     <InvestmentResults
@@ -56,6 +57,11 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                         )}
                     />
                 </>
+            ) : (
+                <Box textAlign="center" height="137px">
+                    <Separator text="Results" />
+                    <CircularProgress />
+                </Box>
             )}
             <Separator text="Parameters" />
             <RangeInput
@@ -74,25 +80,9 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                 value={systematicDeposit}
                 onChange={setSystematicDeposit}
             />
-            <RangeInput
-                minValue={1}
-                maxValue={20}
-                label="frequency"
-                label2="every"
-                unit={frequencyUnit}
-                value={frequency}
-                onChange={setFrequency}
-            />
+            <RangeInput minValue={1} maxValue={20} label="frequency" unit={frequencyUnit} value={frequency} onChange={setFrequency} />
             <RadioPeriodSelector periodUnit={frequencyUnit} onChange={setFrequencyUnit} />
-            <RangeInput
-                minValue={1}
-                maxValue={20}
-                label="duration"
-                label2="for"
-                unit={durationUnit}
-                value={duration}
-                onChange={setDuration}
-            />
+            <RangeInput minValue={1} maxValue={20} label="duration" unit={durationUnit} value={duration} onChange={setDuration} />
             <RadioPeriodSelector periodUnit={durationUnit} onChange={setDurationUnit} />
             <RangeInput minValue={0} maxValue={100} label="ROI" unit="%" value={returnOfInvestment} onChange={setReturnOfInvestment} />
         </>

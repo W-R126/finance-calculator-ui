@@ -14,27 +14,13 @@ interface Props {
     onChange: (value: number) => void;
 }
 
-export const RangeInput = ({value, onChange, minValue, maxValue, unit, label, label2}: Props) => {
-    const emitChange = (newValue: number) => {
-        if (value !== newValue) {
-            onChange(newValue);
-        }
-    };
-
-    const handleSliderChange = (event: React.ChangeEvent<{}>, newValue: number | number[]) => {
-        if (typeof newValue === 'number') {
-            emitChange(newValue);
-        }
+export const RangeInput: React.FC<Props> = ({value, onChange, minValue, maxValue, label, label2, unit}) => {
+    const handleSliderChange = (event: any, newValue: number | number[]) => {
+        onChange(newValue as number);
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = event.target.value;
-
-        if (newValue === '') {
-            emitChange(0);
-        } else if (typeof newValue === 'number') {
-            emitChange(newValue);
-        }
+        onChange(event.target.value === '' ? 0 : Number(event.target.value));
     };
 
     const handleBlur = () => {
