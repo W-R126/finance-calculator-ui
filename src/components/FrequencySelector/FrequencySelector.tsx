@@ -1,4 +1,3 @@
-import * as styles from './FrequencySelector.styles';
 import React, {ChangeEvent, useEffect, useState} from 'react';
 import {Box, Grid, MenuItem, Slider, TextField, Typography} from '@material-ui/core';
 import {FrequencyUnit} from './FrequencySelector.types';
@@ -57,7 +56,7 @@ export const FrequencySelector: React.FC<Props> = ({value, onChange, label}) => 
     };
 
     return (
-        <Box className={styles.test}>
+        <Box>
             <Grid container spacing={2}>
                 <Grid item xs>
                     <Typography>{label}</Typography>
