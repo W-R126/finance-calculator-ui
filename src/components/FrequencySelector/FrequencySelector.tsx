@@ -11,7 +11,7 @@ interface Props {
     label: string;
 }
 
-export const FrequencySelector: React.FC<Props> = ({value, onChange, label}: Props) => {
+export const FrequencySelector: React.FC<Props> = ({value, onChange, label}) => {
     const [unit, setUnit] = useState(FrequencyUnit.YEARS);
 
     const minValue = 1;

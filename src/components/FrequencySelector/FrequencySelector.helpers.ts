@@ -1,4 +1,5 @@
 import {FrequencyUnit} from './FrequencySelector.types';
+import {maxDays, maxMonths, maxWeeks, maxYears} from './FrequencySelector.constants';
 
 export function convertToYears(value: number, unit: FrequencyUnit): number {
     switch (unit) {
@@ -29,12 +30,12 @@ export function convertFromYears(value: number, unit: FrequencyUnit): number {
 export function getMaxValueFor(unit: FrequencyUnit): number {
     switch (unit) {
         case FrequencyUnit.YEARS:
-            return 100;
+            return maxYears;
         case FrequencyUnit.MONTHS:
-            return 12;
+            return maxMonths;
         case FrequencyUnit.WEEKS:
-            return 48;
+            return maxWeeks;
         case FrequencyUnit.DAYS:
-            return 365;
+            return maxDays;
     }
 }
