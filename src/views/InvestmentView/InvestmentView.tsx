@@ -3,21 +3,15 @@ import React, {useEffect, useState} from 'react';
 import {InvestmentInfo} from './InvestmentInfo';
 import {NavBar} from '../../components/NavBar/NavBar';
 import {buttonBox} from './InvestmentView.styles';
-import {PeriodUnit} from '../../components/RadioPeriodSelector/RadioPeriodSelector.types';
 import {useInvestmentsAPI} from '../../hooks/useInvestmentsAPI';
 import {InvestmentParameters} from '../../api/investmentsAPI.types';
-import {inYears} from '../../helpers/inYears';
 import {Alert} from '@material-ui/lab';
 
 const mockedParameters: InvestmentParameters = {
     initialDepositValue: 1800,
     systematicDepositValue: 0,
-    frequency: 3,
-    frequencyUnit: PeriodUnit.WEEKS,
-    frequenceInYear: inYears(3, PeriodUnit.WEEKS),
-    duration: 2,
-    durationUnit: PeriodUnit.DAYS,
-    durationInYears: inYears(2, PeriodUnit.DAYS),
+    frequenceInYear: 3,
+    durationInYears: 1,
     returnOfInvestment: 20,
 };
 

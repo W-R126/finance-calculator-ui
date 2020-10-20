@@ -1,13 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {RadioPeriodSelector} from '../../../components/RadioPeriodSelector/RadioPeriodSelector';
 import {RangeInput} from '../../../components/RangeInput/RangeInput';
 import {Separator} from '../../../components/Separator/Separator';
 import {currencyUnit} from '../InvestmentView.constants';
 import {InvestmentResults} from './InvestmentResults';
 import {InvestmentParameters, InvestmentResultTypes} from '../../../api/investmentsAPI.types';
-import {inYears} from '../../../helpers/inYears';
 import {calculatePredictedChange} from './InvestmentInfo.helpers';
 import {Box, CircularProgress} from '@material-ui/core';
+import {FrequencySelector} from '../../../components/FrequencySelector/FrequencySelector';
 
 interface Props {
     parameters: InvestmentParameters;
@@ -20,25 +19,19 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
 
     const [initialDeposit, setInitialDeposit] = useState(parameters.initialDepositValue);
     const [systematicDeposit, setSystematicDeposit] = useState(parameters.systematicDepositValue);
-    const [frequency, setFrequency] = useState(parameters.frequency);
-    const [frequencyUnit, setFrequencyUnit] = useState(parameters.frequencyUnit);
-    const [duration, setDuration] = useState(parameters.duration);
-    const [durationUnit, setDurationUnit] = useState(parameters.durationUnit);
+    const [frequency, setFrequency] = useState(parameters.frequenceInYear);
+    const [duration, setDuration] = useState(parameters.durationInYears);
     const [returnOfInvestment, setReturnOfInvestment] = useState(parameters.returnOfInvestment);
 
     useEffect(() => {
         setParameters({
             initialDepositValue: initialDeposit,
             systematicDepositValue: systematicDeposit,
-            frequency: frequency,
-            frequencyUnit: frequencyUnit,
-            frequenceInYear: inYears(frequency, frequencyUnit),
-            duration: duration,
-            durationUnit: durationUnit,
-            durationInYears: inYears(duration, durationUnit),
+            frequenceInYear: frequency,
+            durationInYears: duration,
             returnOfInvestment: returnOfInvestment,
         });
-    }, [setParameters, initialDeposit, systematicDeposit, frequency, frequencyUnit, duration, durationUnit, returnOfInvestment]);
+    }, [setParameters, initialDeposit, systematicDeposit, frequency, duration, returnOfInvestment]);
 
     return (
         <>
@@ -80,10 +73,8 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                 value={systematicDeposit}
                 onChange={setSystematicDeposit}
             />
-            <RangeInput minValue={1} maxValue={20} label="frequency" unit={frequencyUnit} value={frequency} onChange={setFrequency} />
-            <RadioPeriodSelector periodUnit={frequencyUnit} onChange={setFrequencyUnit} />
-            <RangeInput minValue={1} maxValue={20} label="duration" unit={durationUnit} value={duration} onChange={setDuration} />
-            <RadioPeriodSelector periodUnit={durationUnit} onChange={setDurationUnit} />
+            <FrequencySelector value={frequency} onChange={setFrequency} label="frequency" />
+            <FrequencySelector value={duration} onChange={setDuration} label="duration" />
             <RangeInput minValue={0} maxValue={100} label="ROI" unit="%" value={returnOfInvestment} onChange={setReturnOfInvestment} />
         </>
     );
