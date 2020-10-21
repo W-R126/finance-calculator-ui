@@ -19,7 +19,7 @@ spec:
                 - name: fintech-docker-secret
             containers:
                 - name: metis-finance-calculator-ui
-                  image: metis-team-docker-registry.fintechchallenge.pl/metis-team/metis-finance-calculator-ui:latest
+                  image: metis-team-docker-registry.fintechchallenge.pl/metis-team/metis-finance-calculator-ui:image_version_placeholder
                   imagePullPolicy: Always
                   env:
                       - name: API_BASE_PATH
