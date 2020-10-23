@@ -19,11 +19,11 @@ spec:
                 - name: fintech-docker-secret
             containers:
                 - name: metis-finance-calculator-ui
-                  image: metis-team-docker-registry.fintechchallenge.pl/metis-team/metis-finance-calculator-ui:latest
+                  image: metis-team-docker-registry.fintechchallenge.pl/metis-team/metis-finance-calculator-ui:image_version_placeholder
                   imagePullPolicy: Always
                   env:
                       - name: API_BASE_PATH
-                        value: https://fin-calc-service.metis-team.prod.fintechchallenge.pl
+                        value: https://fin-calc-service.metis-team.fintechchallenge.pl
                   ports:
                       - name: web
                         containerPort: 80
@@ -105,7 +105,7 @@ spec:
         - websecure
     routes:
         - kind: Rule
-          match: Host(`metis-finance-calculator-ui.metis-team.prod.fintechchallenge.pl`)
+          match: Host(`metis-finance-calculator-ui.metis-team.fintechchallenge.pl`)
           middlewares:
               - name: fintech-prod-metis-team-basic-auth-middleware
                 namespace: fintech-prod-metis-team
@@ -121,4 +121,4 @@ spec:
             namespace: fintech-prod-metis-team
         certResolver: hltech
         domains:
-            - main: metis-finance-calculator-ui.metis-team.prod.fintechchallenge.pl
+            - main: metis-finance-calculator-ui.metis-team.fintechchallenge.pl
