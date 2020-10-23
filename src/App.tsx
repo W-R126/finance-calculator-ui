@@ -1,12 +1,12 @@
-import React from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import {InvestmentView} from './views/InvestmentView';
+import React from 'react';
+import {PortfolioView} from './views/PortfolioView';
 
 export const App = () => {
     return (
         <React.Fragment>
             <CssBaseline />
-            <InvestmentView />
+            <PortfolioView />
         </React.Fragment>
     );
 };
