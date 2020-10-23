@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {RangeInput} from '../../../components/RangeInput/RangeInput';
 import {Separator} from '../../../components/Separator/Separator';
 import {currencyUnit} from '../InvestmentView.constants';
-import {InvestmentResults} from './InvestmentResults';
+import {InvestmentResults} from '../../../components/InvestmentResults/InvestmentResults';
 import {InvestmentParameters, InvestmentResultTypes} from '../../../api/investmentsAPI.types';
 import {calculatePredictedChange} from './InvestmentInfo.helpers';
 import {Box, CircularProgress} from '@material-ui/core';

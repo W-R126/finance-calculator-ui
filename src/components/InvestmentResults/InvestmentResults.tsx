@@ -1,7 +1,8 @@
-import {Box, styled, Typography} from '@material-ui/core';
-import * as format from '../../../helpers/formatNumber';
+import {Box, Typography} from '@material-ui/core';
+import * as format from '../../helpers/formatNumber';
 import React from 'react';
-import {currencyUnit} from '../InvestmentView.constants';
+import {currencyUnit} from '../../views/InvestmentView/InvestmentView.constants';
+import {css} from 'emotion';
 
 interface Props {
     totalChangePercent: number;
@@ -20,27 +21,29 @@ export const InvestmentResults: React.FC<Props> = ({totalChangePercent, totalCha
         <>
             <Box display="flex" justifyContent="space-between">
                 <Typography>Total change</Typography>
-                <PositiveChange variant="h6">
+                <Typography
+                    variant="h6"
+                    className={css`
+                        color: #00cd08;
+                    `}
+                >
                     {format.asPercentage(totalChangePercent * 100)} {round(totalChange)}
                     {currency}
-                </PositiveChange>
+                </Typography>
             </Box>
 
             <Box display="flex" justifyContent="space-between">
                 <Typography>Predicted value</Typography>
-                <PredicatedValue variant="h4">
+                <Typography
+                    variant="h4"
+                    className={css`
+                        color: #3461ff;
+                    `}
+                >
                     {round(predictedChange)}
                     {currency}
-                </PredicatedValue>
+                </Typography>
             </Box>
         </>
     );
 };
-
-const PositiveChange = styled(Typography)({
-    color: '#00cd08',
-});
-
-const PredicatedValue = styled(Typography)({
-    color: '#3461ff',
-});
