@@ -5,24 +5,27 @@ import {getBaseName} from './App.helpers';
 import {Routes} from './helpers/routes';
 import {InvestmentView} from './views/InvestmentView';
 import {LoginView} from './views/LoginView/LoginView';
+import {AuthContextProvider} from './contexts/authContext';
 
 export const App = () => {
     const basename = getBaseName();
 
     return (
-        <BrowserRouter basename={basename}>
-            <CssBaseline />
-            <Switch>
-                <Route path={'/'} exact>
-                    <Redirect to={Routes.INVESTMENT_CALCULATOR} />
-                </Route>
-                <Route path={Routes.INVESTMENT_CALCULATOR}>
-                    <InvestmentView />
-                </Route>
-                <Route path={Routes.LOGIN}>
-                    <LoginView />
-                </Route>
-            </Switch>
-        </BrowserRouter>
+        <AuthContextProvider>
+            <BrowserRouter basename={basename}>
+                <CssBaseline />
+                <Switch>
+                    <Route path={'/'} exact>
+                        <Redirect to={Routes.INVESTMENT_CALCULATOR} />
+                    </Route>
+                    <Route path={Routes.INVESTMENT_CALCULATOR}>
+                        <InvestmentView />
+                    </Route>
+                    <Route path={Routes.LOGIN}>
+                        <LoginView />
+                    </Route>
+                </Switch>
+            </BrowserRouter>
+        </AuthContextProvider>
     );
 };

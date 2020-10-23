@@ -1,15 +1,30 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Box, Button, Container, Paper, TextField, Typography} from '@material-ui/core';
 import {Formik, FormikHelpers} from 'formik';
 import {LoginFormData} from './LoginView.types';
+import {useAuthAPI} from '../../hooks/useAuthApi';
+import {useAuthDispatch, useUserState} from '../../contexts/authContext';
+import {loginSuccess} from '../../contexts/authAction.types';
 
 export const LoginView: React.FC = () => {
+    const [data, fetchData, isFetching] = useAuthAPI();
+    const authDispatch = useAuthDispatch();
+    const authContext = useUserState();
+
     const handleOnSubmit = (values: LoginFormData, {setSubmitting}: FormikHelpers<LoginFormData>) => {
         setTimeout(() => setSubmitting(false), 1000);
+
+        // todo temporary for test
+        fetchData({username: 'name', password: 'pass'});
+        if (data != null) {
+            authDispatch(loginSuccess(data));
+        }
     };
 
-    const validate = () => {};
+    // todo temporary for test
+    console.log(authContext);
 
+    const validate = () => {};
     return (
         <Container maxWidth="sm">
             <Box mt={3} textAlign="center">
