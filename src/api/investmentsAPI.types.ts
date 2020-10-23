@@ -13,4 +13,5 @@ export interface InvestmentResultTypes {
     systematicDepositValue: number;
     durationInYears: number;
     frequenceInYear: number;
+    totalRiskPercentage: number;
 }
