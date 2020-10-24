@@ -1,14 +1,12 @@
 import {Box, Button, Container, Paper, TextField, Typography} from '@material-ui/core';
 import {Formik, FormikHelpers} from 'formik';
 import React from 'react';
-import {loginSuccess} from '../../contexts/authAction.types';
-import {useAuthDispatch, useUserState} from '../../contexts/authContext';
+import {useUserState} from '../../contexts/authContext';
 import {useAuthAPI} from '../../hooks/useAuthApi';
 import {LoginFormData} from './LoginView.types';
 
 export const LoginView: React.FC = () => {
-    const [data, fetchData] = useAuthAPI();
-    const authDispatch = useAuthDispatch();
+    const [fetchData, isFetching] = useAuthAPI();
     const authContext = useUserState();
 
     const handleOnSubmit = (values: LoginFormData, {setSubmitting}: FormikHelpers<LoginFormData>) => {
@@ -16,9 +14,6 @@ export const LoginView: React.FC = () => {
 
         // todo temporary for test
         fetchData({username: 'name', password: 'pass'});
-        if (data != null) {
-            authDispatch(loginSuccess(data));
-        }
     };
 
     // todo temporary for test

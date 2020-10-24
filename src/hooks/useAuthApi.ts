@@ -2,11 +2,14 @@ import {useEffect, useState} from 'react';
 import {AuthParameters} from '../api/authAPI.types';
 import {/*todo: getAuth,*/ mockGetAuth} from '../api/authAPI';
 import {AuthUser} from '../contexts/authContext.types';
+import {useAuthDispatch} from '../contexts/authContext';
+import {loginSuccess} from '../contexts/authAction.types';
 
-export function useAuthAPI(): [AuthUser | null, (params: AuthParameters) => void, boolean] {
+export function useAuthAPI(): [(params: AuthParameters) => void, boolean] {
     const [isFetching, setFetching] = useState(false);
-    const [data, setData] = useState<AuthUser | null>(null);
+    // const [data, setData] = useState<AuthUser | null>(null);
     const [params, setParams] = useState<AuthParameters | null>(null);
+    const authDispatch = useAuthDispatch();
 
     useEffect(() => {
         if (params) {
@@ -19,18 +22,18 @@ export function useAuthAPI(): [AuthUser | null, (params: AuthParameters) => void
                         username: params.username,
                     };
                     localStorage.setItem('username', params.username);
-                    setData(user);
+                    authDispatch(loginSuccess(user));
                 })
                 .finally(() => {
                     setFetching(false);
                 });
         }
-    }, [params]);
+    }, [params, authDispatch]);
 
     //
     const fetchData = (parameters: AuthParameters) => {
         setParams(parameters);
     };
 
-    return [data, fetchData, isFetching];
+    return [fetchData, isFetching];
 }
