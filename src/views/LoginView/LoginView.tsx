@@ -18,7 +18,7 @@ export const LoginView: React.FC = () => {
 
         // todo temporary for test
         fetchData({
-            action: AuthAction.SIGN_IN,
+            action: AuthAction.SIGN_UP,
             data: {
                 username: 'name',
                 password: 'pass',
@@ -33,7 +33,7 @@ export const LoginView: React.FC = () => {
     };
 
     // todo temporary for test
-    console.log(authContext);
+    console.log(authContext, isFetching);
     const user = 'hello: ' + authContext.username + ' logged in: ' + authContext.isAuth + ' error: ' + authContext.error;
     // end temporary for test
 
