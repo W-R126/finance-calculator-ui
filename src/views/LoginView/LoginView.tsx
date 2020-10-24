@@ -1,14 +1,15 @@
 import {Box, Button, Container, Paper, TextField, Typography} from '@material-ui/core';
 import {Formik, FormikHelpers} from 'formik';
 import React from 'react';
-import {useUserState} from '../../contexts/authContext';
+import {AuthAction} from '../../api/authAPI.types';
+import {logOut} from '../../contexts/authAction.types';
+import {useAuthDispatch, useUserState} from '../../contexts/authContext';
 import {useAuthAPI} from '../../hooks/useAuthApi';
 import {LoginFormData} from './LoginView.types';
-import {AuthAction} from '../../api/authAPI.types';
-import {useAuthDispatch} from '../../contexts/authContext';
-import {logOut} from '../../contexts/authAction.types';
 
 export const LoginView: React.FC = () => {
+    // eslint-disable-next-line
+    // TODO add fetching indicator
     const [fetchData, isFetching] = useAuthAPI();
     const authContext = useUserState();
     const authDispatch = useAuthDispatch();
