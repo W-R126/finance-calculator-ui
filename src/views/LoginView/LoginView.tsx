@@ -4,24 +4,46 @@ import React from 'react';
 import {useUserState} from '../../contexts/authContext';
 import {useAuthAPI} from '../../hooks/useAuthApi';
 import {LoginFormData} from './LoginView.types';
+import {AuthAction} from '../../api/authAPI.types';
+import {useAuthDispatch} from '../../contexts/authContext';
+import {logOut} from '../../contexts/authAction.types';
 
 export const LoginView: React.FC = () => {
     const [fetchData, isFetching] = useAuthAPI();
     const authContext = useUserState();
+    const authDispatch = useAuthDispatch();
 
     const handleOnSubmit = (values: LoginFormData, {setSubmitting}: FormikHelpers<LoginFormData>) => {
         setTimeout(() => setSubmitting(false), 1000);
 
         // todo temporary for test
-        fetchData({username: 'name', password: 'pass'});
+        fetchData({
+            action: AuthAction.SIGN_IN,
+            data: {
+                username: 'name',
+                password: 'pass',
+            },
+        });
+        // end temporary for test
+    };
+
+    // todo temporary demonstrate logout
+    const handleLogOut = () => {
+        authDispatch(logOut());
     };
 
     // todo temporary for test
     console.log(authContext);
+    const user = 'hello: ' + authContext.username + ' logged in: ' + authContext.isAuth + ' error: ' + authContext.error;
+    // end temporary for test
 
     const validate = () => {};
     return (
         <Container maxWidth="sm">
+            {/*todo below is just to demonstrate log out / log in*/}
+            <p onClick={handleLogOut}>click to Log out</p>
+            <p>{user}</p>
+            {/* end mock log out*/}
             <Box mt={3} textAlign="center">
                 <Paper>
                     <Box p={2}>
