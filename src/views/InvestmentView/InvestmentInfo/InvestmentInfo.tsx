@@ -19,7 +19,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
 
     const [initialDeposit, setInitialDeposit] = useState(parameters.initialDepositValue);
     const [systematicDeposit, setSystematicDeposit] = useState(parameters.systematicDepositValue);
-    const [frequency, setFrequency] = useState(parameters.frequenceInYear);
+    const [frequency, setFrequency] = useState(parameters.frequencyInYears);
     const [duration, setDuration] = useState(parameters.durationInYears);
     const [returnOfInvestment, setReturnOfInvestment] = useState(parameters.returnOfInvestment);
 
@@ -27,7 +27,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
         setParameters({
             initialDepositValue: initialDeposit,
             systematicDepositValue: systematicDeposit,
-            frequenceInYear: frequency,
+            frequencyInYears: frequency,
             durationInYears: duration,
             returnOfInvestment: returnOfInvestment,
         });
@@ -41,12 +41,12 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                     <InvestmentResults
                         totalChangePercent={results.rateOfReturnPercentage}
                         totalChange={results.rateOfReturnValue}
-                        totalRiskPercentage={results.totalRiskPercentage}
+                        totalRiskPercentage={results.risk}
                         predictedChange={calculatePredictedChange(
                             results.initialDepositValue,
                             results.systematicDepositValue,
                             results.durationInYears,
-                            results.frequenceInYear,
+                            results.frequencyInYears,
                             results.rateOfReturnValue,
                         )}
                     />

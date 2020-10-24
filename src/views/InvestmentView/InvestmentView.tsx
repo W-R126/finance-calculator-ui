@@ -12,7 +12,7 @@ import {DataGraph} from '../../components/InvestmentChart/InvestmentChart.types'
 const mockedParameters: InvestmentParameters = {
     initialDepositValue: 1800,
     systematicDepositValue: 0,
-    frequenceInYear: 3,
+    frequencyInYears: 3,
     durationInYears: 1,
     returnOfInvestment: 20,
 };

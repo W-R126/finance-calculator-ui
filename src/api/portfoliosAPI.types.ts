@@ -12,8 +12,8 @@ export interface PortfolioInvestment {
     name: string;
     rateOfReturnPercentage: number;
     risk: number;
-    xaxisDataType: string;
-    yaxisDataType: string;
+    xAxisDataType: string;
+    yAxisDataType: string;
 }
 
 export interface PortfolioDetails {

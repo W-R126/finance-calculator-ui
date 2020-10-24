@@ -5,6 +5,6 @@ export interface DataPoint {
 
 export interface DataGraph {
     graphPointsValue: DataPoint[];
-    xaxisDataType: string;
-    yaxisDataType: string;
+    xAxisDataType: string;
+    yAxisDataType: string;
 }
