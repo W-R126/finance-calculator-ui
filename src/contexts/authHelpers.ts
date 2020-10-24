@@ -31,9 +31,11 @@ export function readLocalStorage(): AuthUser {
 }
 
 export function setAxiosAuth(token: string) {
+    console.log('todo ' + token);
     //todo  axios.defaults.headers.common['Authorization'] = token;
 }
 
 export function clearAxiosAuth() {
+    console.log('todo');
     //todo delete axios.defaults.headers.common['Authorization']; // todo make sure this is how it's supposed to be done
 }
