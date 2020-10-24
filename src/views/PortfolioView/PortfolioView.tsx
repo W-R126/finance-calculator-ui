@@ -1,12 +1,12 @@
 import {Box, Container, Fab, FormControl, Grid, MenuItem, Select, Typography} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import {css} from 'emotion';
-import React, {useState} from 'react';
+import React from 'react';
 import {InvestmentResults} from '../../components/InvestmentResults/InvestmentResults';
 import {Separator} from '../../components/Separator/Separator';
+import {usePortfoliosAPI} from '../../hooks/usePortfoliosAPI';
 import {InvestmentItem} from './InvestmentItem';
 import {InvestmentsTitleBox, TopBox} from './PortfolioView.styles';
-import {usePortfoliosAPI} from '../../hooks/usePortfoliosAPI';
 
 const mockedInvestmentResultsParams = {
     totalChangePercent: 0.13,
@@ -15,26 +15,13 @@ const mockedInvestmentResultsParams = {
     predictedChange: 2500,
 };
 
-const mockedInvestments = [
-    {name: 'Investment 1', changePercent: 0.09, riskPercent: 0.01},
-    {name: 'Investment 2', changePercent: 0, riskPercent: 0},
-    {name: 'Investment 3', changePercent: 0.3, riskPercent: 12},
-    {name: 'Investment 4', changePercent: 43, riskPercent: 12.3},
-    {name: 'Investment 5', changePercent: 23, riskPercent: 1.34},
-    {name: 'Investment 6', changePercent: 1, riskPercent: 0.34},
-    {name: 'Investment 7', changePercent: 3, riskPercent: 12.2},
-    {name: 'Investment 8', changePercent: 1, riskPercent: 12.34},
-];
-
-const mockedPortfolioFilterOptions = ['All investments', 'Portfolio 1', 'Portfolio 2'];
-
 export const PortfolioView: React.FC = () => {
-    // //
+    //TODO fetching indicator
+    // eslint-disable-next-line
     const [portfolios, isFetching, fetchPortfolio, details, isFetchingDetails] = usePortfoliosAPI();
     // //
 
-    const filterOptions = mockedPortfolioFilterOptions;
-    const [investmentsFilter, setInvestmentsFilter] = useState(filterOptions[0]);
+    //const [investmentsFilter, setInvestmentsFilter] = useState(filterOptions[0]);
 
     const {totalChangePercent, totalChange, totalRisk, predictedChange} = mockedInvestmentResultsParams;
 
