@@ -1,5 +1,5 @@
 import {AuthUser} from './authContext.types';
-import axios from 'axios';
+// todo import axios from 'axios';
 
 export function clearLocalStorage() {
     localStorage.removeItem('token');
