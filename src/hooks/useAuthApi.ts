@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'react';
 import {AuthParameters} from '../api/authAPI.types';
-import {getAuth /* mockGetAuth*/} from '../api/authAPI';
+import {/*getAuth*/ mockGetAuth} from '../api/authAPI';
 import {AuthUser} from '../contexts/authContext.types';
 import {useAuthDispatch} from '../contexts/authContext';
 import {loginError, loginSuccess} from '../contexts/authAction.types';
@@ -14,7 +14,7 @@ export function useAuthAPI(): [(params: AuthParameters) => void, boolean] {
     useEffect(() => {
         if (params) {
             setFetching(true);
-            getAuth(params)
+            mockGetAuth(params)
                 .then(token => {
                     const user: AuthUser = {
                         isAuth: true,

@@ -19,7 +19,7 @@ export const LoginView: React.FC = () => {
 
         // todo temporary for test
         fetchData({
-            action: AuthAction.SIGN_UP,
+            action: AuthAction.SIGN_IN,
             data: {
                 username: 'name',
                 password: 'pass',
