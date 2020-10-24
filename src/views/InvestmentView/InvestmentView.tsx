@@ -59,7 +59,7 @@ export const InvestmentView: React.FC = () => {
                 <NavBar />
             ) /* This is so that the pipeline will not complain about unused component. It will be activated for auth when it's done.*/}
             <Container maxWidth="sm">
-                {data !== null && (
+                {data && (
                     <Box display={'flex'} justifyContent={'center'}>
                         <InvestmentChart graph={data as DataGraph} />
                     </Box>
