@@ -6,6 +6,11 @@ export interface InvestmentParameters {
     returnOfInvestment: number;
 }
 
+export interface GraphPoint {
+    x: number;
+    y: number;
+}
+
 export interface InvestmentResultTypes {
     rateOfReturnPercentage: number;
     rateOfReturnValue: number;
@@ -13,5 +18,8 @@ export interface InvestmentResultTypes {
     systematicDepositValue: number;
     durationInYears: number;
     frequenceInYear: number;
+    graphPointsValue: GraphPoint[];
+    xaxisDataType: string;
+    yaxisDataType: string;
     totalRiskPercentage: number;
 }

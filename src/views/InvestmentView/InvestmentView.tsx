@@ -6,6 +6,8 @@ import {buttonBox} from './InvestmentView.styles';
 import {useInvestmentsAPI} from '../../hooks/useInvestmentsAPI';
 import {InvestmentParameters} from '../../api/investmentsAPI.types';
 import {Alert} from '@material-ui/lab';
+import {InvestmentChart} from '../../components/InvestmentChart/InvestmentChart';
+import {DataGraph} from '../../components/InvestmentChart/InvestmentChart.types';
 
 const mockedParameters: InvestmentParameters = {
     initialDepositValue: 1800,
@@ -57,6 +59,11 @@ export const InvestmentView: React.FC = () => {
                 <NavBar />
             ) /* This is so that the pipeline will not complain about unused component. It will be activated for auth when it's done.*/}
             <Container maxWidth="sm">
+                {data && (
+                    <Box display={'flex'} justifyContent={'center'}>
+                        <InvestmentChart graph={data as DataGraph} />
+                    </Box>
+                )}
                 <InvestmentInfo parameters={parameters} setParameters={setParameters} results={data} />
                 <Box className={buttonBox}>
                     <Button
