@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {CartesianGrid, Label, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis} from 'recharts';
 import {DataGraph} from './InvestmentChart.types';
 import {Paper} from '@material-ui/core';
-import * as styles from './InvsetmentChart.styles';
+import * as styles from './InvestmentChart.styles';
 
 interface Props {
     graph: DataGraph;
