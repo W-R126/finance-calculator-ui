@@ -6,6 +6,7 @@ import {Routes} from './helpers/routes';
 import {InvestmentView} from './views/InvestmentView';
 import {LoginView} from './views/LoginView/LoginView';
 import {AuthContextProvider} from './contexts/authContext';
+import {PortfolioView} from './views/PortfolioView';
 
 export const App = () => {
     const basename = getBaseName();
@@ -20,6 +21,9 @@ export const App = () => {
                     </Route>
                     <Route path={Routes.INVESTMENT_CALCULATOR}>
                         <InvestmentView />
+                    </Route>
+                    <Route path={Routes.PORTFOLIOS}>
+                        <PortfolioView />
                     </Route>
                     <Route path={Routes.LOGIN}>
                         <LoginView />
