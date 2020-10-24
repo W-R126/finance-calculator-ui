@@ -21,4 +21,5 @@ export interface InvestmentResultTypes {
     graphPointsValue: GraphPoint[];
     xaxisDataType: string;
     yaxisDataType: string;
+    totalRiskPercentage: number;
 }

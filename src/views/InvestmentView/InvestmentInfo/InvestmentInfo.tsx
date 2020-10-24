@@ -1,12 +1,12 @@
+import {Box, CircularProgress} from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
+import {InvestmentParameters, InvestmentResultTypes} from '../../../api/investmentsAPI.types';
+import {FrequencySelector} from '../../../components/FrequencySelector/FrequencySelector';
+import {InvestmentResults} from '../../../components/InvestmentResults/InvestmentResults';
 import {RangeInput} from '../../../components/RangeInput/RangeInput';
 import {Separator} from '../../../components/Separator/Separator';
 import {currencyUnit} from '../InvestmentView.constants';
-import {InvestmentResults} from './InvestmentResults';
-import {InvestmentParameters, InvestmentResultTypes} from '../../../api/investmentsAPI.types';
 import {calculatePredictedChange} from './InvestmentInfo.helpers';
-import {Box, CircularProgress} from '@material-ui/core';
-import {FrequencySelector} from '../../../components/FrequencySelector/FrequencySelector';
 
 interface Props {
     parameters: InvestmentParameters;
@@ -41,6 +41,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                     <InvestmentResults
                         totalChangePercent={results.rateOfReturnPercentage}
                         totalChange={results.rateOfReturnValue}
+                        totalRiskPercentage={results.totalRiskPercentage}
                         predictedChange={calculatePredictedChange(
                             results.initialDepositValue,
                             results.systematicDepositValue,
