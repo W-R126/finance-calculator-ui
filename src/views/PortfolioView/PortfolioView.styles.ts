@@ -16,3 +16,8 @@ export const InvestmentsTitleBox = css`
         padding-left: 0;
     }
 `;
+
+export const DescriptionBox = css`
+    display: flex;
+    justify-content: space-between;
+`;

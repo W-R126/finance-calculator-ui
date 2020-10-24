@@ -1,17 +1,18 @@
 import {Box, Typography} from '@material-ui/core';
-import * as format from '../../helpers/formatNumber';
-import React from 'react';
-import {currencyUnit} from '../../views/InvestmentView/InvestmentView.constants';
 import {css} from 'emotion';
+import React from 'react';
+import * as format from '../../helpers/formatNumber';
+import {currencyUnit} from '../../views/InvestmentView/InvestmentView.constants';
 
 interface Props {
     totalChangePercent: number;
     totalChange: number;
+    totalRiskPercentage: number;
 
     predictedChange: number;
 }
 
-export const InvestmentResults: React.FC<Props> = ({totalChangePercent, totalChange, predictedChange}) => {
+export const InvestmentResults: React.FC<Props> = ({totalChangePercent, totalChange, totalRiskPercentage: totalRisk, predictedChange}) => {
     const currency = currencyUnit;
     const accurance = 2;
 
@@ -27,8 +28,14 @@ export const InvestmentResults: React.FC<Props> = ({totalChangePercent, totalCha
                         color: #00cd08;
                     `}
                 >
-                    {format.asPercentage(totalChangePercent * 100)} {round(totalChange)}
+                    {format.asPercentage(totalChangePercent)} {round(totalChange)}
                     {currency}
+                </Typography>
+            </Box>
+            <Box display="flex" justifyContent="space-between">
+                <Typography>Total risk factor</Typography>
+                <Typography variant="h6" color="secondary">
+                    {format.asPercentage(totalRisk * 100)}
                 </Typography>
             </Box>
 
