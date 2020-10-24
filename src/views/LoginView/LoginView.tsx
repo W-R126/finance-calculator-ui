@@ -1,32 +1,50 @@
 import {Box, Button, Container, Paper, TextField, Typography} from '@material-ui/core';
 import {Formik, FormikHelpers} from 'formik';
 import React from 'react';
-import {loginSuccess} from '../../contexts/authAction.types';
+import {AuthAction} from '../../api/authAPI.types';
+import {logOut} from '../../contexts/authAction.types';
 import {useAuthDispatch, useUserState} from '../../contexts/authContext';
 import {useAuthAPI} from '../../hooks/useAuthApi';
 import {LoginFormData} from './LoginView.types';
 
 export const LoginView: React.FC = () => {
-    const [data, fetchData] = useAuthAPI();
-    const authDispatch = useAuthDispatch();
+    // eslint-disable-next-line
+    // TODO add fetching indicator
+    const [fetchData, isFetching] = useAuthAPI();
     const authContext = useUserState();
+    const authDispatch = useAuthDispatch();
 
     const handleOnSubmit = (values: LoginFormData, {setSubmitting}: FormikHelpers<LoginFormData>) => {
         setTimeout(() => setSubmitting(false), 1000);
 
         // todo temporary for test
-        fetchData({username: 'name', password: 'pass'});
-        if (data != null) {
-            authDispatch(loginSuccess(data));
-        }
+        fetchData({
+            action: AuthAction.SIGN_IN,
+            data: {
+                username: 'name',
+                password: 'pass',
+            },
+        });
+        // end temporary for test
+    };
+
+    // todo temporary demonstrate logout
+    const handleLogOut = () => {
+        authDispatch(logOut());
     };
 
     // todo temporary for test
-    console.log(authContext);
+    console.log(authContext, isFetching);
+    const user = 'hello: ' + authContext.username + ' logged in: ' + authContext.isAuth + ' error: ' + authContext.error;
+    // end temporary for test
 
     const validate = () => {};
     return (
         <Container maxWidth="sm">
+            {/*todo below is just to demonstrate log out / log in*/}
+            <p onClick={handleLogOut}>click to Log out</p>
+            <p>{user}</p>
+            {/* end mock log out*/}
             <Box mt={3} textAlign="center">
                 <Paper>
                     <Box p={2}>
