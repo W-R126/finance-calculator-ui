@@ -1,13 +1,13 @@
-import React, {useContext} from 'react';
 import {Box, Button, Container, Paper, TextField, Typography} from '@material-ui/core';
 import {Formik, FormikHelpers} from 'formik';
-import {LoginFormData} from './LoginView.types';
-import {useAuthAPI} from '../../hooks/useAuthApi';
-import {useAuthDispatch, useUserState} from '../../contexts/authContext';
+import React from 'react';
 import {loginSuccess} from '../../contexts/authAction.types';
+import {useAuthDispatch, useUserState} from '../../contexts/authContext';
+import {useAuthAPI} from '../../hooks/useAuthApi';
+import {LoginFormData} from './LoginView.types';
 
 export const LoginView: React.FC = () => {
-    const [data, fetchData, isFetching] = useAuthAPI();
+    const [data, fetchData] = useAuthAPI();
     const authDispatch = useAuthDispatch();
     const authContext = useUserState();
 
