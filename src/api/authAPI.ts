@@ -1,34 +1,65 @@
 import axios from 'axios';
-import {AuthParameters, AuthResultTypes} from './authAPI.types';
+import {AuthAction, AuthParameters, AuthResultTypes} from './authAPI.types';
+import {setAxiosAuth} from '../contexts/authHelpers';
 
 // Send sign in request, set axios headers with jwt token, return token
 export function getAuth(params: AuthParameters): Promise<AuthResultTypes> {
     return axios({
         method: 'post',
-        url: 'api/users/signin',
+        url: 'api/users/' + params.action,
         data: params,
         //set axios header to the returned data (JWT object) and return the passed username and
         // set isAuth to true
     }).then(response => {
-        axios.defaults.headers.common['Authorization'] = response.data;
+        setAxiosAuth(response.data);
         return response.data;
     });
 }
 
-// todo temporary for test
+// todo everything below is temporary for tests
 export function mockGetAuth(params: AuthParameters): Promise<AuthResultTypes> {
     return new Promise<AuthResultTypes>((resolve, reject) => {
-        if (params.username === mockUser.username && params.password === mockUser.password) {
-            resolve({token: 'JWT'});
-        } else {
-            reject({
-                error: 'Invalid username or password',
-            });
+        switch (params.action) {
+            case AuthAction.SIGN_IN:
+                if (params.data.username === mockUser.username && params.data.password === mockUser.password) {
+                    resolve({token: 'JWT'});
+                } else {
+                    reject({
+                        error: 'Invalid username or password',
+                    });
+                }
+                break;
+            case AuthAction.SIGN_UP:
+                if (!userIn(params.data)) {
+                    mockUsers.push(params.data);
+                    resolve({token: 'JWT'});
+                } else {
+                    console.log('already in use');
+                    reject({
+                        error: 'Username: "' + params.data.username + '" already exists',
+                    });
+                }
         }
     });
 }
 
-const mockUser: AuthParameters = {
+const mockUser = {
     password: 'pass',
     username: 'name',
 };
+
+let mockUsers = [
+    {
+        password: 'pass',
+        username: 'name',
+    },
+];
+
+function userIn(data: any) {
+    for (let user of mockUsers) {
+        if (data.username === user.username) {
+            return true;
+        }
+    }
+    return false;
+}

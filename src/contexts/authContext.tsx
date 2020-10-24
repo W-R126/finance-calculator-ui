@@ -1,11 +1,12 @@
 import React, {useReducer} from 'react';
 import {AuthUser} from './authContext.types';
-import {authReducer, initialAuthState} from './authReducer';
+import {authReducer} from './authReducer';
 import {AuthAction} from './authAction.types';
-
+import {readLocalStorage} from './authHelpers';
 const AuthStateContext = React.createContext<AuthUser | undefined>(undefined);
 const AuthDispatchContext = React.createContext<any>(undefined); //AuthAction | undefined todo fix type
 
+// hook for user info context
 export const useUserState = (): AuthUser => {
     const context = React.useContext(AuthStateContext);
     if (context === undefined) {
@@ -14,6 +15,7 @@ export const useUserState = (): AuthUser => {
     return context;
 };
 
+// hook for modifying user info context
 export const useAuthDispatch = (): React.Dispatch<AuthAction> => {
     const context = React.useContext(AuthDispatchContext);
     if (context === undefined) {
@@ -22,8 +24,9 @@ export const useAuthDispatch = (): React.Dispatch<AuthAction> => {
     return context;
 };
 
+// Provider, connecting state and dispatcher
 export const AuthContextProvider = ({children}: {children: React.ReactNode}) => {
-    const [user, dispatch] = useReducer(authReducer, initialAuthState);
+    const [user, dispatch] = useReducer(authReducer, readLocalStorage());
     return (
         <AuthStateContext.Provider value={user}>
             <AuthDispatchContext.Provider value={dispatch}>{children}</AuthDispatchContext.Provider>
