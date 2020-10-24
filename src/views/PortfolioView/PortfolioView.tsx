@@ -30,7 +30,7 @@ const mockedPortfolioFilterOptions = ['All investments', 'Portfolio 1', 'Portfol
 
 export const PortfolioView: React.FC = () => {
     // //
-    const [portfolios, isFetching] = usePortfoliosAPI();
+    const [portfolios, isFetching, fetchPortfolio, details, isFetchingDetails] = usePortfoliosAPI();
     // //
 
     const filterOptions = mockedPortfolioFilterOptions;
@@ -40,9 +40,9 @@ export const PortfolioView: React.FC = () => {
 
     const handlePortfolioAdd = () => {};
     const handleInvestmentAdd = () => {};
+
     const handleSelectChange = (event: React.ChangeEvent<{value: unknown}>) => {
-        console.log(event.target.value);
-        setInvestmentsFilter(event.target.value as string);
+        fetchPortfolio(event.target.value as number);
     };
 
     return (
@@ -105,8 +105,13 @@ export const PortfolioView: React.FC = () => {
             </Grid>
 
             <Box>
-                {mockedInvestments.map(({name, changePercent, riskPercent}) => (
-                    <InvestmentItem key={name} name={name} riskPercent={riskPercent} changePercent={changePercent} />
+                {details.investments.map(investment => (
+                    <InvestmentItem
+                        key={investment.name}
+                        name={investment.name}
+                        riskPercent={investment.risk}
+                        changePercent={investment.rateOfReturnPercentage}
+                    />
                 ))}
             </Box>
         </Container>
