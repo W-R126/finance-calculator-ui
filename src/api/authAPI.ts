@@ -7,7 +7,7 @@ export function getAuth(params: AuthParameters): Promise<AuthResultTypes> {
     return axios({
         method: 'post',
         url: 'api/users/' + params.action,
-        data: params,
+        data: params.data,
         //set axios header to the returned data (JWT object) and return the passed username and
         // set isAuth to true
     }).then(response => {

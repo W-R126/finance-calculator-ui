@@ -25,6 +25,7 @@ export const LoginView: React.FC = () => {
                 password: values.password,
             },
         });
+        // TODO: make redirection to portfolio page after success
     };
 
     const handleLogIn = () => {
