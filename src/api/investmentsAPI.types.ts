@@ -1,7 +1,7 @@
 export interface InvestmentParameters {
     initialDepositValue: number;
     systematicDepositValue: number;
-    frequenceInYear: number;
+    frequencyInYears: number;
     durationInYears: number;
     returnOfInvestment: number;
 }
@@ -17,9 +17,9 @@ export interface InvestmentResultTypes {
     initialDepositValue: number;
     systematicDepositValue: number;
     durationInYears: number;
-    frequenceInYear: number;
+    frequencyInYears: number;
     graphPointsValue: GraphPoint[];
-    xaxisDataType: string;
-    yaxisDataType: string;
-    totalRiskPercentage: number;
+    xAxisDataType: string;
+    yAxisDataType: string;
+    risk: number;
 }

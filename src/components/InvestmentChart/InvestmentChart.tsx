@@ -18,10 +18,10 @@ export const InvestmentChart: React.FC<Props> = ({graph}) => {
             <ResponsiveContainer width={'100%'} height={200}>
                 <LineChart data={graph.graphPointsValue}>
                     <XAxis dataKey="x">
-                        <Label value={graph.xaxisDataType} offset={-5} position="insideBottom" />
+                        <Label value={graph.xAxisDataType} offset={-5} position="insideBottom" />
                     </XAxis>
                     <YAxis>
-                        <Label value={graph.yaxisDataType} angle={-90} offset={5} position="insideLeft" />
+                        <Label value={graph.yAxisDataType} angle={-90} offset={5} position="insideLeft" />
                     </YAxis>
 
                     <Tooltip />
