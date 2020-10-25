@@ -7,6 +7,7 @@ import * as styles from './UserMenu.styles';
 import {logOut} from '../../contexts/authAction.types';
 import {useAuthDispatch} from '../../contexts/authContext';
 import {Link} from 'react-router-dom';
+import {Routes} from '../../helpers/routes';
 
 interface Props {
     username: string;
@@ -37,12 +38,12 @@ export const UserMenu: React.FC<Props> = ({username}) => {
             </Button>
             <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                 <MenuItem onClick={handleLogOut}>
-                    <Link className={styles.Link} to={'/login'}>
+                    <Link className={styles.Link} to={Routes.LOGIN}>
                         LOGOUT
                     </Link>
                 </MenuItem>
                 <MenuItem onClick={handleClose} value={1}>
-                    <Link className={styles.Link} to={'/login'}>
+                    <Link className={styles.Link} to={Routes.LOGIN}>
                         SWITCH ACCOUNT
                     </Link>
                 </MenuItem>

@@ -6,6 +6,7 @@ import {routeToText} from './NavBar.helpers';
 import * as styles from './NavBar.styles';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import {UserMenu} from '../UserMenu/UserMenu';
+import {Routes} from '../../helpers/routes';
 
 interface Props {}
 
@@ -20,7 +21,7 @@ export const NavBar = (props: Props) => {
 
     const goBack = () => {
         return (
-            <Link className={styles.Arrow} to={'/portfolios'}>
+            <Link className={styles.Arrow} to={Routes.PORTFOLIOS}>
                 <ArrowBackIosIcon />
             </Link>
         );
@@ -32,7 +33,7 @@ export const NavBar = (props: Props) => {
 
     const loginButton = () => {
         return (
-            <Link className={styles.Link} to={'/login'}>
+            <Link className={styles.Link} to={Routes.LOGIN}>
                 <Button color="inherit">{'Login/Sign up'}</Button>
             </Link>
         );
