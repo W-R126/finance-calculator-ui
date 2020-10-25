@@ -21,7 +21,7 @@ export const LoginView: React.FC = () => {
         fetchData({
             action: AuthAction.SIGN_IN,
             data: {
-                username: 'name',
+                username: 'John',
                 password: 'pass',
             },
         });
