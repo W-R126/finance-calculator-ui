@@ -14,7 +14,7 @@ import {Routes} from '../../helpers/routes';
 export const PortfolioView: React.FC = () => {
     // TODO fetching indicator
     // eslint-disable-next-line
-    const {portfolios, fetchPortfolio, portfolio, deleteCurrentPortfolio} = usePortfoliosAPI();
+    const {portfolios, fetchPortfolio, portfolio, deleteCurrentPortfolio, deleteInvestment} = usePortfoliosAPI();
 
     const handlePortfolioAdd = () => {};
 
@@ -22,6 +22,10 @@ export const PortfolioView: React.FC = () => {
 
     const handleDeletePortfolio = () => {
         deleteCurrentPortfolio();
+    };
+
+    const handleDeleteInvestment = (id: number) => {
+        deleteInvestment(id);
     };
 
     return (
@@ -118,6 +122,7 @@ export const PortfolioView: React.FC = () => {
                         name={investment.name}
                         riskPercent={investment.risk}
                         changePercent={investment.rateOfReturnPercentage}
+                        onDelete={handleDeleteInvestment}
                     />
                 ))}
             </Box>
