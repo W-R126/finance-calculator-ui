@@ -20,8 +20,15 @@ export const NavBar = (props: Props) => {
     const inPortfolio = nav_title === 'portfolio';
 
     const goBack = () => {
+        if (isAuth) {
+            return (
+                <Link className={styles.Arrow} to={Routes.PORTFOLIOS}>
+                    <ArrowBackIosIcon />
+                </Link>
+            );
+        }
         return (
-            <Link className={styles.Arrow} to={Routes.PORTFOLIOS}>
+            <Link className={styles.Arrow} to={Routes.INVESTMENT_CALCULATOR}>
                 <ArrowBackIosIcon />
             </Link>
         );
