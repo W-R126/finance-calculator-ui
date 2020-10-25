@@ -1,7 +1,24 @@
-import {Box, Container, Fab, FormControl, Grid, IconButton, MenuItem, Select, Typography} from '@material-ui/core';
+import {
+    Box,
+    Button,
+    Container,
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Fab,
+    FormControl,
+    Grid,
+    IconButton,
+    MenuItem,
+    Select,
+    TextField,
+    Typography,
+} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import {css} from 'emotion';
-import React from 'react';
+import React, {useState} from 'react';
 import {InvestmentResults} from '../../components/InvestmentResults/InvestmentResults';
 import {Separator} from '../../components/Separator/Separator';
 import {usePortfoliosAPI} from '../../hooks/usePortfoliosAPI';
@@ -9,12 +26,18 @@ import {InvestmentItem} from './InvestmentItem';
 import {InvestmentsTitleBox, TopBox} from './PortfolioView.styles';
 import {Link} from 'react-router-dom';
 import {DeleteForever} from '@material-ui/icons';
+import {submitPortfolio} from './PortfolioView.helpes';
 import {Routes} from '../../helpers/routes';
 
 export const PortfolioView: React.FC = () => {
     const {portfolios, fetchPortfolio, portfolio, deleteCurrentPortfolio, deleteInvestment} = usePortfoliosAPI();
     console.log(portfolio.investments);
-    const handlePortfolioAdd = () => {};
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [portfolioName, setPortfolioName] = useState('');
+
+    const handlePortfolioAdd = () => {
+        setDialogOpen(true);
+    };
 
     const handleSelectChange = (event: React.ChangeEvent<{value: unknown}>) => fetchPortfolio(event.target.value as number);
 
@@ -26,8 +49,41 @@ export const PortfolioView: React.FC = () => {
         deleteInvestment(id);
     };
 
+    const handleDialogClose = () => {
+        setDialogOpen(false);
+    };
+
+    const handleDialogAdd = () => {
+        submitPortfolio(portfolioName).then(() => {
+            setDialogOpen(false);
+        });
+    };
+
     return (
         <Container maxWidth="sm">
+            <Dialog open={dialogOpen} onClose={handleDialogClose}>
+                <DialogTitle>Subscribe</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>Add new portfolio</DialogContentText>
+                    <TextField
+                        label="Portfolio name"
+                        type="text"
+                        fullWidth
+                        value={portfolioName}
+                        variant="outlined"
+                        onChange={event => setPortfolioName(event.target.value)}
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleDialogClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleDialogAdd} type={'submit'} color="primary">
+                        Add
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
             <Box className={TopBox}>
                 <Grid container>
                     <Grid item xs={6}>
