@@ -1,5 +1,4 @@
 import {css} from 'emotion';
-const rightNavPadding = 2;
 
 export const Link = css`
     color: white;

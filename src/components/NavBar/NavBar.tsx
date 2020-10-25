@@ -1,11 +1,11 @@
-import {AppBar, Box, Button, FormControl, Menu, MenuItem, Select, styled, Toolbar, Typography} from '@material-ui/core';
-import React, {useState} from 'react';
+import {AppBar, Box, Button, styled, Toolbar, Typography} from '@material-ui/core';
+import React from 'react';
 import {useUserState} from '../../contexts/authContext';
 import {Link, useLocation} from 'react-router-dom';
 import {routeToText} from './NavBar.helpers';
 import * as styles from './NavBar.styles';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import {UserMenu} from '../NavMenu/UserMenu';
+import {UserMenu} from '../UserMenu/UserMenu';
 
 interface Props {}
 
