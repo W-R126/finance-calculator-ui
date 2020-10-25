@@ -12,8 +12,6 @@ import {DeleteForever} from '@material-ui/icons';
 import {Routes} from '../../helpers/routes';
 
 export const PortfolioView: React.FC = () => {
-    // TODO fetching indicator
-    // eslint-disable-next-line
     const {portfolios, fetchPortfolio, portfolio, deleteCurrentPortfolio, deleteInvestment} = usePortfoliosAPI();
 
     const handlePortfolioAdd = () => {};
