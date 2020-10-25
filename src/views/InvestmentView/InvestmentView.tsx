@@ -1,25 +1,27 @@
 import {Box, Button, Container, Snackbar} from '@material-ui/core';
-import React, {useEffect, useState} from 'react';
-import {InvestmentInfo} from './InvestmentInfo';
-import {NavBar} from '../../components/NavBar/NavBar';
-import {buttonBox} from './InvestmentView.styles';
-import {useInvestmentsAPI} from '../../hooks/useInvestmentsAPI';
-import {InvestmentParameters} from '../../api/investmentsAPI.types';
 import {Alert} from '@material-ui/lab';
+import React, {useEffect, useState} from 'react';
+import {InvestmentParameters} from '../../api/investmentsAPI.types';
 import {InvestmentChart} from '../../components/InvestmentChart/InvestmentChart';
 import {DataGraph} from '../../components/InvestmentChart/InvestmentChart.types';
+import {NavBar} from '../../components/NavBar/NavBar';
+import {useInvestmentsAPI} from '../../hooks/useInvestmentsAPI';
+import {InvestmentInfo} from './InvestmentInfo';
+import {buttonBox} from './InvestmentView.styles';
 
-const mockedParameters: InvestmentParameters = {
+const initialParameters: InvestmentParameters = {
     initialDepositValue: 1800,
     systematicDepositValue: 0,
     frequencyInYears: 3,
     durationInYears: 1,
     returnOfInvestment: 20,
+    risk: 12,
 };
 
 export const InvestmentView: React.FC = () => {
-    const [parameters, setParameters] = useState<InvestmentParameters>(mockedParameters);
+    const [parameters, setParameters] = useState<InvestmentParameters>(initialParameters);
     const [data, fetchData, isFetching] = useInvestmentsAPI();
+    const [open, setOpen] = useState(false);
 
     useEffect(() => {
         if (data === null && !isFetching) {
@@ -33,8 +35,6 @@ export const InvestmentView: React.FC = () => {
             returnOfInvestment: parameters.returnOfInvestment / 100,
         });
     };
-
-    const [open, setOpen] = useState(false);
 
     const handleClick = () => {
         setOpen(true);
@@ -61,7 +61,7 @@ export const InvestmentView: React.FC = () => {
             <Container maxWidth="sm">
                 {data && (
                     <Box display={'flex'} justifyContent={'center'}>
-                        <InvestmentChart graph={data as DataGraph} />
+                        <InvestmentChart graph={(data as unknown) as DataGraph} />
                     </Box>
                 )}
                 <InvestmentInfo parameters={parameters} setParameters={setParameters} results={data} />

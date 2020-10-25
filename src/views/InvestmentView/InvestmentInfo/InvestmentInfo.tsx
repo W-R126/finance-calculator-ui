@@ -11,7 +11,7 @@ import {calculatePredictedChange} from './InvestmentInfo.helpers';
 interface Props {
     parameters: InvestmentParameters;
     setParameters: React.Dispatch<React.SetStateAction<InvestmentParameters>>;
-    results: InvestmentResultTypes | null;
+    results?: InvestmentResultTypes | null;
 }
 
 export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, results}) => {
@@ -22,6 +22,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
     const [frequency, setFrequency] = useState(parameters.frequencyInYears);
     const [duration, setDuration] = useState(parameters.durationInYears);
     const [returnOfInvestment, setReturnOfInvestment] = useState(parameters.returnOfInvestment);
+    const [risk, setRisk] = useState(parameters.risk);
 
     useEffect(() => {
         setParameters({
@@ -30,8 +31,9 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
             frequencyInYears: frequency,
             durationInYears: duration,
             returnOfInvestment: returnOfInvestment,
+            risk: risk,
         });
-    }, [setParameters, initialDeposit, systematicDeposit, frequency, duration, returnOfInvestment]);
+    }, [setParameters, initialDeposit, systematicDeposit, frequency, duration, returnOfInvestment, risk]);
 
     return (
         <>
@@ -76,7 +78,8 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
             />
             <FrequencySelector value={frequency} onChange={setFrequency} label="frequency" />
             <FrequencySelector value={duration} onChange={setDuration} label="duration" />
-            <RangeInput minValue={0} maxValue={100} label="ROI" unit="%" value={returnOfInvestment} onChange={setReturnOfInvestment} />
+            <RangeInput minValue={0} maxValue={50} label="ROI" unit="%" value={returnOfInvestment} onChange={setReturnOfInvestment} />
+            <RangeInput minValue={0} maxValue={100} label="Risk factor" unit="%" value={risk} onChange={setRisk} />
         </>
     );
 };
