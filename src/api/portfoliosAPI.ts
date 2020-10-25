@@ -17,3 +17,13 @@ export function getPortfolioDetails(id: number): Promise<PortfolioDetails> {
         },
     }).then(response => response.data);
 }
+
+export function deletePortfolio(id: number): Promise<boolean> {
+    return axios({
+        method: 'delete',
+        url: 'api/portfolios',
+        params: {
+            id,
+        },
+    }).then(response => response.status === 200);
+}
