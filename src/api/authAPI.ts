@@ -45,13 +45,17 @@ export function mockGetAuth(params: AuthParameters): Promise<AuthResultTypes> {
 
 const mockUser = {
     password: 'pass',
-    username: 'name',
+    username: 'John',
 };
 
 let mockUsers = [
     {
         password: 'pass',
         username: 'name',
+    },
+    {
+        password: 'pass',
+        username: 'John',
     },
 ];
 
