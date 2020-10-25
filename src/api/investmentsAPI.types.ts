@@ -4,6 +4,7 @@ export interface InvestmentParameters {
     frequencyInYears: number;
     durationInYears: number;
     returnOfInvestment: number;
+    risk: number;
 }
 
 export interface GraphPoint {
