@@ -1,16 +1,16 @@
-import {Button, Grid, Typography} from '@material-ui/core';
+import {Grid, Typography} from '@material-ui/core';
 import React from 'react';
 import * as format from '../../helpers/formatNumber';
-import {InvestmentsChange} from './InvestmentItem.styles';
+import * as styles from './InvestmentItem.styles';
+import {Link} from 'react-router-dom';
 
 interface Props {
+    id: number;
     name: string;
     changePercent: number;
     riskPercent: number;
 }
-export const InvestmentItem: React.FC<Props> = ({name, changePercent, riskPercent}) => {
-    const handleDetailsClick = () => {};
-
+export const InvestmentItem: React.FC<Props> = ({id, name, changePercent, riskPercent}) => {
     return (
         <>
             <Grid container spacing={3} alignItems="center">
@@ -18,17 +18,17 @@ export const InvestmentItem: React.FC<Props> = ({name, changePercent, riskPercen
                     <Typography>{name}</Typography>
                 </Grid>
                 <Grid item xs>
-                    <Typography color="secondary" className={InvestmentsChange}>
+                    <Typography color="secondary" className={styles.InvestmentsChange}>
                         {format.asPercentage(riskPercent)}
                     </Typography>
                 </Grid>
                 <Grid item xs>
-                    <Typography className={InvestmentsChange}>{format.asPercentage(changePercent)}</Typography>
+                    <Typography className={styles.InvestmentsChange}>{format.asPercentage(changePercent)}</Typography>
                 </Grid>
                 <Grid item xs>
-                    <Button color="primary" onClick={handleDetailsClick}>
+                    <Link className={styles.Link} to={`/investment?investmentId=${id}`}>
                         Details
-                    </Button>
+                    </Link>
                 </Grid>
             </Grid>
         </>

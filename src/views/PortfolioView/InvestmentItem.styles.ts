@@ -6,3 +6,9 @@ export const InvestmentsChange = css`
     padding-right: 18px;
     color: #00cd08;
 `;
+
+export const Link = css`
+    color: blue;
+    text-decoration: none;
+    text-transform: uppercase;
+`;

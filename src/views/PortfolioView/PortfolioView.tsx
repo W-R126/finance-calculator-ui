@@ -8,35 +8,21 @@ import {usePortfoliosAPI} from '../../hooks/usePortfoliosAPI';
 import {InvestmentItem} from './InvestmentItem';
 import {InvestmentsTitleBox, TopBox} from './PortfolioView.styles';
 
-const mockedInvestmentResultsParams = {
-    totalChangePercent: 0.13,
-    totalChange: 245,
-    totalRisk: 13,
-    predictedChange: 2500,
-};
-
 export const PortfolioView: React.FC = () => {
-    //TODO fetching indicator
+    // TODO fetching indicator
     // eslint-disable-next-line
     const [portfolios, isFetching, fetchPortfolio, details, isFetchingDetails] = usePortfoliosAPI();
-    // //
-
-    //const [investmentsFilter, setInvestmentsFilter] = useState(filterOptions[0]);
-
-    const {totalChangePercent, totalChange, totalRisk, predictedChange} = mockedInvestmentResultsParams;
 
     const handlePortfolioAdd = () => {};
     const handleInvestmentAdd = () => {};
 
-    const handleSelectChange = (event: React.ChangeEvent<{value: unknown}>) => {
-        fetchPortfolio(event.target.value as number);
-    };
+    const handleSelectChange = (event: React.ChangeEvent<{value: unknown}>) => fetchPortfolio(event.target.value as number);
 
     return (
         <Container maxWidth="sm">
             <Box className={TopBox}>
                 <FormControl variant="outlined">
-                    <Select value={0} onChange={handleSelectChange}>
+                    <Select value={details.id} onChange={handleSelectChange}>
                         <MenuItem key={0} value={0}>
                             All Investments
                         </MenuItem>
@@ -55,10 +41,10 @@ export const PortfolioView: React.FC = () => {
 
             <Separator text="Results" />
             <InvestmentResults
-                totalChangePercent={totalChangePercent}
-                totalChange={totalChange}
-                totalRiskPercentage={totalRisk}
-                predictedChange={predictedChange}
+                totalChangePercent={details.rateOfReturnPercentage}
+                totalChange={details.rateOfReturnValue}
+                totalRiskPercentage={0}
+                predictedChange={details.totalInvestedCash + details.rateOfReturnValue}
             />
             <Box className={InvestmentsTitleBox}>
                 <Separator text="Investments" />
@@ -94,6 +80,7 @@ export const PortfolioView: React.FC = () => {
             <Box>
                 {details.investments.map(investment => (
                     <InvestmentItem
+                        id={investment.id}
                         key={investment.name}
                         name={investment.name}
                         riskPercent={investment.risk}

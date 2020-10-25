@@ -11,7 +11,7 @@ export function getPortfolios(): Promise<Portfolio[]> {
 export function getPortfolioDetails(id: number): Promise<PortfolioDetails> {
     return axios({
         method: 'get',
-        url: id === 0 ? 'api/portfolios' : 'api/portfolios/all-investments-details',
+        url: id !== 0 ? 'api/portfolios' : 'api/portfolios/all-investments-details',
         params: {
             id,
         },
