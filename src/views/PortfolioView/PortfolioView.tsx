@@ -9,6 +9,7 @@ import {InvestmentItem} from './InvestmentItem';
 import {InvestmentsTitleBox, TopBox} from './PortfolioView.styles';
 import {Link} from 'react-router-dom';
 import {DeleteForever} from '@material-ui/icons';
+import {Routes} from '../../helpers/routes';
 
 export const PortfolioView: React.FC = () => {
     // TODO fetching indicator
@@ -76,7 +77,9 @@ export const PortfolioView: React.FC = () => {
             />
             <Box className={InvestmentsTitleBox}>
                 <Separator text="Investments" />
-                <Link to={details.id !== 0 ? `/investment?portfolioId=${details.id}` : `/investment`}>
+                <Link
+                    to={portfolio.id !== 0 ? `${Routes.INVESTMENT_CALCULATOR}?portfolioId=${portfolio.id}` : Routes.INVESTMENT_CALCULATOR}
+                >
                     <Fab size="small" color="primary" aria-label="add">
                         <AddIcon />
                     </Fab>

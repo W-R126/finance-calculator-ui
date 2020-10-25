@@ -3,6 +3,7 @@ import React from 'react';
 import * as format from '../../helpers/formatNumber';
 import * as styles from './InvestmentItem.styles';
 import {Link} from 'react-router-dom';
+import {Routes} from '../../helpers/routes';
 
 interface Props {
     id: number;
@@ -26,7 +27,7 @@ export const InvestmentItem: React.FC<Props> = ({id, name, changePercent, riskPe
                 <Typography className={styles.InvestmentsChange}>{format.asPercentage(changePercent)}</Typography>
             </Grid>
             <Grid item xs>
-                <Link className={styles.Link} to={`/investment?investmentId=${id}`}>
+                <Link className={styles.Link} to={`${Routes.INVESTMENT_CALCULATOR}?investmentId=${id}`}>
                     Details
                 </Link>
             </Grid>
