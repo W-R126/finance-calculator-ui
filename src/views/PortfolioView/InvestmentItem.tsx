@@ -13,6 +13,7 @@ interface Props {
 }
 
 export const InvestmentItem: React.FC<Props> = ({id, name, changePercent, riskPercent}) => {
+    console.log(name);
     return (
         <Grid container spacing={3} alignItems="center">
             <Grid item xs={4}>

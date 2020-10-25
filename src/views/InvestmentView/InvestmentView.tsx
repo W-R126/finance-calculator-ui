@@ -8,6 +8,9 @@ import {NavBar} from '../../components/NavBar/NavBar';
 import {useInvestmentsAPI} from '../../hooks/useInvestmentsAPI';
 import {InvestmentInfo} from './InvestmentInfo';
 import {buttonBox} from './InvestmentView.styles';
+import {useHistory, useLocation} from 'react-router';
+import {Routes} from '../../helpers/routes';
+import {modifyInvestment} from '../../api/investmentsAPI';
 
 const initialParameters: InvestmentParameters = {
     initialDepositValue: 1800,
@@ -19,15 +22,22 @@ const initialParameters: InvestmentParameters = {
 };
 
 export const InvestmentView: React.FC = () => {
+    const history = useHistory();
+    const query = new URLSearchParams(useLocation().search);
+    const investmentId = query.get('investmentId') as number | null;
+
     const [parameters, setParameters] = useState<InvestmentParameters>(initialParameters);
-    const [data, fetchData, isFetching] = useInvestmentsAPI();
+    const {data, fetchData, isFetching} = useInvestmentsAPI(investmentId);
     const [open, setOpen] = useState(false);
 
     useEffect(() => {
-        if (data === null && !isFetching) {
-            fetchData(parameters);
+        if (!isFetching) {
+            fetchData({
+                ...parameters,
+                returnOfInvestment: parameters.returnOfInvestment / 100,
+            });
         }
-    }, [fetchData, parameters, data, isFetching]);
+    });
 
     const handleSubmit = async () => {
         fetchData({
@@ -36,16 +46,22 @@ export const InvestmentView: React.FC = () => {
         });
     };
 
-    const handleClick = () => {
-        setOpen(true);
-    };
-
     const handleClose = (event?: React.SyntheticEvent, reason?: string) => {
         if (reason === 'clickaway') {
             return;
         }
 
         setOpen(false);
+    };
+
+    const handleSaveInvestment = () => {};
+
+    const handleModifyInvestment = () => {
+        if (data && investmentId) {
+            modifyInvestment(data, investmentId).then(() => {
+                history.push(Routes.PORTFOLIOS);
+            });
+        }
     };
 
     return (
@@ -77,16 +93,29 @@ export const InvestmentView: React.FC = () => {
                         Calculate
                     </Button>
 
-                    <Button
-                        type={'submit'}
-                        disabled={isFetching}
-                        variant={'contained'}
-                        color={'primary'}
-                        style={{borderRadius: 25, marginLeft: 32}}
-                        onClick={handleClick}
-                    >
-                        Save to portfolio
-                    </Button>
+                    {investmentId === null ? (
+                        <Button
+                            type={'submit'}
+                            disabled={isFetching}
+                            variant={'contained'}
+                            color={'primary'}
+                            style={{borderRadius: 25, marginLeft: 32}}
+                            onClick={handleSaveInvestment}
+                        >
+                            Save to portfolio
+                        </Button>
+                    ) : (
+                        <Button
+                            type={'submit'}
+                            disabled={isFetching}
+                            variant={'contained'}
+                            color={'primary'}
+                            style={{borderRadius: 25, marginLeft: 32}}
+                            onClick={handleModifyInvestment}
+                        >
+                            Update investment
+                        </Button>
+                    )}
                 </Box>
             </Container>
         </>

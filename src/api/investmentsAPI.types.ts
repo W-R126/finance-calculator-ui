@@ -23,4 +23,6 @@ export interface InvestmentResultTypes {
     xAxisDataType: string;
     yAxisDataType: string;
     risk: number;
+    category: string;
+    id: number;
 }
