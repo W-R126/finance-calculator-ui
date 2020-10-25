@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Portfolio, PortfolioDetails} from '../api/portfoliosAPI.types';
 import {deletePortfolio, getPortfolioDetails, getPortfolios} from '../api/portfoliosAPI';
+import * as investments from '../api/investmentsAPI';
 
 export function usePortfoliosAPI() {
     const [isFetchingPortfolios, setFetchingPortfolios] = useState(true);
@@ -53,7 +54,7 @@ export function usePortfoliosAPI() {
     const deleteCurrentPortfolio = () => {
         setFetchingPortfolios(true);
         setFetchingDetails(true);
-        deletePortfolio(portfolio.id).then(success => {
+        deletePortfolio(portfolio.id).then(() => {
             getPortfolios()
                 .then(portfolios => setPortfolios(portfolios))
                 .finally(() => {
@@ -69,6 +70,12 @@ export function usePortfoliosAPI() {
         });
     };
 
+    const deleteInvestment = (id: number) => {
+        investments.deleteInvestment(id).then(() => {
+            fetchPortfolio(portfolio.id);
+        });
+    };
+
     return {
         portfolios,
         isFetchingPortfolios,
@@ -76,5 +83,6 @@ export function usePortfoliosAPI() {
         deleteCurrentPortfolio,
         portfolio,
         isFetchingDetails,
+        deleteInvestment,
     };
 }
