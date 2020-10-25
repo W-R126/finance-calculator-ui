@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -30,7 +30,7 @@ export const UserMenu: React.FC<Props> = ({username}) => {
     };
 
     return (
-        <div className={styles.MenuPos}>
+        <div>
             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
                 <div className={styles.DropArrow}>{username}</div>
                 <ArrowDropDownIcon className={styles.DropArrow} />
