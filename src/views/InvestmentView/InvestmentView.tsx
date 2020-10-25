@@ -15,7 +15,7 @@ const initialParameters: InvestmentParameters = {
     frequencyInYears: 3,
     durationInYears: 1,
     returnOfInvestment: 20,
-    risk: 12,
+    risk: 0.12,
 };
 
 export const InvestmentView: React.FC = () => {
