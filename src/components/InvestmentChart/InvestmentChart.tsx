@@ -9,9 +9,7 @@ interface Props {
 }
 
 export const InvestmentChart: React.FC<Props> = ({graph}) => {
-    useEffect(() => {
-        console.log(graph);
-    });
+    useEffect(() => {});
 
     return (
         <Paper className={styles.paper}>
