@@ -1,8 +1,10 @@
-import {AppBar, Button, styled, Toolbar} from '@material-ui/core';
+import {AppBar, Box, Button, styled, Toolbar, Typography} from '@material-ui/core';
 import React from 'react';
 import {useUserState} from '../../contexts/authContext';
 import {Link, useLocation} from 'react-router-dom';
 import {routeToText} from './NavBar.helpers';
+import * as styles from './NavBar.styles';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 interface Props {}
 
@@ -11,22 +13,26 @@ export const NavBar = (props: Props) => {
     const loginText = authContext.isAuth ? 'Hello ' + authContext.username : 'Login/Sign up';
     const location = useLocation();
     const nav_title = routeToText(location.pathname);
+    const inPortfolio = nav_title === 'portfolio';
     const goBack = () => {
         return (
-            <Link to={'/portfolios'}>
-                <Button>Go back</Button>
+            <Link className={styles.Arrow} to={'/portfolios'}>
+                <ArrowBackIosIcon />
             </Link>
         );
     };
-    console.log(location.pathname);
     return (
         <AppBar position="static">
             <StyledToolbar>
-                {nav_title !== 'portfolio' ? goBack() : ''}
-                {nav_title}
-                <Link to={'/login'}>
-                    <Button color="inherit">{loginText}</Button>
-                </Link>
+                <Box className={styles.LeftBox} flexGrow={1}>
+                    {inPortfolio ? '' : goBack()}
+                    <Typography className={inPortfolio ? styles.TitleNoArrow : styles.TitleArrow}>{nav_title}</Typography>
+                </Box>
+                <Box>
+                    <Link className={styles.Link} to={'/login'}>
+                        <Button color="inherit">{loginText}</Button>
+                    </Link>
+                </Box>
             </StyledToolbar>
         </AppBar>
     );
