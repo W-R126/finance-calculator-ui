@@ -25,4 +25,5 @@ export interface InvestmentResultTypes {
     risk: number;
     category: string;
     id: number;
+    name: string;
 }

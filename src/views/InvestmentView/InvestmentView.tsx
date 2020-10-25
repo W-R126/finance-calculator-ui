@@ -1,4 +1,15 @@
-import {Box, Button, Container, Snackbar} from '@material-ui/core';
+import {
+    Box,
+    Button,
+    Container,
+    DialogActions,
+    Snackbar,
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    DialogContentText,
+    TextField,
+} from '@material-ui/core';
 import {Alert} from '@material-ui/lab';
 import React, {useEffect, useState} from 'react';
 import {InvestmentParameters} from '../../api/investmentsAPI.types';
@@ -36,7 +47,7 @@ export const InvestmentView: React.FC = () => {
     const investmentId = query.get('investmentId') as number | null;
 
     const [parameters, setParameters] = useState<InvestmentParameters>(initialParameters);
-    const [data, fetchData, isFetching] = useInvestmentsAPI();
+    const {data, fetchData, isFetching} = useInvestmentsAPI(null);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -51,9 +62,7 @@ export const InvestmentView: React.FC = () => {
         InvestmentCategories.STOCK_MARKET,
     ];
 
-    const [portfolios] = usePortfoliosAPI();
-    const {data, fetchData, isFetching} = useInvestmentsAPI(investmentId);
-    const [open, setOpen] = useState(false);
+    const {portfolios} = usePortfoliosAPI();
 
     useEffect(() => {
         if (!isFetching) {
@@ -62,7 +71,8 @@ export const InvestmentView: React.FC = () => {
                 returnOfInvestment: parameters.returnOfInvestment / 100,
             });
         }
-    });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         if (portfolios) setPortfoliosNames(portfolios.map(({name}) => name));
@@ -91,12 +101,12 @@ export const InvestmentView: React.FC = () => {
     };
 
     const handleDialogAdd = () => {
-        submitInvestment(parameters, portfolioName, investmentCategory, investmentName, portfoliosNames);
-        setDialogOpen(false);
-        setSnackbarOpen(true);
+        submitInvestment(data, portfolioName, investmentCategory, investmentName, portfolios).then(() => {
+            setDialogOpen(false);
+            setSnackbarOpen(true);
+            history.push(Routes.PORTFOLIOS);
+        });
     };
-
-    const handleSaveInvestment = () => {};
 
     const handleModifyInvestment = () => {
         if (data && investmentId) {
@@ -168,12 +178,11 @@ export const InvestmentView: React.FC = () => {
 
                     {investmentId === null ? (
                         <Button
-                            type={'submit'}
                             disabled={isFetching}
                             variant={'contained'}
                             color={'primary'}
                             style={{borderRadius: 25, marginLeft: 32}}
-                            onClick={handleSaveInvestment}
+                            onClick={handleSaveToPortfolio}
                         >
                             Save to portfolio
                         </Button>
@@ -189,15 +198,6 @@ export const InvestmentView: React.FC = () => {
                             Update investment
                         </Button>
                     )}
-                    <Button
-                        disabled={isFetching}
-                        variant={'contained'}
-                        color={'primary'}
-                        style={{borderRadius: 25, marginLeft: 32}}
-                        onClick={handleSaveToPortfolio}
-                    >
-                        Save to portfolio
-                    </Button>
                 </Box>
             </Container>
         </>

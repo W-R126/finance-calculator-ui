@@ -27,3 +27,13 @@ export function deletePortfolio(id: number): Promise<boolean> {
         },
     }).then(response => response.status === 200);
 }
+
+export function createPortfolio(name: string) {
+    return axios({
+        method: 'post',
+        url: 'api/portfolios',
+        params: {
+            name,
+        },
+    }).then(response => response.data);
+}

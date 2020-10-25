@@ -1,20 +1,27 @@
-import {InvestmentParameters} from '../../api/investmentsAPI.types';
-import {InvestmentPostParams} from './InvestmentView.types';
+import {InvestmentResultTypes} from '../../api/investmentsAPI.types';
+import {Portfolio} from '../../api/portfoliosAPI.types';
+import {createPortfolio} from '../../api/portfoliosAPI';
+import {saveToPortfolio} from '../../api/investmentsAPI';
 
-export const submitInvestment = (
-    parameters: InvestmentParameters,
+export const submitInvestment = async (
+    data: InvestmentResultTypes | null,
     portfolioName: string,
     investmentCategory: string,
     investmentName: string,
-    portfoliosNames: string[],
+    portfolios: Portfolio[],
 ) => {
-    createInvestment(createPortfolio(portfolioName), {...parameters, category: investmentCategory, name: investmentName});
+    if (data)
+        await createInvestment(await getPortfolioId(portfolioName, portfolios), {
+            ...data,
+            category: investmentCategory,
+            name: investmentName,
+        });
 };
 
-const createPortfolio = (portfolioName: string): number => {
-    return 0;
-}; //TODO create portfolio if not exists and return its id
-
-const createInvestment = (portfolioId: number, investmentParams: InvestmentPostParams) => {
-    //TODO create investment and redirect
+const getPortfolioId = async (portfolioName: string, portfolios: Portfolio[]): Promise<number> => {
+    const result = portfolios.find(({name}) => name === portfolioName);
+    if (result) return result.id;
+    else return createPortfolio(portfolioName).then(result => result.id);
 };
+
+const createInvestment = (portfolioId: number, investment: InvestmentResultTypes) => saveToPortfolio(investment, portfolioId);

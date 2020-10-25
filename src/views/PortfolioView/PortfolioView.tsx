@@ -116,7 +116,7 @@ export const PortfolioView: React.FC = () => {
                 {portfolio.investments.map(investment => (
                     <InvestmentItem
                         id={investment.id}
-                        key={investment.name}
+                        key={investment.id}
                         name={investment.name}
                         riskPercent={investment.risk}
                         changePercent={investment.rateOfReturnPercentage}

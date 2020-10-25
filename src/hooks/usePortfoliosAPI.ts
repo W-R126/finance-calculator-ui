@@ -85,5 +85,4 @@ export function usePortfoliosAPI() {
         isFetchingDetails,
         deleteInvestment,
     };
-    return [portfolios, isFetchingPortfolios, fetchPortfolio, portfolio, isFetchingDetails];
 }
