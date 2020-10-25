@@ -15,7 +15,6 @@ export const NavBar = (props: Props) => {
     const location = useLocation();
 
     const isAuth = authContext.isAuth;
-    const loginText = isAuth ? null : 'Login/Sign up';
     const nav_title = routeToText(location.pathname);
     const inPortfolio = nav_title === 'portfolio';
 
@@ -34,7 +33,7 @@ export const NavBar = (props: Props) => {
     const loginButton = () => {
         return (
             <Link className={styles.Link} to={'/login'}>
-                <Button color="inherit">{loginText}</Button>
+                <Button color="inherit">{'Login/Sign up'}</Button>
             </Link>
         );
     };

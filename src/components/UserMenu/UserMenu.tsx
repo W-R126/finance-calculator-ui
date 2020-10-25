@@ -36,7 +36,11 @@ export const UserMenu: React.FC<Props> = ({username}) => {
                 <ArrowDropDownIcon className={styles.DropArrow} />
             </Button>
             <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                <MenuItem onClick={handleLogOut}>LOGOUT</MenuItem>
+                <MenuItem onClick={handleLogOut}>
+                    <Link className={styles.Link} to={'/login'}>
+                        LOGOUT
+                    </Link>
+                </MenuItem>
                 <MenuItem onClick={handleClose} value={1}>
                     <Link className={styles.Link} to={'/login'}>
                         SWITCH ACCOUNT
