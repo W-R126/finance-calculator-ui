@@ -45,7 +45,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                     <InvestmentResults
                         totalChangePercent={results.rateOfReturnPercentage}
                         totalChange={results.rateOfReturnValue}
-                        totalRiskPercentage={results.risk}
+                        totalRiskPercentage={risk}
                         predictedChange={calculatePredictedChange(
                             results.initialDepositValue,
                             results.systematicDepositValue,
