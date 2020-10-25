@@ -7,6 +7,7 @@ import {InvestmentView} from './views/InvestmentView';
 import {LoginView} from './views/LoginView/LoginView';
 import {AuthContextProvider} from './contexts/authContext';
 import {PortfolioView} from './views/PortfolioView';
+import {NavBar} from './components/NavBar/NavBar';
 
 export const App = () => {
     const basename = getBaseName();
@@ -15,6 +16,7 @@ export const App = () => {
         <AuthContextProvider>
             <BrowserRouter basename={basename}>
                 <CssBaseline />
+                <NavBar />
                 <Switch>
                     <Route path={'/'} exact>
                         <Redirect to={Routes.INVESTMENT_CALCULATOR} />
