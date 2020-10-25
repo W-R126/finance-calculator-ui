@@ -1,5 +1,5 @@
 export enum Routes {
-    INVESTMENT_CALCULATOR = '/investments/new',
+    INVESTMENT_CALCULATOR = '/investment',
     LOGIN = '/login',
     PORTFOLIOS = '/portfolios',
 }
