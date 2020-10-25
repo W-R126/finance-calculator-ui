@@ -24,4 +24,5 @@ export interface PortfolioDetails {
     rateOfReturnPercentage: number;
     rateOfReturnValue: number;
     totalInvestedCash: number;
+    risk: number;
 }

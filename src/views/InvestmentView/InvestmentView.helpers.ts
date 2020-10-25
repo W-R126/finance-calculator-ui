@@ -1,4 +1,4 @@
-import {InvestmentResultTypes} from '../../api/investmentsAPI.types';
+import {InvestmentParameters, InvestmentResultTypes} from '../../api/investmentsAPI.types';
 import {Portfolio} from '../../api/portfoliosAPI.types';
 import {createPortfolio} from '../../api/portfoliosAPI';
 import {saveToPortfolio} from '../../api/investmentsAPI';
@@ -9,12 +9,19 @@ export const submitInvestment = async (
     investmentCategory: string,
     investmentName: string,
     portfolios: Portfolio[],
+    parameters: InvestmentParameters,
 ) => {
     if (data)
         await createInvestment(await getPortfolioId(portfolioName, portfolios), {
-            ...data,
+            ...parameters,
             category: investmentCategory,
             name: investmentName,
+            rateOfReturnPercentage: data.rateOfReturnPercentage,
+            rateOfReturnValue: data.rateOfReturnValue,
+            graphPointsValue: data.graphPointsValue,
+            xAxisDataType: data.xAxisDataType,
+            yAxisDataType: data.yAxisDataType,
+            id: data.id,
         });
 };
 

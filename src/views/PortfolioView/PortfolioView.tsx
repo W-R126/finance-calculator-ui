@@ -13,7 +13,7 @@ import {Routes} from '../../helpers/routes';
 
 export const PortfolioView: React.FC = () => {
     const {portfolios, fetchPortfolio, portfolio, deleteCurrentPortfolio, deleteInvestment} = usePortfoliosAPI();
-
+    console.log(portfolio.investments);
     const handlePortfolioAdd = () => {};
 
     const handleSelectChange = (event: React.ChangeEvent<{value: unknown}>) => fetchPortfolio(event.target.value as number);
@@ -118,7 +118,7 @@ export const PortfolioView: React.FC = () => {
                         id={investment.id}
                         key={investment.id}
                         name={investment.name}
-                        riskPercent={investment.risk}
+                        riskPercent={investment.risk * 100}
                         changePercent={investment.rateOfReturnPercentage}
                         onDelete={handleDeleteInvestment}
                     />

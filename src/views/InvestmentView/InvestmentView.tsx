@@ -86,7 +86,10 @@ export const InvestmentView: React.FC = () => {
     };
 
     const handleSaveToPortfolio = () => {
-        setDialogOpen(true);
+        handleCalculateClick().then(() => {
+            console.log(data);
+            setDialogOpen(true);
+        });
     };
 
     const handleSnackbarClose = (event?: React.SyntheticEvent, reason?: string) => {
@@ -101,7 +104,7 @@ export const InvestmentView: React.FC = () => {
     };
 
     const handleDialogAdd = () => {
-        submitInvestment(data, portfolioName, investmentCategory, investmentName, portfolios).then(() => {
+        submitInvestment(data, portfolioName, investmentCategory, investmentName, portfolios, parameters).then(() => {
             setDialogOpen(false);
             setSnackbarOpen(true);
             history.push(Routes.PORTFOLIOS);

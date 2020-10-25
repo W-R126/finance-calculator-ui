@@ -16,6 +16,7 @@ export function usePortfoliosAPI() {
         rateOfReturnPercentage: 0,
         rateOfReturnValue: 0,
         totalInvestedCash: 0,
+        risk: 0,
     });
 
     useEffect(() => {
