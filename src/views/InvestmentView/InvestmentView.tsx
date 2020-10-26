@@ -202,7 +202,6 @@ export const InvestmentView: React.FC = () => {
                     )}
                 </Box>
             </Container>
-            )}
         </>
     );
 };
