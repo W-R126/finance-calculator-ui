@@ -3,7 +3,7 @@ import {Portfolio, PortfolioDetails} from '../api/portfoliosAPI.types';
 import {deletePortfolio, getPortfolioDetails, getPortfolios} from '../api/portfoliosAPI';
 import * as investments from '../api/investmentsAPI';
 
-export function usePortfoliosAPI() {
+export function usePortfoliosAPI(portfolioId: number | null) {
     const [isFetchingPortfolios, setFetchingPortfolios] = useState(true);
     const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
 
@@ -25,18 +25,20 @@ export function usePortfoliosAPI() {
             .finally(() => {
                 setFetchingPortfolios(false);
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
-        getPortfolioDetails(0)
+        getPortfolioDetails(portfolioId ?? 0)
             .then(details => {
-                details.id = 0;
+                details.id = portfolioId ?? 0;
                 details.rateOfReturnPercentage = details.rateOfReturnPercentage ?? 0;
                 setPortfolio(details);
             })
             .finally(() => {
                 setFetchingDetails(false);
             });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const fetchPortfolio = (id: number) => {

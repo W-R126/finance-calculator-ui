@@ -28,9 +28,14 @@ import {Link} from 'react-router-dom';
 import {DeleteForever} from '@material-ui/icons';
 import {submitPortfolio} from './PortfolioView.helpes';
 import {Routes} from '../../helpers/routes';
+import {useHistory, useLocation} from 'react-router';
 
 export const PortfolioView: React.FC = () => {
-    const {portfolios, fetchPortfolio, portfolio, deleteCurrentPortfolio, deleteInvestment} = usePortfoliosAPI();
+    const history = useHistory();
+    const query = new URLSearchParams(useLocation().search);
+    const portfolioId = query.get('portfolioId') as number | null;
+
+    const {portfolios, fetchPortfolio, portfolio, deleteCurrentPortfolio, deleteInvestment} = usePortfoliosAPI(portfolioId);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [portfolioName, setPortfolioName] = useState('');
     const handlePortfolioAdd = () => {
@@ -52,11 +57,12 @@ export const PortfolioView: React.FC = () => {
     };
 
     const handleDialogAdd = () => {
-        submitPortfolio(portfolioName).then(portfolio_id => {
+        submitPortfolio(portfolioName).then(portfolioId => {
             setDialogOpen(false);
-            console.log(portfolio_id);
+            console.log(portfolioId);
             // TODO: this is rather temporary solution
-            fetchPortfolio(portfolio_id as number);
+            fetchPortfolio(portfolioId as number);
+            history.push(`${Routes.PORTFOLIOS}?portfolioId=${portfolioId}`);
             window.location.reload();
         });
     };
@@ -66,7 +72,7 @@ export const PortfolioView: React.FC = () => {
             <Dialog open={dialogOpen} onClose={handleDialogClose}>
                 <DialogTitle>Add new portfolio</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>Please provide name</DialogContentText>
+                    <DialogContentText>Please provide portfolio name</DialogContentText>
                     <TextField
                         label="Portfolio name"
                         type="text"

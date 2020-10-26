@@ -62,7 +62,7 @@ export const InvestmentView: React.FC = () => {
         InvestmentCategories.STOCK_MARKET,
     ];
 
-    const {portfolios} = usePortfoliosAPI();
+    const {portfolios} = usePortfoliosAPI(null);
 
     useEffect(() => {
         if (!isFetching) {
@@ -103,10 +103,10 @@ export const InvestmentView: React.FC = () => {
     };
 
     const handleDialogAdd = () => {
-        submitInvestment(data, portfolioName, investmentCategory, investmentName, portfolios, parameters).then(() => {
+        submitInvestment(data, portfolioName, investmentCategory, investmentName, portfolios, parameters).then(portfolioId => {
             setDialogOpen(false);
             setSnackbarOpen(true);
-            history.push(Routes.PORTFOLIOS);
+            history.push(`${Routes.PORTFOLIOS}?portfolioId=${portfolioId}`);
         });
     };
 
