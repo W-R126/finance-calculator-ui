@@ -54,8 +54,12 @@ export const PortfolioView: React.FC = () => {
     };
 
     const handleDialogAdd = () => {
-        submitPortfolio(portfolioName).then(() => {
+        submitPortfolio(portfolioName).then(portfolio_id => {
             setDialogOpen(false);
+            console.log(portfolio_id);
+            // TODO: this is rather temporary solution
+            fetchPortfolio(portfolio_id as number);
+            window.location.reload();
         });
     };
 
