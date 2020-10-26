@@ -11,8 +11,9 @@ export const submitInvestment = async (
     portfolios: Portfolio[],
     parameters: InvestmentParameters,
 ) => {
+    const portfolioId = await getPortfolioId(portfolioName, portfolios);
     if (data)
-        await createInvestment(await getPortfolioId(portfolioName, portfolios), {
+        await createInvestment(portfolioId, {
             ...parameters,
             category: investmentCategory,
             name: investmentName,
@@ -23,6 +24,7 @@ export const submitInvestment = async (
             yAxisDataType: data.yAxisDataType,
             id: data.id,
         });
+    return portfolioId;
 };
 
 const getPortfolioId = async (portfolioName: string, portfolios: Portfolio[]): Promise<number> => {
