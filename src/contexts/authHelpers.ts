@@ -31,11 +31,11 @@ export function readLocalStorage(): AuthUser {
 }
 
 export function setAxiosAuth(token: string) {
-    console.log('todo ' + token);
+    //TODO JWT
     axios.defaults.headers.common['AuthorizationJwt'] = token;
 }
 
 export function clearAxiosAuth() {
-    console.log('todo');
+    //TODO
     delete axios.defaults.headers.common['AuthorizationJwt']; // todo make sure this is how it's supposed to be done
 }

@@ -31,7 +31,6 @@ import {Routes} from '../../helpers/routes';
 
 export const PortfolioView: React.FC = () => {
     const {portfolios, fetchPortfolio, portfolio, deleteCurrentPortfolio, deleteInvestment} = usePortfoliosAPI();
-    console.log(portfolio.investments);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [portfolioName, setPortfolioName] = useState('');
 
@@ -66,9 +65,9 @@ export const PortfolioView: React.FC = () => {
     return (
         <Container maxWidth="sm">
             <Dialog open={dialogOpen} onClose={handleDialogClose}>
-                <DialogTitle>Subscribe</DialogTitle>
+                <DialogTitle>Add new portfolio</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>Add new portfolio</DialogContentText>
+                    <DialogContentText>Please provide name</DialogContentText>
                     <TextField
                         label="Portfolio name"
                         type="text"

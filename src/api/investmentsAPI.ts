@@ -47,6 +47,8 @@ export function modifyInvestment(investment: InvestmentResultTypes, investmentId
         params: {
             id: investmentId,
         },
-        data: investment,
+        data: {
+            investmentDTO: investment,
+        },
     }).then(response => response.status === 200);
 }

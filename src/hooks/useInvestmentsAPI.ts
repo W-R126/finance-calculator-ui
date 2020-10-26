@@ -3,7 +3,7 @@ import {getInvestment, getInvestmentCalculation} from '../api/investmentsAPI';
 import {InvestmentParameters, InvestmentResultTypes} from '../api/investmentsAPI.types';
 
 export function useInvestmentsAPI(investmentId: number | null) {
-    const [isFetching, setFetching] = useState(false);
+    const [isFetching, setFetching] = useState(true);
     const [data, setData] = useState<InvestmentResultTypes | null>(null);
     const [params, setParams] = useState<InvestmentParameters | null>(null);
 
@@ -12,9 +12,8 @@ export function useInvestmentsAPI(investmentId: number | null) {
             setFetching(true);
 
             getInvestment(investmentId).then(investment => {
-                console.log('HELLOW WADDASDasDASDaSD');
-                console.log(investment);
                 setData(investment);
+                setFetching(false);
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
