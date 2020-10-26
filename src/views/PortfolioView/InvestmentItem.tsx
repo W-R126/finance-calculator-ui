@@ -1,12 +1,11 @@
 import {Box, Grid, IconButton, Menu, MenuItem, Typography} from '@material-ui/core';
+import {MoreHoriz} from '@material-ui/icons';
 import React from 'react';
-import * as format from '../../helpers/formatNumber';
-import * as styles from './InvestmentItem.styles';
-import {Link} from 'react-router-dom';
-import {Routes} from '../../helpers/routes';
-import {DeleteForever, MoreHoriz} from '@material-ui/icons';
-import {MainBox} from './InvestmentItem.styles';
 import {useHistory} from 'react-router';
+import * as format from '../../helpers/formatNumber';
+import {Routes} from '../../helpers/routes';
+import * as styles from './InvestmentItem.styles';
+import {MainBox} from './InvestmentItem.styles';
 
 interface Props {
     id: number;
