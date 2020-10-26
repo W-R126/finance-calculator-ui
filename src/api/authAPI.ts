@@ -10,10 +10,15 @@ export function getAuth(params: AuthParameters): Promise<AuthResultTypes> {
         data: params.data,
         //set axios header to the returned data (JWT object) and return the passed username and
         // set isAuth to true
-    }).then(response => {
-        setAxiosAuth(response.data);
-        return response.data;
-    });
+    })
+        .then(response => {
+            setAxiosAuth(response.data);
+            return response.data;
+        })
+        .catch(error => {
+            //console.log(error);
+            throw Error(error);
+        });
 }
 
 // todo everything below is temporary for tests
