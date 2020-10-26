@@ -1,11 +1,12 @@
-import {Box, Grid, IconButton, Typography} from '@material-ui/core';
+import {Box, Grid, IconButton, Menu, MenuItem, Typography} from '@material-ui/core';
 import React from 'react';
 import * as format from '../../helpers/formatNumber';
 import * as styles from './InvestmentItem.styles';
 import {Link} from 'react-router-dom';
 import {Routes} from '../../helpers/routes';
-import {DeleteForever} from '@material-ui/icons';
+import {DeleteForever, MoreHoriz} from '@material-ui/icons';
 import {MainBox} from './InvestmentItem.styles';
+import {useHistory} from 'react-router';
 
 interface Props {
     id: number;
@@ -16,9 +17,15 @@ interface Props {
 }
 
 export const InvestmentItem: React.FC<Props> = ({id, name, changePercent, riskPercent, onDelete}) => {
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+    const history = useHistory();
+    const handleMoreClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
+    const handleMoreClose = () => {
+        setAnchorEl(null);
+    };
     return (
         <Box className={MainBox}>
-            <Grid container spacing={3} alignItems="center">
+            <Grid container spacing={2} alignItems="center">
                 <Grid item xs>
                     <Typography>{name}</Typography>
                 </Grid>
@@ -31,21 +38,25 @@ export const InvestmentItem: React.FC<Props> = ({id, name, changePercent, riskPe
                     <Typography className={styles.InvestmentsChange}>{format.asPercentage(changePercent)}</Typography>
                 </Grid>
                 <Grid item xs>
-                    <Box>
-                        <IconButton
-                            size="medium"
-                            color="inherit"
-                            component="span"
+                    <Menu anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleMoreClose}>
+                        <MenuItem
                             onClick={() => {
                                 onDelete(id);
                             }}
                         >
-                            <DeleteForever />
-                        </IconButton>
-                        <Link className={styles.Link} to={`${Routes.INVESTMENT_CALCULATOR}?investmentId=${id}`}>
-                            Details
-                        </Link>
-                    </Box>
+                            Delete
+                        </MenuItem>
+                        <MenuItem
+                            onClick={() => {
+                                history.push(`${Routes.INVESTMENT_CALCULATOR}?investmentId=${id}`);
+                            }}
+                        >
+                            Modify
+                        </MenuItem>
+                    </Menu>
+                    <IconButton color="inherit" component="span" onClick={handleMoreClick}>
+                        <MoreHoriz color="primary" />
+                    </IconButton>
                 </Grid>
             </Grid>
         </Box>
