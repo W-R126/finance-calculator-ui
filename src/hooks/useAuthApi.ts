@@ -41,7 +41,7 @@ export function useAuthAPI(): [(params: AuthParameters) => void, boolean] {
                     setFetching(false);
                 });
         }
-    }, [params, authDispatch]);
+    }, [params, authDispatch, history]);
 
     const fetchData = (parameters: AuthParameters) => {
         setParams(parameters);
