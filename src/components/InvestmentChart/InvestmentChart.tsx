@@ -3,6 +3,7 @@ import {CartesianGrid, Label, Line, LineChart, ResponsiveContainer, Tooltip, XAx
 import {DataGraph} from './InvestmentChart.types';
 import {Paper} from '@material-ui/core';
 import * as styles from './InvestmentChart.styles';
+import {roundAllPoints} from './InvestmentChart.helpers';
 
 interface Props {
     graph: DataGraph;
@@ -14,7 +15,7 @@ export const InvestmentChart: React.FC<Props> = ({graph}) => {
     return (
         <Paper className={styles.paper}>
             <ResponsiveContainer width={'100%'} height={200}>
-                <LineChart data={graph.graphPointsValue}>
+                <LineChart data={roundAllPoints(graph.graphPointsValue)}>
                     <XAxis dataKey="x">
                         <Label value={graph.xAxisDataType} offset={-5} position="insideBottom" />
                     </XAxis>
