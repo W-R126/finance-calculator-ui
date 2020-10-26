@@ -1,11 +1,10 @@
-import {Box, Button, Container, Paper, TextField, Typography} from '@material-ui/core';
+import {Backdrop, Box, Button, CircularProgress, Container, Paper, TextField, Typography} from '@material-ui/core';
 import {Formik, FormikHelpers} from 'formik';
 import React, {useState} from 'react';
 import {AuthAction} from '../../api/authAPI.types';
 import {useUserState} from '../../contexts/authContext';
 import {useAuthAPI} from '../../hooks/useAuthApi';
 import {LoginFormData} from './LoginView.types';
-
 export const LoginView: React.FC = () => {
     // eslint-disable-next-line
     // TODO add fetching indicator
@@ -84,7 +83,6 @@ export const LoginView: React.FC = () => {
                                                 helperText={errors.password && touched.password && errors.password}
                                             />
                                         </Box>
-                                        {isFetching ? 'Loading...' : ''}
                                         {errorMessage}
                                         <Box mt={3} display="flex" justifyContent="center">
                                             <Button
@@ -117,6 +115,10 @@ export const LoginView: React.FC = () => {
                     </Box>
                 </Paper>
             </Box>
+
+            <Backdrop open={isFetching} style={{zIndex: 999, color: '#fff'}}>
+                <CircularProgress color="inherit" />
+            </Backdrop>
         </Container>
     );
 };
