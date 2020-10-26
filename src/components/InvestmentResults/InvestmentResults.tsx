@@ -32,12 +32,14 @@ export const InvestmentResults: React.FC<Props> = ({totalChangePercent, totalCha
                     {currency}
                 </Typography>
             </Box>
-            <Box display="flex" justifyContent="space-between">
-                <Typography>Total risk factor</Typography>
-                <Typography variant="h6" color="secondary">
-                    {format.asPercentage(totalRisk * 100)}
-                </Typography>
-            </Box>
+            {totalRisk !== -1 && (
+                <Box display="flex" justifyContent="space-between">
+                    <Typography>Total risk factor</Typography>
+                    <Typography variant="h6" color="secondary">
+                        {format.asPercentage(totalRisk * 100)}
+                    </Typography>
+                </Box>
+            )}
 
             <Box display="flex" justifyContent="space-between">
                 <Typography>Predicted value</Typography>

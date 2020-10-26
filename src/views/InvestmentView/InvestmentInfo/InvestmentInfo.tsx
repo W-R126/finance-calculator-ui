@@ -33,7 +33,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
             frequencyInYears: frequency,
             durationInYears: duration,
             returnOfInvestment: returnOfInvestment,
-            risk: risk / 100,
+            risk: risk,
         });
     }, [setParameters, initialDeposit, systematicDeposit, frequency, duration, returnOfInvestment, risk]);
 
@@ -81,7 +81,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
             <FrequencySelector value={frequency} onChange={setFrequency} label="frequency" />
             <FrequencySelector value={duration} onChange={setDuration} label="duration" />
             <RangeInput minValue={0} maxValue={50} label="ROI" unit="%" value={returnOfInvestment} onChange={setReturnOfInvestment} />
-            <RangeInput minValue={0} maxValue={100} label="Risk factor" unit="%" value={risk * 100} onChange={onRiskChange} />
+            <RangeInput minValue={0} maxValue={100} label="Risk factor" unit="%" value={Math.round(risk * 100)} onChange={onRiskChange} />
         </>
     );
 };

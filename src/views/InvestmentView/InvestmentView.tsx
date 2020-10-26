@@ -26,12 +26,12 @@ import {usePortfoliosAPI} from '../../hooks/usePortfoliosAPI';
 import {submitInvestment} from './InvestmentView.helpers';
 
 const initialParameters: InvestmentParameters = {
-    initialDepositValue: 1800,
-    systematicDepositValue: 0,
-    frequencyInYears: 3,
-    durationInYears: 1,
-    returnOfInvestment: 20,
-    risk: 0.12,
+    initialDepositValue: 634,
+    systematicDepositValue: 119,
+    frequencyInYears: 1,
+    durationInYears: 30,
+    returnOfInvestment: 9,
+    risk: 0.14,
 };
 
 enum InvestmentCategories {
@@ -87,7 +87,6 @@ export const InvestmentView: React.FC = () => {
 
     const handleSaveToPortfolio = () => {
         handleCalculateClick().then(() => {
-            console.log(data);
             setDialogOpen(true);
         });
     };
@@ -203,6 +202,7 @@ export const InvestmentView: React.FC = () => {
                     )}
                 </Box>
             </Container>
+            )}
         </>
     );
 };

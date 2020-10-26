@@ -12,3 +12,8 @@ export const Link = css`
     text-decoration: none;
     text-transform: uppercase;
 `;
+
+export const MainBox = css`
+    display: flex;
+    justify-content: flex-end;
+`;

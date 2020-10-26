@@ -33,7 +33,6 @@ export const PortfolioView: React.FC = () => {
     const {portfolios, fetchPortfolio, portfolio, deleteCurrentPortfolio, deleteInvestment} = usePortfoliosAPI();
     const [dialogOpen, setDialogOpen] = useState(false);
     const [portfolioName, setPortfolioName] = useState('');
-
     const handlePortfolioAdd = () => {
         setDialogOpen(true);
     };
@@ -133,7 +132,7 @@ export const PortfolioView: React.FC = () => {
             <InvestmentResults
                 totalChangePercent={portfolio.rateOfReturnPercentage}
                 totalChange={portfolio.rateOfReturnValue}
-                totalRiskPercentage={0}
+                totalRiskPercentage={-1}
                 predictedChange={portfolio.totalInvestedCash + portfolio.rateOfReturnValue}
             />
             <Box className={InvestmentsTitleBox}>
@@ -177,7 +176,7 @@ export const PortfolioView: React.FC = () => {
                         id={investment.id}
                         key={investment.id}
                         name={investment.name}
-                        riskPercent={investment.risk * 100}
+                        riskPercent={investment.risk}
                         changePercent={investment.rateOfReturnPercentage}
                         onDelete={handleDeleteInvestment}
                     />

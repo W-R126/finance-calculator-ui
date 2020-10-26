@@ -3,7 +3,7 @@ import {getInvestment, getInvestmentCalculation} from '../api/investmentsAPI';
 import {InvestmentParameters, InvestmentResultTypes} from '../api/investmentsAPI.types';
 
 export function useInvestmentsAPI(investmentId: number | null) {
-    const [isFetching, setFetching] = useState(true);
+    const [isFetching, setFetching] = useState(false);
     const [data, setData] = useState<InvestmentResultTypes | null>(null);
     const [params, setParams] = useState<InvestmentParameters | null>(null);
 
