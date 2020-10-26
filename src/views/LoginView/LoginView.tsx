@@ -5,8 +5,6 @@ import {AuthAction} from '../../api/authAPI.types';
 import {useUserState} from '../../contexts/authContext';
 import {useAuthAPI} from '../../hooks/useAuthApi';
 import {LoginFormData} from './LoginView.types';
-import {css} from 'emotion';
-
 export const LoginView: React.FC = () => {
     // eslint-disable-next-line
     // TODO add fetching indicator
