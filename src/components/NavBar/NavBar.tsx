@@ -17,12 +17,22 @@ export const NavBar = (props: Props) => {
 
     const isAuth = authContext.isAuth;
     const nav_title = routeToText(location.pathname);
+
+    // todo get dynamically
     const inPortfolio = nav_title === 'portfolio';
+    const inInvestment = nav_title === 'investment details';
 
     const goBack = () => {
         if (isAuth) {
             return (
                 <Link className={styles.Arrow} to={Routes.PORTFOLIOS}>
+                    <ArrowBackIosIcon />
+                </Link>
+            );
+        }
+        if (inInvestment) {
+            return (
+                <Link className={styles.Arrow} to={Routes.LOGIN}>
                     <ArrowBackIosIcon />
                 </Link>
             );

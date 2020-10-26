@@ -1,5 +1,5 @@
 import {AuthUser} from './authContext.types';
-// todo import axios from 'axios';
+import axios from 'axios';
 
 export function clearLocalStorage() {
     localStorage.removeItem('token');
@@ -32,10 +32,10 @@ export function readLocalStorage(): AuthUser {
 
 export function setAxiosAuth(token: string) {
     console.log('todo ' + token);
-    //todo  axios.defaults.headers.common['Authorization'] = token;
+    axios.defaults.headers.common['AuthorizationJwt'] = token;
 }
 
 export function clearAxiosAuth() {
     console.log('todo');
-    //todo delete axios.defaults.headers.common['Authorization']; // todo make sure this is how it's supposed to be done
+    delete axios.defaults.headers.common['AuthorizationJwt']; // todo make sure this is how it's supposed to be done
 }
