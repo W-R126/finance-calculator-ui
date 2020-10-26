@@ -1,9 +1,7 @@
 import {Box, Grid, IconButton, Menu, MenuItem, Typography} from '@material-ui/core';
 import {MoreHoriz} from '@material-ui/icons';
 import React from 'react';
-import {useHistory} from 'react-router';
 import * as format from '../../helpers/formatNumber';
-import {Routes} from '../../helpers/routes';
 import * as styles from './InvestmentItem.styles';
 import {MainBox} from './InvestmentItem.styles';
 
@@ -17,7 +15,6 @@ interface Props {
 
 export const InvestmentItem: React.FC<Props> = ({id, name, changePercent, riskPercent, onDelete}) => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-    const history = useHistory();
     const handleMoreClick = (event: React.MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget);
     const handleMoreClose = () => {
         setAnchorEl(null);
@@ -45,13 +42,13 @@ export const InvestmentItem: React.FC<Props> = ({id, name, changePercent, riskPe
                         >
                             Delete
                         </MenuItem>
-                        <MenuItem
+                        {/* <MenuItem
                             onClick={() => {
                                 history.push(`${Routes.INVESTMENT_CALCULATOR}?investmentId=${id}`);
                             }}
                         >
                             Modify
-                        </MenuItem>
+                        </MenuItem> */}
                     </Menu>
                     <IconButton color="inherit" component="span" onClick={handleMoreClick}>
                         <MoreHoriz color="primary" />
