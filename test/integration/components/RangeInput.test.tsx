@@ -4,13 +4,13 @@ import {RangeInput} from '../../../src/components/RangeInput/RangeInput';
 
 describe('RangeInput.tsx', () => {
     test(`should display label`, () => {
-        render(<RangeInput minValue={-76} maxValue={300} label="hello world" unit="$" value={256} setValue={value => {}} />);
+        render(<RangeInput minValue={-76} maxValue={300} label="hello world" unit="$" value={256} onChange={value => {}} />);
 
         screen.getByText('hello world');
     });
 
     test(`should display unit`, () => {
-        render(<RangeInput minValue={-76} maxValue={300} label="hello world" unit="$" value={256} setValue={value => {}} />);
+        render(<RangeInput minValue={-76} maxValue={300} label="hello world" unit="$" value={256} onChange={value => {}} />);
 
         screen.getByText('$');
     });
@@ -24,7 +24,7 @@ describe('RangeInput.tsx', () => {
                 label2="this is label 2"
                 unit="$"
                 value={256}
-                setValue={value => {}}
+                onChange={value => {}}
             />,
         );
 

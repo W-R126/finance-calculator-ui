@@ -14,9 +14,9 @@ interface Props {
 
 export const InvestmentResults: React.FC<Props> = ({totalChangePercent, totalChange, totalRiskPercentage: totalRisk, predictedChange}) => {
     const currency = currencyUnit;
-    const accurance = 2;
+    const accuracy = 2;
 
-    const round = (value: number) => Math.round(value * Math.pow(10, accurance)) / Math.pow(10, accurance);
+    const round = (value: number) => Math.round(value * Math.pow(10, accuracy)) / Math.pow(10, accuracy);
 
     return (
         <>
