@@ -109,7 +109,7 @@ export const InvestmentView: React.FC = () => {
                     <FreeSoloAutocomplete
                         label="Portfolio name"
                         items={portfoliosNames}
-                        value={portfolioName}
+                        initialValue={portfolioName}
                         onChange={setPortfolioName}
                     />
                     <TextField
@@ -123,7 +123,7 @@ export const InvestmentView: React.FC = () => {
                     <FreeSoloAutocomplete
                         label="Investment category"
                         items={categories}
-                        value={investmentCategory}
+                        initialValue={investmentCategory}
                         onChange={setInvestmentCategory}
                     />
                 </DialogContent>
