@@ -5,14 +5,15 @@ import {AuthAction} from '../../api/authAPI.types';
 import {useUserState} from '../../contexts/authContext';
 import {useAuthAPI} from '../../hooks/useAuthApi';
 import {LoginFormData} from './LoginView.types';
+import {getErrorMessage} from './LoginView.helpers';
+import {errorMessageStyle} from './LoginView.styles';
 export const LoginView: React.FC = () => {
     // eslint-disable-next-line
-    // TODO add fetching indicator
     const [fetchData, isFetching] = useAuthAPI();
     const authContext = useUserState();
     const [isSigningUp, setIsSigningUp] = useState(false);
 
-    const errorMessage = authContext.error;
+    const errorMessage = getErrorMessage(isSigningUp, authContext.error);
 
     const handleOnSubmit = (values: LoginFormData, {setSubmitting}: FormikHelpers<LoginFormData>) => {
         setTimeout(() => setSubmitting(false), 1000);
@@ -83,7 +84,7 @@ export const LoginView: React.FC = () => {
                                                 helperText={errors.password && touched.password && errors.password}
                                             />
                                         </Box>
-                                        {errorMessage}
+                                        <Typography className={errorMessageStyle}>{errorMessage}</Typography>
                                         <Box mt={3} display="flex" justifyContent="center">
                                             <Button
                                                 size="large"
