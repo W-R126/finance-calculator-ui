@@ -26,17 +26,11 @@ export const FreeSoloAutocomplete: React.FC<Props> = ({label, initialValue, onCh
             value={value}
             onChange={(event, newValue) => {
                 if (typeof newValue === 'string') {
-                    // timeout to avoid instant validation of the dialog's form.
-                    setTimeout(() => {
-                        onChange(newValue);
-                        setValue({inputValue: newValue, title: newValue});
-                    });
+                    onChange(newValue);
+                    setValue({inputValue: newValue, title: newValue});
                 } else if (newValue && newValue.inputValue) {
                     onChange(newValue.inputValue);
                     setValue(newValue);
-                } else {
-                    setValue(newValue);
-                    onChange(newValue ? newValue.title : '');
                 }
             }}
             filterOptions={(options, params) => {
@@ -60,7 +54,7 @@ export const FreeSoloAutocomplete: React.FC<Props> = ({label, initialValue, onCh
             renderOption={option => option.title}
             freeSolo
             className={FreeSolo}
-            renderInput={params => <TextField {...params} label={label} variant="outlined" fullWidth />}
+            renderInput={params => <TextField {...params} label={label} variant="outlined" test-id="free-solo-input" fullWidth />}
         />
     );
 };
