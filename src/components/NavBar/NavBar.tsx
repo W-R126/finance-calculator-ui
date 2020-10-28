@@ -1,17 +1,14 @@
-import {AppBar, Box, Button, styled, Toolbar, Typography} from '@material-ui/core';
+import {AppBar, Box, Button, Toolbar, Typography} from '@material-ui/core';
 import React from 'react';
 import {useUserState} from '../../contexts/authContext';
 import {Link, useLocation} from 'react-router-dom';
-import {routeToText} from './NavBar.helpers';
+import {getGoBackRoute, routeToText} from './NavBar.helpers';
 import * as styles from './NavBar.styles';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import {UserMenu} from '../UserMenu/UserMenu';
 import {Routes} from '../../helpers/routes';
 
-interface Props {}
-
-export const NavBar = (props: Props) => {
-    // hooks
+export const NavBar: React.FC = () => {
     const authContext = useUserState();
     const location = useLocation();
 
@@ -22,54 +19,27 @@ export const NavBar = (props: Props) => {
     const inPortfolio = nav_title === 'portfolio';
     const inInvestment = nav_title === 'investment details';
 
-    const goBack = () => {
-        if (isAuth) {
-            return (
-                <Link className={styles.Arrow} to={Routes.PORTFOLIOS}>
-                    <ArrowBackIosIcon />
-                </Link>
-            );
-        }
-        if (inInvestment) {
-            return (
-                <Link className={styles.Arrow} to={Routes.LOGIN}>
-                    <ArrowBackIosIcon />
-                </Link>
-            );
-        }
-        return (
-            <Link className={styles.Arrow} to={Routes.INVESTMENT_CALCULATOR}>
-                <ArrowBackIosIcon />
-            </Link>
-        );
-    };
+    const GoBack = () => (
+        <Link className={styles.Arrow} to={getGoBackRoute(isAuth, inInvestment)}>
+            <ArrowBackIosIcon />
+        </Link>
+    );
 
-    const userMenu = () => {
-        return <UserMenu username={authContext.username} />;
-    };
-
-    const loginButton = () => {
-        return (
-            <Link className={styles.Link} to={Routes.LOGIN}>
-                <Button color="inherit">{'Login/Sign up'}</Button>
-            </Link>
-        );
-    };
+    const LoginButton = () => (
+        <Link className={styles.Link} to={Routes.LOGIN}>
+            <Button color="inherit">{'Login/Sign up'}</Button>
+        </Link>
+    );
 
     return (
         <AppBar position="static">
-            <StyledToolbar>
+            <Toolbar className={styles.StyledToolbar}>
                 <Box className={styles.LeftBox} flexGrow={1}>
-                    {inPortfolio ? '' : goBack()}
+                    {inPortfolio ? '' : <GoBack />}
                     <Typography className={inPortfolio ? styles.TitleNoArrow : styles.TitleArrow}>{nav_title}</Typography>
                 </Box>
-                <Box>{isAuth ? userMenu() : loginButton()}</Box>
-            </StyledToolbar>
+                <Box>{isAuth ? <UserMenu username={authContext.username} /> : <LoginButton />}</Box>
+            </Toolbar>
         </AppBar>
     );
 };
-
-const StyledToolbar = styled(Toolbar)({
-    justifyContent: 'flex-end',
-    backgroundColor: '#3461ff',
-});
