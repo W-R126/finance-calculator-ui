@@ -1,9 +1,9 @@
 import axios from 'axios';
-import {AuthAction, AuthParameters, AuthResultTypes} from './authAPI.types';
+import {AuthAction, AuthParameters} from './authAPI.types';
 import {setAxiosAuth} from '../contexts/authHelpers';
 
 // Send sign in request, set axios headers with jwt token, return token
-export function getAuth(params: AuthParameters): Promise<AuthResultTypes> {
+export function getAuth(params: AuthParameters): Promise<string> {
     return axios({
         method: 'post',
         url: 'api/users/' + params.action,
@@ -22,12 +22,12 @@ export function getAuth(params: AuthParameters): Promise<AuthResultTypes> {
 }
 
 // todo everything below is temporary for tests
-export function mockGetAuth(params: AuthParameters): Promise<AuthResultTypes> {
-    return new Promise<AuthResultTypes>((resolve, reject) => {
+export function mockGetAuth(params: AuthParameters): Promise<string> {
+    return new Promise<string>((resolve, reject) => {
         switch (params.action) {
             case AuthAction.SIGN_IN:
                 if (params.data.username === mockUser.username && params.data.password === mockUser.password) {
-                    resolve({token: 'JWT'});
+                    resolve('JWT');
                 } else {
                     reject({
                         error: 'Invalid username or password',
@@ -37,7 +37,7 @@ export function mockGetAuth(params: AuthParameters): Promise<AuthResultTypes> {
             case AuthAction.SIGN_UP:
                 if (!userIn(params.data)) {
                     mockUsers.push(params.data);
-                    resolve({token: 'JWT'});
+                    resolve('JWT');
                 } else {
                     console.log('already in use');
                     reject({

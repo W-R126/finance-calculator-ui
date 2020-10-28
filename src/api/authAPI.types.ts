@@ -10,7 +10,3 @@ export interface AuthParameters {
         password: string; // todo this needs to be changed to whatever format the backend accepts
     };
 }
-
-export interface AuthResultTypes {
-    token: string;
-}

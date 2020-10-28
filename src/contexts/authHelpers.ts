@@ -7,14 +7,16 @@ export function clearLocalStorage() {
 }
 
 export function setLocalStorage(username: string, token: string) {
+    console.log(`Writing token ${token} to local storage`);
     localStorage.setItem('username', username);
-    localStorage.setItem('token', token);
+    localStorage.setItem('jwtAuthToken', token);
 }
 
 // reads user data from local storage and sets axios auth header to retrieved token
 export function readLocalStorage(): AuthUser {
     const username = localStorage.getItem('username');
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('jwtAuthToken');
+
     if (username && token) {
         setAxiosAuth(token);
         return {
@@ -31,11 +33,9 @@ export function readLocalStorage(): AuthUser {
 }
 
 export function setAxiosAuth(token: string) {
-    //TODO JWT
-    axios.defaults.headers.common['AuthorizationJwt'] = token;
+    axios.defaults.headers.common['AuthorizationJwt'] = `Bearer ${token}`;
 }
 
 export function clearAxiosAuth() {
-    //TODO
     delete axios.defaults.headers.common['AuthorizationJwt']; // todo make sure this is how it's supposed to be done
 }

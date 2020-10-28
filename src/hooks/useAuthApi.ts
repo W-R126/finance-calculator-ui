@@ -23,7 +23,9 @@ export function useAuthAPI(): [(params: AuthParameters) => void, boolean] {
                         username: params.data.username,
                         error: '',
                     };
-                    setLocalStorage(params.data.username, token.token);
+                    console.log('TOKEN AAAAAAAAA IS');
+                    console.log(token);
+                    setLocalStorage(params.data.username, token);
                     authDispatch(loginSuccess(user));
                     history.push(Routes.PORTFOLIOS);
                 })
