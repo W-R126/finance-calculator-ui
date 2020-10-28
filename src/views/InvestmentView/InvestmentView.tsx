@@ -24,22 +24,7 @@ import {Routes} from '../../helpers/routes';
 import {modifyInvestment} from '../../api/investmentsAPI';
 import {usePortfoliosAPI} from '../../hooks/usePortfoliosAPI';
 import {submitInvestment} from './InvestmentView.helpers';
-
-const initialParameters: InvestmentParameters = {
-    initialDepositValue: 634,
-    systematicDepositValue: 119,
-    frequencyInYears: 1,
-    durationInYears: 30,
-    returnOfInvestment: 9,
-    risk: 0.14,
-};
-
-enum InvestmentCategories {
-    GOLD = 'Gold',
-    REAL_ESTATE = 'Real estate',
-    BONDS = 'Bonds',
-    STOCK_MARKET = 'Stock Market',
-}
+import {categories, initialParameters} from './InvestmentView.constants';
 
 export const InvestmentView: React.FC = () => {
     const history = useHistory();
@@ -55,12 +40,6 @@ export const InvestmentView: React.FC = () => {
     const [portfolioName, setPortfolioName] = useState('');
     const [investmentCategory, setInvestmentCategory] = useState('');
     const [investmentName, setInvestmentName] = useState('');
-    const categories = [
-        InvestmentCategories.GOLD,
-        InvestmentCategories.BONDS,
-        InvestmentCategories.REAL_ESTATE,
-        InvestmentCategories.STOCK_MARKET,
-    ];
 
     const {portfolios} = usePortfoliosAPI(null);
 
@@ -98,9 +77,7 @@ export const InvestmentView: React.FC = () => {
         setSnackbarOpen(false);
     };
 
-    const handleDialogClose = () => {
-        setDialogOpen(false);
-    };
+    const handleDialogClose = () => setDialogOpen(false);
 
     const handleDialogAdd = () => {
         submitInvestment(data, portfolioName, investmentCategory, investmentName, portfolios, parameters).then(portfolioId => {
@@ -132,7 +109,7 @@ export const InvestmentView: React.FC = () => {
                     <FreeSoloAutocomplete
                         label="Portfolio name"
                         items={portfoliosNames}
-                        value={portfolioName}
+                        initialValue={portfolioName}
                         onChange={setPortfolioName}
                     />
                     <TextField
@@ -146,7 +123,7 @@ export const InvestmentView: React.FC = () => {
                     <FreeSoloAutocomplete
                         label="Investment category"
                         items={categories}
-                        value={investmentCategory}
+                        initialValue={investmentCategory}
                         onChange={setInvestmentCategory}
                     />
                 </DialogContent>
