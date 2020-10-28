@@ -1,65 +1,38 @@
-import {
-    Box,
-    Button,
-    Container,
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText,
-    DialogTitle,
-    Fab,
-    FormControl,
-    Grid,
-    IconButton,
-    MenuItem,
-    Select,
-    TextField,
-    Typography,
-} from '@material-ui/core';
+import {Box, Container, Fab} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
-import {css} from 'emotion';
 import React, {useState} from 'react';
 import {InvestmentResults} from '../../components/InvestmentResults/InvestmentResults';
 import {Separator} from '../../components/Separator/Separator';
 import {usePortfoliosAPI} from '../../hooks/usePortfoliosAPI';
-import {InvestmentItem} from './InvestmentItem';
-import {InvestmentsTitleBox, TopBox} from './PortfolioView.styles';
+import {InvestmentItem} from './InvestmentItem/InvestmentItem';
+import {InvestmentsTitleBox} from './PortfolioView.styles';
 import {Link} from 'react-router-dom';
-import {DeleteForever} from '@material-ui/icons';
 import {submitPortfolio} from './PortfolioView.helpes';
 import {Routes} from '../../helpers/routes';
 import {useHistory, useLocation} from 'react-router';
+import {AddPortfolioDialog} from './PortfolioViewDialog';
+import {InvestmentItemDescription} from './InvestmentItem/InvestmentItemDescription';
+import {PortfolioViewControls} from './PortfolioViewControls';
 
 export const PortfolioView: React.FC = () => {
     const history = useHistory();
     const query = new URLSearchParams(useLocation().search);
     const portfolioId = query.get('portfolioId') as number | null;
 
-    const {portfolios, fetchPortfolio, portfolio, deleteCurrentPortfolio, deleteInvestment} = usePortfoliosAPI(portfolioId);
+    const {portfolios, deleteCurrentPortfolio, portfolio, deleteInvestment, fetchPortfolio} = usePortfoliosAPI(portfolioId);
+
     const [dialogOpen, setDialogOpen] = useState(false);
     const [portfolioName, setPortfolioName] = useState('');
-    const handlePortfolioAdd = () => {
-        setDialogOpen(true);
-    };
 
-    const handleSelectChange = (event: React.ChangeEvent<{value: unknown}>) => fetchPortfolio(event.target.value as number);
+    const handlePortfolioAdd = () => setDialogOpen(true);
 
-    const handleDeletePortfolio = () => {
-        deleteCurrentPortfolio();
-    };
+    const handleDeleteInvestment = (id: number) => deleteInvestment(id);
 
-    const handleDeleteInvestment = (id: number) => {
-        deleteInvestment(id);
-    };
-
-    const handleDialogClose = () => {
-        setDialogOpen(false);
-    };
+    const handleDialogClose = () => setDialogOpen(false);
 
     const handleDialogAdd = () => {
         submitPortfolio(portfolioName).then(portfolioId => {
             setDialogOpen(false);
-            console.log(portfolioId);
             // TODO: this is rather temporary solution
             fetchPortfolio(portfolioId as number);
             history.push(`${Routes.PORTFOLIOS}?portfolioId=${portfolioId}`);
@@ -69,70 +42,21 @@ export const PortfolioView: React.FC = () => {
 
     return (
         <Container maxWidth="sm">
-            <Dialog open={dialogOpen} onClose={handleDialogClose}>
-                <DialogTitle>Add new portfolio</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>Please provide portfolio name</DialogContentText>
-                    <TextField
-                        label="Portfolio name"
-                        type="text"
-                        fullWidth
-                        value={portfolioName}
-                        variant="outlined"
-                        onChange={event => setPortfolioName(event.target.value)}
-                    />
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleDialogClose} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={handleDialogAdd} type={'submit'} color="primary">
-                        Add
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <AddPortfolioDialog
+                dialogOpen={dialogOpen}
+                setPortfolioName={setPortfolioName}
+                portfolioName={portfolioName}
+                handleDialogClose={handleDialogClose}
+                handleDialogAdd={handleDialogAdd}
+            />
 
-            <Box className={TopBox}>
-                <Grid container>
-                    <Grid item xs={6}>
-                        <FormControl size={'small'} variant="outlined" fullWidth>
-                            <Select value={portfolio.id} onChange={handleSelectChange}>
-                                <MenuItem key={0} value={0}>
-                                    All Investments
-                                </MenuItem>
-                                {portfolios.map(portfolio => (
-                                    <MenuItem key={portfolio.id} value={portfolio.id}>
-                                        {portfolio.name}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                    </Grid>
-
-                    <Grid item xs={2}>
-                        <Box display={'flex'} justifyContent={'center'} color={'red'}>
-                            {portfolio.id !== 0 && (
-                                <IconButton
-                                    size={'medium'}
-                                    color="inherit"
-                                    aria-label="upload picture"
-                                    component="span"
-                                    onClick={handleDeletePortfolio}
-                                >
-                                    <DeleteForever />
-                                </IconButton>
-                            )}
-                        </Box>
-                    </Grid>
-
-                    <Grid item xs={4}>
-                        <Fab style={{width: '100%'}} size="medium" variant="extended" color="primary" onClick={handlePortfolioAdd}>
-                            <AddIcon />
-                            Portfolio
-                        </Fab>
-                    </Grid>
-                </Grid>
-            </Box>
+            <PortfolioViewControls
+                portfolio={portfolio}
+                portfolios={portfolios}
+                deleteCurrentPortfolio={deleteCurrentPortfolio}
+                fetchPortfolio={fetchPortfolio}
+                handlePortfolioAdd={handlePortfolioAdd}
+            />
 
             <Separator text="Results" />
             <InvestmentResults
@@ -152,29 +76,7 @@ export const PortfolioView: React.FC = () => {
                 </Link>
             </Box>
 
-            <Grid container spacing={2} alignItems="center">
-                <Grid item xs={4}>
-                    <Typography color="primary" variant="caption">
-                        NAME
-                    </Typography>
-                </Grid>
-                <Grid item xs>
-                    <Typography
-                        className={css`
-                            padding-left: 16px;
-                        `}
-                        color="primary"
-                        variant="caption"
-                    >
-                        RISK
-                    </Typography>
-                </Grid>
-                <Grid item xs={5}>
-                    <Typography color="primary" variant="caption">
-                        CHANGE
-                    </Typography>
-                </Grid>
-            </Grid>
+            <InvestmentItemDescription />
 
             <Box>
                 {portfolio.investments.map(investment => (
