@@ -1,7 +1,7 @@
 import {Box, Grid, IconButton, Menu, MenuItem, Typography} from '@material-ui/core';
 import {MoreHoriz} from '@material-ui/icons';
 import React from 'react';
-import * as format from '../../helpers/formatNumber';
+import * as format from '../../../helpers/formatNumber';
 import * as styles from './InvestmentItem.styles';
 import {MainBox} from './InvestmentItem.styles';
 
