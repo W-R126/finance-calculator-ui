@@ -30,11 +30,10 @@ export function useAuthAPI(): [(params: AuthParameters) => void, boolean] {
                     history.push(Routes.PORTFOLIOS);
                 })
                 .catch(error => {
-                    console.log(error);
                     const user: AuthUser = {
                         isAuth: false,
                         username: '',
-                        error: error.error,
+                        error: error.response.status,
                     };
                     clearLocalStorage();
                     authDispatch(loginError(user));
