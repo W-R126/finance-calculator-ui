@@ -8,6 +8,7 @@ import {logOut} from '../../contexts/authAction.types';
 import {useAuthDispatch} from '../../contexts/authContext';
 import {Link} from 'react-router-dom';
 import {Routes} from '../../helpers/routes';
+import {Box} from '@material-ui/core';
 
 interface Props {
     username: string;
@@ -31,9 +32,9 @@ export const UserMenu: React.FC<Props> = ({username}) => {
     };
 
     return (
-        <div>
+        <>
             <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-                <div className={styles.DropArrow}>{username}</div>
+                <Box className={styles.DropArrow}>{username}</Box>
                 <ArrowDropDownIcon className={styles.DropArrow} />
             </Button>
             <Menu id="simple-menu" anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
@@ -48,6 +49,6 @@ export const UserMenu: React.FC<Props> = ({username}) => {
                     </Link>
                 </MenuItem>
             </Menu>
-        </div>
+        </>
     );
 };

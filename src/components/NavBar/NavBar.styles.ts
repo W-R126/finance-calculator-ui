@@ -27,3 +27,8 @@ export const TitleNoArrow = css`
 export const LeftBox = css`
     display: flex;
 `;
+
+export const StyledToolbar = css`
+    justify-content: flex-end;
+    background-color: #3461ff;
+`;

@@ -1,6 +1,6 @@
 import {Routes} from '../../helpers/routes';
 
-export function routeToText(route: string) {
+export const routeToText = (route: string) => {
     switch (route) {
         case Routes.INVESTMENT_CALCULATOR:
             return 'investment details';
@@ -11,4 +11,10 @@ export function routeToText(route: string) {
         default:
             return 'you are lost';
     }
-}
+};
+
+export const getGoBackRoute = (isAuth: boolean, inInvestment: boolean) => {
+    if (isAuth) return Routes.PORTFOLIOS;
+    if (inInvestment) return Routes.LOGIN;
+    else return Routes.INVESTMENT_CALCULATOR;
+};
