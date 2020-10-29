@@ -17,14 +17,13 @@ export function useInvestments() {
 
     const updateResults = (data: InvestmentResults) => {
         data.id = data.id ?? results?.id ?? 0;
+        data.name = data.name ?? results?.name ?? '';
         data.category = data.category ?? results?.category ?? '';
         data.risk = data.risk ?? results?.risk ?? 0.5;
 
         setResults(data);
 
         const params = convertResultsToParameters(data);
-        console.log('Response is:');
-        console.log(params);
         setParameters(params);
     };
 
