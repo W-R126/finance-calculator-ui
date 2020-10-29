@@ -1,24 +1,16 @@
-import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import {css} from 'emotion';
 
-export const useStyles = makeStyles((theme: Theme) =>
-    createStyles({
-        root: {
-            width: '100%',
-        },
-        paper: {
-            width: '100%',
-            marginBottom: theme.spacing(2),
-        },
-        visuallyHidden: {
-            border: 0,
-            clip: 'rect(0 0 0 0)',
-            height: 1,
-            margin: -1,
-            overflow: 'hidden',
-            padding: 0,
-            position: 'absolute',
-            top: 20,
-            width: 1,
-        },
-    }),
-);
+export const MainBox = css`
+    width: 100%;
+    margin-top: 1rem;
+`;
+
+export const StyledPaper = css`
+    width: 100%;
+    margin-bottom: 2rem;
+`;
+
+export const InvestmentsChange = css`
+    padding-right: 18px;
+    color: #00cd08;
+`;

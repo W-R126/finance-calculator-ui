@@ -1,7 +1,8 @@
 export interface Data {
+    id: number;
     name: string;
     risk: number;
-    change: number;
+    rateOfReturnPercentage: number;
 }
 
 export type Order = 'asc' | 'desc';

@@ -2,24 +2,19 @@ import React from 'react';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
-import Checkbox from '@material-ui/core/Checkbox';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import {Data, Order} from './InvestmentsList.types';
 import {headCells} from './InvestmentsList.constants';
-import {useStyles} from './InvestmentsList.styles';
+import {Box, Typography} from '@material-ui/core';
+import {VisuallyHidden} from './InvestmentsListHead.styles';
 
 interface Props {
-    classes: ReturnType<typeof useStyles>;
-    numSelected: number;
     onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void;
-    onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
     order: Order;
     orderBy: string;
-    rowCount: number;
 }
 
-export const InvestmentsListHead = (props: Props) => {
-    const {classes, onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort} = props;
+export const InvestmentsListHead: React.FC<Props> = ({order, orderBy, onRequestSort}) => {
     const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
         onRequestSort(event, property);
     };
@@ -27,20 +22,8 @@ export const InvestmentsListHead = (props: Props) => {
     return (
         <TableHead>
             <TableRow>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                    />
-                </TableCell>
                 {headCells.map(headCell => (
-                    <TableCell
-                        key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
-                        padding={headCell.disablePadding ? 'none' : 'default'}
-                        sortDirection={orderBy === headCell.id ? order : false}
-                    >
+                    <TableCell key={headCell.id} sortDirection={orderBy === headCell.id ? order : false} padding="checkbox">
                         <TableSortLabel
                             active={orderBy === headCell.id}
                             direction={orderBy === headCell.id ? order : 'asc'}
@@ -48,13 +31,16 @@ export const InvestmentsListHead = (props: Props) => {
                         >
                             {headCell.label}
                             {orderBy === headCell.id ? (
-                                <span className={classes.visuallyHidden}>
+                                <Box component="span" className={VisuallyHidden}>
                                     {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                                </span>
+                                </Box>
                             ) : null}
                         </TableSortLabel>
                     </TableCell>
                 ))}
+                <TableCell padding="checkbox">
+                    <Typography variant="body2">Actions</Typography>
+                </TableCell>
             </TableRow>
         </TableHead>
     );

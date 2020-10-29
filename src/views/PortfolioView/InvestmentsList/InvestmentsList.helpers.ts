@@ -1,5 +1,5 @@
-import {Data, Order} from './InvestmentsList.types';
-import {rows} from './InvestmentsList.constants';
+import {Order} from './InvestmentsList.types';
+import {PortfolioInvestment} from '../../../api/portfoliosAPI.types';
 
 export function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -28,4 +28,5 @@ export function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
     return stabilizedThis.map(el => el[0]);
 }
 
-export const emptyRows = (rowsPerPage: number, page: number) => rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
+export const prepareInvestmentInput = (investments: PortfolioInvestment[]) =>
+    investments.map(({id, name, risk, rateOfReturnPercentage}) => ({id, name, risk, rateOfReturnPercentage}));
