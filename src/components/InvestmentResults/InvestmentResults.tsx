@@ -28,7 +28,7 @@ export const InvestmentResults: React.FC<Props> = ({totalChangePercent, totalCha
                         color: #00cd08;
                     `}
                 >
-                    {format.asPercentage(totalChangePercent)} {round(totalChange)}
+                    {format.asPercentage(totalChangePercent * 100)} {round(totalChange)}
                     {currency}
                 </Typography>
             </Box>

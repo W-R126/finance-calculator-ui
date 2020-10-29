@@ -80,7 +80,7 @@ export const InvestmentsList: React.FC<Props> = ({portfolio, onDelete, investmen
                                             </TableCell>
                                             <TableCell align="left" size="small" padding="checkbox">
                                                 <Typography className={InvestmentsChange}>
-                                                    {format.asPercentage(row.rateOfReturnPercentage)}
+                                                    {format.asPercentage(row.rateOfReturnPercentage * 100)}
                                                 </Typography>
                                             </TableCell>
                                             <TableCell align="left" size="small">
