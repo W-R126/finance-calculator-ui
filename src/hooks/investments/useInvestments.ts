@@ -11,7 +11,7 @@ export function useInvestments() {
     const urlParameters = new URLSearchParams(location.search);
     const investmentId = urlParameters.get('investmentId') as number | null;
 
-    const [isFetching, setFetching] = useState(true);
+    const [isFetching, setFetching] = useState(false);
     const [parameters, setParameters] = useState<InvestmentParameters>(defaultParameters);
     const [results, setResults] = useState<InvestmentResults | null>(null);
 
@@ -23,6 +23,8 @@ export function useInvestments() {
         setResults(data);
 
         const params = convertResultsToParameters(data);
+        console.log('Response is:');
+        console.log(params);
         setParameters(params);
     };
 
@@ -33,15 +35,15 @@ export function useInvestments() {
                 .then(updateResults)
                 .finally(() => setFetching(false));
         } else {
-            recalculate();
+            recalculate(parameters);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const recalculate = () => {
+    const recalculate = (params: InvestmentParameters) => {
         if (!isFetching) {
             setFetching(true);
-            calculateInvestment(parameters)
+            calculateInvestment(params)
                 .then(updateResults)
                 .finally(() => setFetching(false));
         }

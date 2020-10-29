@@ -35,8 +35,8 @@ export const InvestmentView: React.FC = () => {
     const currency = currencyUnit;
 
     const [handler, setHandler] = useState<number | null>(null);
-    const updateParameters = (parameters: InvestmentParameters) => {
-        setParameters(parameters);
+    const updateParameters = (params: InvestmentParameters) => {
+        setParameters(params);
 
         if (handler !== null) {
             clearTimeout(handler);
@@ -44,8 +44,8 @@ export const InvestmentView: React.FC = () => {
 
         setHandler(
             (setTimeout(() => {
-                recalculate();
-            }, 1000) as unknown) as number,
+                recalculate(params);
+            }, 2000) as unknown) as number,
         );
     };
 
@@ -57,6 +57,7 @@ export const InvestmentView: React.FC = () => {
     };
 
     const setSystematicDeposit = (systematicDepositValue: number) => {
+        console.log(`Setting systematic deposit to: ${systematicDepositValue}`);
         updateParameters({
             ...parameters,
             systematicDepositValue,
@@ -100,8 +101,14 @@ export const InvestmentView: React.FC = () => {
 
     const [portfoliosNames, setPortfoliosNames] = useState<string[]>([]);
     const [portfolioName, setPortfolioName] = useState('');
-    const [investmentCategory, setInvestmentCategory] = useState('');
-    const [investmentName, setInvestmentName] = useState('');
+
+    const [investmentCategory, setInvestmentCategory] = useState(results?.category ?? '');
+    const [investmentName, setInvestmentName] = useState(results?.name ?? '');
+
+    useEffect(() => {
+        setInvestmentCategory(results?.category ?? '');
+        setInvestmentName(results?.name ?? '');
+    }, [results]);
 
     const {portfolios} = usePortfoliosAPI(null);
 
@@ -109,7 +116,7 @@ export const InvestmentView: React.FC = () => {
         if (portfolios) setPortfoliosNames(portfolios.map(({name}) => name));
     }, [portfolios]);
 
-    const handleSaveToPortfolio = () => {
+    const openDialog = () => {
         setDialogOpen(true);
     };
 
@@ -122,9 +129,9 @@ export const InvestmentView: React.FC = () => {
         });
     };
 
-    const handleModifyInvestment = () => {
+    const handleDialogUpdate = () => {
         if (results && investmentId) {
-            modifyInvestment(results, investmentId).then(() => {
+            modifyInvestment({...results, category: investmentCategory, name: investmentName}, investmentId).then(() => {
                 history.push(Routes.PORTFOLIOS);
             });
         }
@@ -136,12 +143,14 @@ export const InvestmentView: React.FC = () => {
                 <DialogTitle>Save Investment</DialogTitle>
                 <DialogContent>
                     <DialogContentText>Please provide some details about investment</DialogContentText>
-                    <FreeSoloAutocomplete
-                        label="Portfolio name"
-                        items={portfoliosNames}
-                        initialValue={portfolioName}
-                        onChange={setPortfolioName}
-                    />
+                    {investmentId === null && (
+                        <FreeSoloAutocomplete
+                            label="Portfolio name"
+                            items={portfoliosNames}
+                            initialValue={portfolioName}
+                            onChange={setPortfolioName}
+                        />
+                    )}
                     <TextField
                         label="Investment name"
                         type="text"
@@ -161,9 +170,15 @@ export const InvestmentView: React.FC = () => {
                     <Button onClick={handleDialogClose} color="primary">
                         Cancel
                     </Button>
-                    <Button onClick={handleDialogAdd} type={'submit'} color="primary">
-                        Add
-                    </Button>
+                    {investmentId !== null ? (
+                        <Button onClick={handleDialogUpdate} type={'submit'} color="primary">
+                            Update
+                        </Button>
+                    ) : (
+                        <Button onClick={handleDialogAdd} type={'submit'} color="primary">
+                            Add
+                        </Button>
+                    )}
                 </DialogActions>
             </Dialog>
 
@@ -230,28 +245,16 @@ export const InvestmentView: React.FC = () => {
                 />
 
                 <Box className={buttonBox}>
-                    {investmentId === null ? (
-                        <Button
-                            disabled={isFetching}
-                            variant={'contained'}
-                            color={'primary'}
-                            style={{borderRadius: 25, marginLeft: 32}}
-                            onClick={handleSaveToPortfolio}
-                        >
-                            Save to portfolio
-                        </Button>
-                    ) : (
-                        <Button
-                            type={'submit'}
-                            disabled={isFetching}
-                            variant={'contained'}
-                            color={'primary'}
-                            style={{borderRadius: 25, marginLeft: 32}}
-                            onClick={handleModifyInvestment}
-                        >
-                            Update investment
-                        </Button>
-                    )}
+                    <Button
+                        type={'submit'}
+                        disabled={isFetching}
+                        variant={'contained'}
+                        color={'primary'}
+                        style={{borderRadius: 25, marginLeft: 32}}
+                        onClick={openDialog}
+                    >
+                        {investmentId !== null ? 'Update investment' : 'Save to portfolio'}
+                    </Button>
                 </Box>
             </Container>
         </>

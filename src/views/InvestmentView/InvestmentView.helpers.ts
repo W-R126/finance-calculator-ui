@@ -14,15 +14,9 @@ export const submitInvestment = async (
     const portfolioId = await getPortfolioId(portfolioName, portfolios);
     if (data)
         await createInvestment(portfolioId, {
-            ...parameters,
+            ...data,
             category: investmentCategory,
             name: investmentName,
-            rateOfReturnPercentage: data.rateOfReturnPercentage,
-            rateOfReturnValue: data.rateOfReturnValue,
-            graphPointsValue: data.graphPointsValue,
-            xAxisDataType: data.xAxisDataType,
-            yAxisDataType: data.yAxisDataType,
-            id: data.id,
         });
     return portfolioId;
 };

@@ -22,6 +22,7 @@ export interface InvestmentResults {
     durationInYears: number;
     frequencyInYears: number;
 
+    returnOfInvestmentPercentage: number;
     rateOfReturnPercentage: number;
     rateOfReturnValue: number;
 }

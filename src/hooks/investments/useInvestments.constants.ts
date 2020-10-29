@@ -5,6 +5,6 @@ export const defaultParameters: InvestmentParameters = {
     systematicDepositValue: 119,
     frequencyInYears: 1,
     durationInYears: 30,
-    returnOfInvestment: 9,
+    returnOfInvestment: 0.03,
     risk: 0.14,
 };
