@@ -7,23 +7,21 @@ export interface InvestmentParameters {
     risk: number;
 }
 
-export interface GraphPoint {
-    x: number;
-    y: number;
-}
+export interface InvestmentResults {
+    id: number;
+    name: string;
+    category: string;
+    risk: number;
 
-export interface InvestmentResultTypes {
-    rateOfReturnPercentage: number;
-    rateOfReturnValue: number;
+    graphPointsValue: {x: number; y: number}[];
+    xAxisDataType: string;
+    yAxisDataType: string;
+
     initialDepositValue: number;
     systematicDepositValue: number;
     durationInYears: number;
     frequencyInYears: number;
-    graphPointsValue: GraphPoint[];
-    xAxisDataType: string;
-    yAxisDataType: string;
-    risk: number;
-    category: string;
-    id: number;
-    name: string;
+
+    rateOfReturnPercentage: number;
+    rateOfReturnValue: number;
 }

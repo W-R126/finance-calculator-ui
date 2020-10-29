@@ -1,4 +1,4 @@
-import {InvestmentParameters} from '../../api/investmentsAPI.types';
+import {InvestmentParameters} from '../../api/investments/investmentsAPI.types';
 import {InvestmentCategories} from './InvestmentView.types';
 
 export const currencyUnit = '$';

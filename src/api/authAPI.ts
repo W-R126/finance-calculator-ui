@@ -34,7 +34,6 @@ export function mockGetAuth(params: AuthParameters): Promise<string> {
                     mockUsers.push(params.data);
                     resolve('JWT');
                 } else {
-                    console.log('already in use');
                     reject({
                         error: 'Username: "' + params.data.username + '" already exists',
                     });

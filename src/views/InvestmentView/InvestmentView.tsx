@@ -3,36 +3,99 @@ import {
     Button,
     Container,
     DialogActions,
-    Snackbar,
     Dialog,
     DialogTitle,
     DialogContent,
     DialogContentText,
     TextField,
+    CircularProgress,
 } from '@material-ui/core';
-import {Alert} from '@material-ui/lab';
 import React, {useEffect, useState} from 'react';
-import {InvestmentParameters} from '../../api/investmentsAPI.types';
 import {FreeSoloAutocomplete} from '../../components/FreeSoloAutocomplete/FreeSoloAutocomplete';
 import {InvestmentChart} from '../../components/InvestmentChart/InvestmentChart';
 import {DataGraph} from '../../components/InvestmentChart/InvestmentChart.types';
-import {useInvestmentsAPI} from '../../hooks/useInvestmentsAPI';
-import {InvestmentInfo} from './InvestmentInfo';
 import {buttonBox} from './InvestmentView.styles';
-import {useHistory, useLocation} from 'react-router';
+import {useHistory} from 'react-router';
 import {Routes} from '../../helpers/routes';
-import {modifyInvestment} from '../../api/investmentsAPI';
+import {modifyInvestment} from '../../api/investments/investmentsAPI';
 import {usePortfoliosAPI} from '../../hooks/usePortfoliosAPI';
-import {submitInvestment} from './InvestmentView.helpers';
-import {categories} from './InvestmentView.constants';
+import {calculatePredictedChange, submitInvestment} from './InvestmentView.helpers';
+import {categories, currencyUnit} from './InvestmentView.constants';
+import {useInvestments} from '../../hooks/investments/useInvestments';
+import {Separator} from '../../components/Separator/Separator';
+import {InvestmentResults} from '../../components/InvestmentResults/InvestmentResults';
+import {RangeInput} from '../../components/RangeInput/RangeInput';
+import {FrequencySelector} from '../../components/FrequencySelector/FrequencySelector';
+import {InvestmentParameters} from '../../api/investments/investmentsAPI.types';
 
 export const InvestmentView: React.FC = () => {
     const history = useHistory();
-    const query = new URLSearchParams(useLocation().search);
-    const investmentId = query.get('investmentId') as number | null;
+    const {isFetching, results, recalculate, setParameters, parameters, investmentId} = useInvestments();
 
-    const {data, fetchData, isFetching, parameters, setParameters} = useInvestmentsAPI(investmentId);
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const currency = currencyUnit;
+
+    const [handler, setHandler] = useState<number | null>(null);
+    const updateParameters = (parameters: InvestmentParameters) => {
+        setParameters(parameters);
+
+        if (handler !== null) {
+            clearTimeout(handler);
+        }
+
+        setHandler(
+            (setTimeout(() => {
+                recalculate();
+            }, 1000) as unknown) as number,
+        );
+    };
+
+    const setInitialDeposit = (initialDepositValue: number) => {
+        updateParameters({
+            ...parameters,
+            initialDepositValue,
+        });
+    };
+
+    const setSystematicDeposit = (systematicDepositValue: number) => {
+        updateParameters({
+            ...parameters,
+            systematicDepositValue,
+        });
+    };
+
+    const setFrequency = (frequencyInYears: number) => {
+        updateParameters({
+            ...parameters,
+            frequencyInYears,
+        });
+    };
+
+    const setDuration = (durationInYears: number) => {
+        updateParameters({
+            ...parameters,
+            durationInYears,
+        });
+    };
+
+    const setReturnOfInvestment = (returnOfInvestment: number) => {
+        updateParameters({
+            ...parameters,
+            returnOfInvestment,
+        });
+    };
+
+    const setRisk = (risk: number) => {
+        updateParameters({
+            ...parameters,
+            risk,
+        });
+    };
+
+    const onRiskChange = (value: number) => setRisk(value / 100);
+    const onROIChange = (value: number) => {
+        setReturnOfInvestment(value / 100);
+    };
+    // DIALOG
     const [dialogOpen, setDialogOpen] = useState(false);
 
     const [portfoliosNames, setPortfoliosNames] = useState<string[]>([]);
@@ -46,39 +109,22 @@ export const InvestmentView: React.FC = () => {
         if (portfolios) setPortfoliosNames(portfolios.map(({name}) => name));
     }, [portfolios]);
 
-    const handleCalculateClick = async () => {
-        fetchData({
-            ...parameters,
-            returnOfInvestment: parameters.returnOfInvestment / 100,
-        });
-    };
-
     const handleSaveToPortfolio = () => {
-        handleCalculateClick().then(() => {
-            setDialogOpen(true);
-        });
-    };
-
-    const handleSnackbarClose = (event?: React.SyntheticEvent, reason?: string) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setSnackbarOpen(false);
+        setDialogOpen(true);
     };
 
     const handleDialogClose = () => setDialogOpen(false);
 
     const handleDialogAdd = () => {
-        submitInvestment(data, portfolioName, investmentCategory, investmentName, portfolios, parameters).then(portfolioId => {
-            setDialogOpen(false);
-            setSnackbarOpen(true);
+        submitInvestment(results, portfolioName, investmentCategory, investmentName, portfolios, parameters).then(portfolioId => {
+            // setDialogOpen(false);
             history.push(`${Routes.PORTFOLIOS}?portfolioId=${portfolioId}`);
         });
     };
 
     const handleModifyInvestment = () => {
-        if (data && investmentId) {
-            modifyInvestment(data, investmentId).then(() => {
+        if (results && investmentId) {
+            modifyInvestment(results, investmentId).then(() => {
                 history.push(Routes.PORTFOLIOS);
             });
         }
@@ -86,13 +132,8 @@ export const InvestmentView: React.FC = () => {
 
     return (
         <>
-            <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleSnackbarClose}>
-                <Alert onClose={handleSnackbarClose} severity="success">
-                    Saved to portfolio!
-                </Alert>
-            </Snackbar>
             <Dialog open={dialogOpen} onClose={handleDialogClose}>
-                <DialogTitle>Subscribe</DialogTitle>
+                <DialogTitle>Save Investment</DialogTitle>
                 <DialogContent>
                     <DialogContentText>Please provide some details about investment</DialogContentText>
                     <FreeSoloAutocomplete
@@ -125,25 +166,70 @@ export const InvestmentView: React.FC = () => {
                     </Button>
                 </DialogActions>
             </Dialog>
+
             <Container maxWidth="sm">
-                {data && (
-                    <Box display={'flex'} justifyContent={'center'}>
-                        <InvestmentChart graph={(data as unknown) as DataGraph} />
+                {results ? (
+                    <>
+                        <Box display={'flex'} justifyContent={'center'}>
+                            <InvestmentChart graph={(results as unknown) as DataGraph} />
+                        </Box>
+                        <Separator text="Results" />
+                        <InvestmentResults
+                            totalChangePercent={results.rateOfReturnPercentage}
+                            totalChange={results.rateOfReturnValue}
+                            totalRiskPercentage={parameters.risk}
+                            predictedChange={calculatePredictedChange(
+                                results.initialDepositValue,
+                                results.systematicDepositValue,
+                                results.durationInYears,
+                                results.frequencyInYears,
+                                results.rateOfReturnValue,
+                            )}
+                        />
+                    </>
+                ) : (
+                    <Box textAlign="center" height="137px">
+                        <Separator text="Results" />
+                        <CircularProgress />
                     </Box>
                 )}
-                <InvestmentInfo parameters={parameters} setParameters={setParameters} results={data} />
-                <Box className={buttonBox}>
-                    <Button
-                        type={'submit'}
-                        disabled={isFetching}
-                        variant={'contained'}
-                        color={'primary'}
-                        style={{borderRadius: 25}}
-                        onClick={handleCalculateClick}
-                    >
-                        Calculate
-                    </Button>
+                <Separator text="Parameters" />
+                <RangeInput
+                    minValue={1}
+                    maxValue={5000}
+                    label="initial deposit"
+                    unit={currency}
+                    value={parameters.initialDepositValue}
+                    onChange={setInitialDeposit}
+                />
+                <RangeInput
+                    minValue={0}
+                    maxValue={250}
+                    label="systematic deposit"
+                    unit={currency}
+                    value={parameters.systematicDepositValue}
+                    onChange={setSystematicDeposit}
+                />
+                <FrequencySelector value={parameters.frequencyInYears} onChange={setFrequency} label="frequency" />
+                <FrequencySelector value={parameters.durationInYears} onChange={setDuration} label="duration" />
+                <RangeInput
+                    minValue={0}
+                    maxValue={50}
+                    label="ROI"
+                    unit="%"
+                    value={Math.round(parameters.returnOfInvestment * 100)}
+                    onChange={onROIChange}
+                />
+                <RangeInput
+                    minValue={0}
+                    maxValue={100}
+                    label="Risk factor"
+                    unit="%"
+                    value={Math.round(parameters.risk * 100)}
+                    onChange={onRiskChange}
+                />
 
+                <Box className={buttonBox}>
                     {investmentId === null ? (
                         <Button
                             disabled={isFetching}

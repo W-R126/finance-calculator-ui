@@ -1,6 +1,6 @@
-import {InvestmentParameters} from '../api/investmentsAPI.types';
+import {InvestmentParameters} from '../../api/investments/investmentsAPI.types';
 
-export const defaultValues: InvestmentParameters = {
+export const defaultParameters: InvestmentParameters = {
     initialDepositValue: 634,
     systematicDepositValue: 119,
     frequencyInYears: 1,

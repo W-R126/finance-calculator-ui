@@ -1,10 +1,10 @@
-import {InvestmentParameters, InvestmentResultTypes} from '../../api/investmentsAPI.types';
 import {Portfolio} from '../../api/portfoliosAPI.types';
 import {createPortfolio} from '../../api/portfoliosAPI';
-import {saveToPortfolio} from '../../api/investmentsAPI';
+import {saveToPortfolio} from '../../api/investments/investmentsAPI';
+import {InvestmentParameters, InvestmentResults} from '../../api/investments/investmentsAPI.types';
 
 export const submitInvestment = async (
-    data: InvestmentResultTypes | null,
+    data: InvestmentResults | null,
     portfolioName: string,
     investmentCategory: string,
     investmentName: string,
@@ -33,4 +33,12 @@ const getPortfolioId = async (portfolioName: string, portfolios: Portfolio[]): P
     else return createPortfolio(portfolioName).then(result => result.id);
 };
 
-const createInvestment = (portfolioId: number, investment: InvestmentResultTypes) => saveToPortfolio(investment, portfolioId);
+const createInvestment = (portfolioId: number, investment: InvestmentResults) => saveToPortfolio(investment, portfolioId);
+
+export const calculatePredictedChange = (
+    _initialDepositValue: number,
+    _systematicDepositValue: number,
+    _durationInYears: number,
+    _frequenceInYear: number,
+    _rateOfReturnValue: number,
+) => _initialDepositValue + _systematicDepositValue * (_durationInYears / _frequenceInYear) + _rateOfReturnValue;

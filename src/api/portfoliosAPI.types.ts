@@ -1,5 +1,3 @@
-import {GraphPoint} from './investmentsAPI.types';
-
 export interface Portfolio {
     id: number;
     name: string;
@@ -7,7 +5,7 @@ export interface Portfolio {
 
 export interface PortfolioInvestment {
     category: string;
-    graphPointsValue: GraphPoint[];
+    graphPointsValue: {x: number; y: number}[];
     id: number;
     name: string;
     rateOfReturnPercentage: number;
@@ -19,7 +17,7 @@ export interface PortfolioInvestment {
 export interface PortfolioDetails {
     id: number;
     name: string;
-    graphPointsValue: GraphPoint[];
+    graphPointsValue: {x: number; y: number}[];
     investments: PortfolioInvestment[];
     rateOfReturnPercentage: number;
     rateOfReturnValue: number;
