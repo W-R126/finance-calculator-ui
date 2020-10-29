@@ -18,7 +18,7 @@ interface OptionType {
 }
 
 export const FreeSoloAutocomplete: React.FC<Props> = ({label, initialValue, onChange, items}) => {
-    const [value, setValue] = React.useState<OptionType | null>(null);
+    const [value, setValue] = React.useState<OptionType | null>({inputValue: initialValue, title: initialValue});
     const options: OptionType[] = items.map(item => ({inputValue: item, title: item}));
 
     return (

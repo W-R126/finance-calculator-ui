@@ -1,15 +1,15 @@
 import axios from 'axios';
-import {InvestmentParameters, InvestmentResultTypes} from './investmentsAPI.types';
+import {InvestmentParameters, InvestmentResults} from './investmentsAPI.types';
 
-export function getInvestmentCalculation(params: InvestmentParameters): Promise<InvestmentResultTypes> {
+export function calculateInvestment(parameters: InvestmentParameters): Promise<InvestmentResults> {
     return axios({
         method: 'post',
         url: 'api/investments/calculate',
-        data: params,
+        data: parameters,
     }).then(response => response.data);
 }
 
-export function getInvestment(id: number) {
+export function getInvestment(id: number): Promise<InvestmentResults> {
     return axios({
         method: 'get',
         url: 'api/investments',
@@ -29,7 +29,7 @@ export function deleteInvestment(id: number): Promise<boolean> {
     }).then(response => response.status === 200);
 }
 
-export function saveToPortfolio(investment: InvestmentResultTypes, portfolioId: number) {
+export function saveToPortfolio(investment: InvestmentResults, portfolioId: number) {
     return axios({
         method: 'post',
         url: 'api/investments',
@@ -40,15 +40,13 @@ export function saveToPortfolio(investment: InvestmentResultTypes, portfolioId: 
     }).then(response => response.status === 200);
 }
 
-export function modifyInvestment(investment: InvestmentResultTypes, investmentId: number) {
+export function modifyInvestment(investment: InvestmentResults, investmentId: number) {
     return axios({
         method: 'put',
         url: 'api/investments',
         params: {
             id: investmentId,
         },
-        data: {
-            investmentDTO: investment,
-        },
+        data: investment,
     }).then(response => response.status === 200);
 }

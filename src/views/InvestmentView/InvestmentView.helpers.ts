@@ -1,10 +1,10 @@
-import {InvestmentParameters, InvestmentResultTypes} from '../../api/investmentsAPI.types';
 import {Portfolio} from '../../api/portfoliosAPI.types';
 import {createPortfolio} from '../../api/portfoliosAPI';
-import {saveToPortfolio} from '../../api/investmentsAPI';
+import {saveToPortfolio} from '../../api/investments/investmentsAPI';
+import {InvestmentParameters, InvestmentResults} from '../../api/investments/investmentsAPI.types';
 
 export const submitInvestment = async (
-    data: InvestmentResultTypes | null,
+    data: InvestmentResults | null,
     portfolioName: string,
     investmentCategory: string,
     investmentName: string,
@@ -14,15 +14,9 @@ export const submitInvestment = async (
     const portfolioId = await getPortfolioId(portfolioName, portfolios);
     if (data)
         await createInvestment(portfolioId, {
-            ...parameters,
+            ...data,
             category: investmentCategory,
             name: investmentName,
-            rateOfReturnPercentage: data.rateOfReturnPercentage,
-            rateOfReturnValue: data.rateOfReturnValue,
-            graphPointsValue: data.graphPointsValue,
-            xAxisDataType: data.xAxisDataType,
-            yAxisDataType: data.yAxisDataType,
-            id: data.id,
         });
     return portfolioId;
 };
@@ -33,4 +27,12 @@ const getPortfolioId = async (portfolioName: string, portfolios: Portfolio[]): P
     else return createPortfolio(portfolioName).then(result => result.id);
 };
 
-const createInvestment = (portfolioId: number, investment: InvestmentResultTypes) => saveToPortfolio(investment, portfolioId);
+const createInvestment = (portfolioId: number, investment: InvestmentResults) => saveToPortfolio(investment, portfolioId);
+
+export const calculatePredictedChange = (
+    initialDepositValue: number,
+    systematicDepositValue: number,
+    durationInYears: number,
+    frequencyInYear: number,
+    rateOfReturnValue: number,
+) => initialDepositValue + systematicDepositValue * (durationInYears / frequencyInYear) + rateOfReturnValue;

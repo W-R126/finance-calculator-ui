@@ -1,7 +1,7 @@
 import {useEffect, useState} from 'react';
 import {Portfolio, PortfolioDetails} from '../api/portfoliosAPI.types';
 import {deletePortfolio, getPortfolioDetails, getPortfolios} from '../api/portfoliosAPI';
-import * as investments from '../api/investmentsAPI';
+import * as investments from '../api/investments/investmentsAPI';
 
 export function usePortfoliosAPI(portfolioId: number | null) {
     const [isFetchingPortfolios, setFetchingPortfolios] = useState(true);
