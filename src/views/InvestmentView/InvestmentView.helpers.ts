@@ -33,6 +33,6 @@ export const calculatePredictedChange = (
     initialDepositValue: number,
     systematicDepositValue: number,
     durationInYears: number,
-    frequenceInYear: number,
+    frequencyInYear: number,
     rateOfReturnValue: number,
-) => initialDepositValue + systematicDepositValue * (durationInYears / frequenceInYear) + rateOfReturnValue;
+) => initialDepositValue + systematicDepositValue * (durationInYears / frequencyInYear) + rateOfReturnValue;
