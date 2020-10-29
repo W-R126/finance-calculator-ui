@@ -9,17 +9,23 @@ import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 import {Data, Order} from './InvestmentsList.types';
 import {emptyRows, getComparator, stableSort} from './InvestmentsList.helpers';
-import {InvestmentsListToolbar} from './InvestmentsListToolbar/InvestmentsListToolbar';
+import {InvestmentsListToolbar} from './InvestmentsListToolbar';
 import {useStyles} from './InvestmentsList.styles';
 import {InvestmentsListHead} from './InvestmentsListHead';
 import {rows} from './InvestmentsList.constants';
 import {Portfolio} from '../../../api/portfoliosAPI.types';
+import EditIcon from '@material-ui/icons/Edit';
+import {Routes} from '../../../helpers/routes';
+import {IconButton} from '@material-ui/core';
+import {useHistory} from 'react-router-dom';
 
 interface Props {
     portfolio: Portfolio;
 }
+
 export const InvestmentsList: React.FC<Props> = ({portfolio}) => {
     const classes = useStyles();
+    const history = useHistory();
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Data>('name');
     const [selected, setSelected] = React.useState<string[]>([]);
@@ -34,8 +40,8 @@ export const InvestmentsList: React.FC<Props> = ({portfolio}) => {
 
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds = rows.map(n => n.name);
-            setSelected(newSelecteds);
+            const newSelected = rows.map(n => n.name);
+            setSelected(newSelected);
             return;
         }
         setSelected([]);
@@ -67,6 +73,9 @@ export const InvestmentsList: React.FC<Props> = ({portfolio}) => {
         setPage(0);
     };
 
+    const handleModifyClick = (id: number) => {
+        history.push(`${Routes.INVESTMENT_CALCULATOR}?investmentId=${id}`);
+    };
     const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
     return (
@@ -109,6 +118,12 @@ export const InvestmentsList: React.FC<Props> = ({portfolio}) => {
                                             </TableCell>
                                             <TableCell align="right">{row.risk}</TableCell>
                                             <TableCell align="right">{row.change}</TableCell>
+                                            <TableCell align="right">
+                                                {/* TODO change to id*/}
+                                                <IconButton onClick={() => handleModifyClick(row.risk)}>
+                                                    <EditIcon />
+                                                </IconButton>
+                                            </TableCell>
                                         </TableRow>
                                     );
                                 })}
