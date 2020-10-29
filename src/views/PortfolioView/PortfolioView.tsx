@@ -1,18 +1,17 @@
-import {Box, Container, Fab} from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import {Box, Container} from '@material-ui/core';
 import React, {useState} from 'react';
 import {InvestmentResults} from '../../components/InvestmentResults/InvestmentResults';
 import {Separator} from '../../components/Separator/Separator';
 import {usePortfoliosAPI} from '../../hooks/usePortfoliosAPI';
 import {InvestmentItem} from './InvestmentItem/InvestmentItem';
 import {InvestmentsTitleBox} from './PortfolioView.styles';
-import {Link} from 'react-router-dom';
 import {submitPortfolio} from './PortfolioView.helpes';
 import {Routes} from '../../helpers/routes';
 import {useHistory, useLocation} from 'react-router';
 import {AddPortfolioDialog} from './PortfolioViewDialog';
 import {InvestmentItemDescription} from './InvestmentItem/InvestmentItemDescription';
 import {PortfolioViewControls} from './PortfolioViewControls';
+import {InvestmentsList} from './InvestmentsList/InvestmentsList';
 
 export const PortfolioView: React.FC = () => {
     const history = useHistory();
@@ -67,13 +66,6 @@ export const PortfolioView: React.FC = () => {
             />
             <Box className={InvestmentsTitleBox}>
                 <Separator text="Investments" />
-                <Link
-                    to={portfolio.id !== 0 ? `${Routes.INVESTMENT_CALCULATOR}?portfolioId=${portfolio.id}` : Routes.INVESTMENT_CALCULATOR}
-                >
-                    <Fab size="small" color="primary" aria-label="add">
-                        <AddIcon />
-                    </Fab>
-                </Link>
             </Box>
 
             <InvestmentItemDescription />
@@ -90,6 +82,7 @@ export const PortfolioView: React.FC = () => {
                     />
                 ))}
             </Box>
+            <InvestmentsList portfolio={portfolio} />
         </Container>
     );
 };
