@@ -4,6 +4,8 @@ import React from 'react';
 import * as format from '../../../helpers/formatNumber';
 import * as styles from './InvestmentItem.styles';
 import {MainBox} from './InvestmentItem.styles';
+import {Routes} from '../../../helpers/routes';
+import {Link} from 'react-router-dom';
 
 interface Props {
     id: number;
@@ -42,13 +44,9 @@ export const InvestmentItem: React.FC<Props> = ({id, name, changePercent, riskPe
                         >
                             Delete
                         </MenuItem>
-                        {/* <MenuItem
-                            onClick={() => {
-                                history.push(`${Routes.INVESTMENT_CALCULATOR}?investmentId=${id}`);
-                            }}
-                        >
-                            Modify
-                        </MenuItem> */}
+                        <Link to={`${Routes.INVESTMENT_CALCULATOR}?investmentId=${id}`}>
+                            <MenuItem>Modify</MenuItem>
+                        </Link>
                     </Menu>
                     <IconButton color="inherit" component="span" onClick={handleMoreClick}>
                         <MoreHoriz color="primary" />

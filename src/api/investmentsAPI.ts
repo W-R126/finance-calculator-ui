@@ -5,7 +5,10 @@ export function getInvestmentCalculation(params: InvestmentParameters): Promise<
     return axios({
         method: 'post',
         url: 'api/investments/calculate',
-        data: params,
+        data: {
+            ...params,
+            returnOfInvestment: params.returnOfInvestment / 100,
+        },
     }).then(response => response.data);
 }
 
@@ -47,8 +50,6 @@ export function modifyInvestment(investment: InvestmentResultTypes, investmentId
         params: {
             id: investmentId,
         },
-        data: {
-            investmentDTO: investment,
-        },
+        data: investment,
     }).then(response => response.status === 200);
 }

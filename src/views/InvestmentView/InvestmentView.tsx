@@ -24,15 +24,14 @@ import {Routes} from '../../helpers/routes';
 import {modifyInvestment} from '../../api/investmentsAPI';
 import {usePortfoliosAPI} from '../../hooks/usePortfoliosAPI';
 import {submitInvestment} from './InvestmentView.helpers';
-import {categories, initialParameters} from './InvestmentView.constants';
+import {categories} from './InvestmentView.constants';
 
 export const InvestmentView: React.FC = () => {
     const history = useHistory();
     const query = new URLSearchParams(useLocation().search);
     const investmentId = query.get('investmentId') as number | null;
 
-    const [parameters, setParameters] = useState<InvestmentParameters>(initialParameters);
-    const {data, fetchData, isFetching} = useInvestmentsAPI(null);
+    const {data, fetchData, isFetching, parameters, setParameters} = useInvestmentsAPI(investmentId);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -42,16 +41,6 @@ export const InvestmentView: React.FC = () => {
     const [investmentName, setInvestmentName] = useState('');
 
     const {portfolios} = usePortfoliosAPI(null);
-
-    useEffect(() => {
-        if (!isFetching) {
-            fetchData({
-                ...parameters,
-                returnOfInvestment: parameters.returnOfInvestment / 100,
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
 
     useEffect(() => {
         if (portfolios) setPortfoliosNames(portfolios.map(({name}) => name));

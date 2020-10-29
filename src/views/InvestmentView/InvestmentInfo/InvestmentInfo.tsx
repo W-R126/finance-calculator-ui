@@ -17,25 +17,49 @@ interface Props {
 export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, results}) => {
     const currency = currencyUnit;
 
-    const [initialDeposit, setInitialDeposit] = useState(parameters.initialDepositValue);
-    const [systematicDeposit, setSystematicDeposit] = useState(parameters.systematicDepositValue);
-    const [frequency, setFrequency] = useState(parameters.frequencyInYears);
-    const [duration, setDuration] = useState(parameters.durationInYears);
-    const [returnOfInvestment, setReturnOfInvestment] = useState(parameters.returnOfInvestment);
-    const [risk, setRisk] = useState(parameters.risk);
+    const setInitialDeposit = (initialDepositValue: number) => {
+        setParameters({
+            ...parameters,
+            initialDepositValue,
+        });
+    };
+
+    const setSystematicDeposit = (systematicDepositValue: number) => {
+        setParameters({
+            ...parameters,
+            systematicDepositValue,
+        });
+    };
+
+    const setFrequency = (frequencyInYears: number) => {
+        setParameters({
+            ...parameters,
+            frequencyInYears,
+        });
+    };
+
+    const setDuration = (durationInYears: number) => {
+        setParameters({
+            ...parameters,
+            durationInYears,
+        });
+    };
+
+    const setReturnOfInvestment = (returnOfInvestment: number) => {
+        setParameters({
+            ...parameters,
+            returnOfInvestment,
+        });
+    };
+
+    const setRisk = (risk: number) => {
+        setParameters({
+            ...parameters,
+            risk,
+        });
+    };
 
     const onRiskChange = (value: number) => setRisk(value / 100);
-
-    useEffect(() => {
-        setParameters({
-            initialDepositValue: initialDeposit,
-            systematicDepositValue: systematicDeposit,
-            frequencyInYears: frequency,
-            durationInYears: duration,
-            returnOfInvestment: returnOfInvestment,
-            risk: risk,
-        });
-    }, [setParameters, initialDeposit, systematicDeposit, frequency, duration, returnOfInvestment, risk]);
 
     return (
         <>
@@ -45,7 +69,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                     <InvestmentResults
                         totalChangePercent={results.rateOfReturnPercentage}
                         totalChange={results.rateOfReturnValue}
-                        totalRiskPercentage={risk}
+                        totalRiskPercentage={parameters.risk}
                         predictedChange={calculatePredictedChange(
                             results.initialDepositValue,
                             results.systematicDepositValue,
@@ -67,7 +91,7 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                 maxValue={5000}
                 label="initial deposit"
                 unit={currency}
-                value={initialDeposit}
+                value={parameters.initialDepositValue}
                 onChange={setInitialDeposit}
             />
             <RangeInput
@@ -75,13 +99,27 @@ export const InvestmentInfo: React.FC<Props> = ({parameters, setParameters, resu
                 maxValue={250}
                 label="systematic deposit"
                 unit={currency}
-                value={systematicDeposit}
+                value={parameters.systematicDepositValue}
                 onChange={setSystematicDeposit}
             />
-            <FrequencySelector value={frequency} onChange={setFrequency} label="frequency" />
-            <FrequencySelector value={duration} onChange={setDuration} label="duration" />
-            <RangeInput minValue={0} maxValue={50} label="ROI" unit="%" value={returnOfInvestment} onChange={setReturnOfInvestment} />
-            <RangeInput minValue={0} maxValue={100} label="Risk factor" unit="%" value={Math.round(risk * 100)} onChange={onRiskChange} />
+            <FrequencySelector value={parameters.frequencyInYears} onChange={setFrequency} label="frequency" />
+            <FrequencySelector value={parameters.durationInYears} onChange={setDuration} label="duration" />
+            <RangeInput
+                minValue={0}
+                maxValue={50}
+                label="ROI"
+                unit="%"
+                value={parameters.returnOfInvestment}
+                onChange={setReturnOfInvestment}
+            />
+            <RangeInput
+                minValue={0}
+                maxValue={100}
+                label="Risk factor"
+                unit="%"
+                value={Math.round(parameters.risk * 100)}
+                onChange={onRiskChange}
+            />
         </>
     );
 };
