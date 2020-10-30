@@ -4,7 +4,7 @@ import {authReducer} from './authReducer';
 import {AuthAction} from './authAction.types';
 import {readLocalStorage} from './authHelpers';
 const AuthStateContext = React.createContext<AuthUser | undefined>(undefined);
-const AuthDispatchContext = React.createContext<any>(undefined); //AuthAction | undefined todo fix type
+const AuthDispatchContext = React.createContext<any>(undefined);
 
 // hook for user info context
 export const useUserState = (): AuthUser => {

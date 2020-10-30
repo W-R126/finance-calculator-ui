@@ -19,7 +19,6 @@ export const UserMenu: React.FC<Props> = ({username}) => {
     const authDispatch = useAuthDispatch();
 
     const handleClick = (event: any) => {
-        // todo fix type
         setAnchorEl(event.currentTarget);
     };
 

@@ -15,7 +15,6 @@ export const NavBar: React.FC = () => {
     const isAuth = authContext.isAuth;
     const nav_title = routeToText(location.pathname);
 
-    // todo get dynamically
     const inPortfolio = nav_title === 'portfolio';
     const inInvestment = nav_title === 'investment details';
 

@@ -7,6 +7,6 @@ export interface AuthParameters {
     action: AuthAction;
     data: {
         username: string;
-        password: string; // todo this needs to be changed to whatever format the backend accepts
+        password: string;
     };
 }

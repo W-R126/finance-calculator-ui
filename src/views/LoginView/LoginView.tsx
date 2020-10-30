@@ -1,4 +1,4 @@
-import {Backdrop, Box, Button, CircularProgress, Container, Paper, TextField, Typography} from '@material-ui/core';
+import {Backdrop, Box, Button, CircularProgress, Container, Link, Paper, TextField, Typography} from '@material-ui/core';
 import {Formik, FormikHelpers} from 'formik';
 import React, {useState} from 'react';
 import {AuthAction} from '../../api/authAPI.types';
@@ -13,6 +13,8 @@ export const LoginView: React.FC = () => {
     const authContext = useUserState();
     const [isSigningUp, setIsSigningUp] = useState(false);
 
+    const mail = 'devmountain@protonmail.com';
+
     const errorMessage = getErrorMessage(isSigningUp, authContext.error);
 
     const handleOnSubmit = (values: LoginFormData, {setSubmitting}: FormikHelpers<LoginFormData>) => {
@@ -25,7 +27,6 @@ export const LoginView: React.FC = () => {
                 password: values.password,
             },
         });
-        // TODO: make redirection to portfolio page after success
     };
 
     const handleLogIn = () => {
@@ -108,6 +109,9 @@ export const LoginView: React.FC = () => {
                                             >
                                                 Sign up
                                             </Button>
+                                        </Box>
+                                        <Box mt={1} display="flex" justifyContent="center">
+                                            <Link href={'mailto:' + mail}>Forgot password?</Link>
                                         </Box>
                                     </form>
                                 );

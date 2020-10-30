@@ -16,7 +16,6 @@ export function getAuth(params: AuthParameters): Promise<string> {
     });
 }
 
-// todo everything below is temporary for tests
 export function mockGetAuth(params: AuthParameters): Promise<string> {
     return new Promise<string>((resolve, reject) => {
         switch (params.action) {

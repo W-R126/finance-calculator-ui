@@ -4,7 +4,7 @@ import {render, screen} from '@testing-library/react';
 
 describe('InvestmentResults.tsx', () => {
     test('should display total change', () => {
-        render(<InvestmentResults totalChangePercent={23} totalChange={155} totalRiskPercentage={54} predictedChange={100} />);
+        render(<InvestmentResults totalChangePercent={0.23} totalChange={155} totalRiskPercentage={54} predictedChange={100} />);
         const value = screen.getByText('+23.00% 155$');
         // @ts-ignore
         expect(value.previousElementSibling.innerHTML).toBe('Total change');

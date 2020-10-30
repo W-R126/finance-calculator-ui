@@ -9,6 +9,7 @@ import {
     DialogContentText,
     TextField,
     CircularProgress,
+    Backdrop,
 } from '@material-ui/core';
 import React, {useEffect, useState} from 'react';
 import {FreeSoloAutocomplete} from '../../components/FreeSoloAutocomplete/FreeSoloAutocomplete';
@@ -38,7 +39,6 @@ export const InvestmentView: React.FC = () => {
     const [handler, setHandler] = useState<number | null>(null);
     const updateParameters = (params: InvestmentParameters) => {
         setParameters(params);
-
         if (handler !== null) {
             clearTimeout(handler);
         }
@@ -58,7 +58,6 @@ export const InvestmentView: React.FC = () => {
     };
 
     const setSystematicDeposit = (systematicDepositValue: number) => {
-        console.log(`Setting systematic deposit to: ${systematicDepositValue}`);
         updateParameters({
             ...parameters,
             systematicDepositValue,
@@ -119,7 +118,6 @@ export const InvestmentView: React.FC = () => {
 
     const isAuth = useUserState().isAuth;
     const openDialog = () => {
-        // todo we need to save the info user input to send request after user authorizes himself
         if (!isAuth) {
             history.push(Routes.LOGIN);
         }
@@ -262,6 +260,9 @@ export const InvestmentView: React.FC = () => {
                         {investmentId !== null ? 'Update investment' : 'Save to portfolio'}
                     </Button>
                 </Box>
+                <Backdrop open={isFetching} style={{zIndex: 999, color: '#fff'}}>
+                    <CircularProgress color="inherit" />
+                </Backdrop>
             </Container>
         </>
     );

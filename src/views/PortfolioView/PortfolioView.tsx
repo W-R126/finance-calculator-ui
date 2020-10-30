@@ -1,4 +1,4 @@
-import {Container} from '@material-ui/core';
+import {Box, Container} from '@material-ui/core';
 import React, {useState} from 'react';
 import {InvestmentResults} from '../../components/InvestmentResults/InvestmentResults';
 import {Separator} from '../../components/Separator/Separator';
@@ -9,6 +9,8 @@ import {useHistory, useLocation} from 'react-router';
 import {AddPortfolioDialog} from './PortfolioViewDialog';
 import {PortfolioViewControls} from './PortfolioViewControls';
 import {InvestmentsList} from './InvestmentsList/InvestmentsList';
+import {InvestmentChart} from '../../components/InvestmentChart/InvestmentChart';
+import {DataGraph} from '../../components/InvestmentChart/InvestmentChart.types';
 
 export const PortfolioView: React.FC = () => {
     const history = useHistory();
@@ -29,12 +31,13 @@ export const PortfolioView: React.FC = () => {
     const handleDialogAdd = () => {
         submitPortfolio(portfolioName).then(portfolioId => {
             setDialogOpen(false);
-            // TODO: this is rather temporary solution
             fetchPortfolio(portfolioId as number);
             history.push(`${Routes.PORTFOLIOS}?portfolioId=${portfolioId}`);
             window.location.reload();
         });
     };
+
+    const isGraphComplete = portfolio.investments.length > 0;
 
     return (
         <Container maxWidth="sm">
@@ -53,6 +56,12 @@ export const PortfolioView: React.FC = () => {
                 fetchPortfolio={fetchPortfolio}
                 handlePortfolioAdd={handlePortfolioAdd}
             />
+
+            {isGraphComplete && (
+                <Box display={'flex'} justifyContent={'center'}>
+                    <InvestmentChart graph={(portfolio as unknown) as DataGraph} />
+                </Box>
+            )}
 
             <Separator text="Results" />
             <InvestmentResults

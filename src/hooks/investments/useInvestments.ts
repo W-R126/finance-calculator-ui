@@ -38,7 +38,6 @@ export function useInvestments() {
             setFetching(true);
             getInvestment(investmentId)
                 .then(updateResults)
-                // todo I realize axios interceptors are a better solution, but for now this is faster to write
                 .catch(error => {
                     const status = error.response.status;
                     if (status === 403) {

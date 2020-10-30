@@ -2,8 +2,6 @@ import {Portfolio, PortfolioDetails} from './portfoliosAPI.types';
 import axios from 'axios';
 
 export function getPortfolios(): Promise<Portfolio[]> {
-    console.log(axios.defaults.headers.common['AuthorizationJwt']);
-
     return axios({
         method: 'get',
         url: 'api/portfolios/names',
