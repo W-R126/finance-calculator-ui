@@ -2,10 +2,20 @@ import {useEffect, useState} from 'react';
 import {Portfolio, PortfolioDetails} from '../api/portfoliosAPI.types';
 import {deletePortfolio, getPortfolioDetails, getPortfolios} from '../api/portfoliosAPI';
 import * as investments from '../api/investments/investmentsAPI';
+import {useAuthDispatch} from '../contexts/authContext';
+import {loginError} from '../contexts/authAction.types';
+import {authFailed} from '../contexts/authHelpers';
+import {Routes} from '../helpers/routes';
+import {useHistory, useLocation} from 'react-router';
 
 export function usePortfoliosAPI(portfolioId: number | null) {
+    const authDispatch = useAuthDispatch();
     const [isFetchingPortfolios, setFetchingPortfolios] = useState(true);
     const [portfolios, setPortfolios] = useState<Portfolio[]>([]);
+
+    //todo this is for the temp error handling
+    const history = useHistory();
+    const location = useLocation();
 
     const [isFetchingDetails, setFetchingDetails] = useState(true);
     const [portfolio, setPortfolio] = useState<PortfolioDetails>({
@@ -22,6 +32,17 @@ export function usePortfoliosAPI(portfolioId: number | null) {
     useEffect(() => {
         getPortfolios()
             .then(portfolios => setPortfolios(portfolios))
+            // todo I realize axios interceptors are a better solution, but for now this is faster to write
+            .catch(error => {
+                const status = error.response.status;
+                if (status === 403) {
+                    authDispatch(loginError(authFailed(status)));
+                    if (location.pathname !== Routes.INVESTMENT_CALCULATOR) {
+                        // todo: this is a temp solution
+                        history.push(Routes.LOGIN);
+                    }
+                }
+            })
             .finally(() => {
                 setFetchingPortfolios(false);
             });
@@ -34,6 +55,17 @@ export function usePortfoliosAPI(portfolioId: number | null) {
                 details.id = portfolioId ?? 0;
                 details.rateOfReturnPercentage = details.rateOfReturnPercentage ?? 0;
                 setPortfolio(details);
+            })
+            // todo I realize axios interceptors are a better solution, but for now this is faster to write
+            .catch(error => {
+                const status = error.response.status;
+                if (status === 403) {
+                    authDispatch(loginError(authFailed(status)));
+                    if (location.pathname !== Routes.INVESTMENT_CALCULATOR) {
+                        // todo: this is a temp solution
+                        history.push(Routes.LOGIN);
+                    }
+                }
             })
             .finally(() => {
                 setFetchingDetails(false);
@@ -50,6 +82,17 @@ export function usePortfoliosAPI(portfolioId: number | null) {
                     details.rateOfReturnPercentage = details.rateOfReturnPercentage ?? 0;
                     setPortfolio(details);
                 })
+                // todo I realize axios interceptors are a better solution, but for now this is faster to write
+                .catch(error => {
+                    const status = error.response.status;
+                    if (status === 403) {
+                        authDispatch(loginError(authFailed(status)));
+                        if (location.pathname !== Routes.INVESTMENT_CALCULATOR) {
+                            // todo: this is a temp solution
+                            history.push(Routes.LOGIN);
+                        }
+                    }
+                })
                 .finally(() => setFetchingDetails(false));
         }
     };
@@ -60,6 +103,14 @@ export function usePortfoliosAPI(portfolioId: number | null) {
         deletePortfolio(portfolio.id).then(() => {
             getPortfolios()
                 .then(portfolios => setPortfolios(portfolios))
+                // todo I realize axios interceptors are a better solution, but for now this is faster to write
+                .catch(error => {
+                    const status = error.response.status;
+                    if (status === 403) {
+                        authDispatch(loginError(authFailed(status)));
+                        history.push(Routes.LOGIN);
+                    }
+                })
                 .finally(() => {
                     setFetchingPortfolios(false);
                 });
@@ -68,6 +119,17 @@ export function usePortfoliosAPI(portfolioId: number | null) {
                     details.id = 0;
                     details.rateOfReturnPercentage = details.rateOfReturnPercentage ?? 0;
                     setPortfolio(details);
+                })
+                // todo I realize axios interceptors are a better solution, but for now this is faster to write
+                .catch(error => {
+                    const status = error.response.status;
+                    if (status === 403) {
+                        authDispatch(loginError(authFailed(status)));
+                        if (location.pathname !== Routes.INVESTMENT_CALCULATOR) {
+                            // todo: this is a temp solution
+                            history.push(Routes.LOGIN);
+                        }
+                    }
                 })
                 .finally(() => setFetchingDetails(false));
         });

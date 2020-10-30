@@ -1,12 +1,18 @@
-import {useLocation} from 'react-router';
+import {useHistory, useLocation} from 'react-router';
 import {useEffect, useState} from 'react';
 import {InvestmentParameters, InvestmentResults} from '../../api/investments/investmentsAPI.types';
 import {calculateInvestment, getInvestment} from '../../api/investments/investmentsAPI';
 import {defaultParameters} from './useInvestments.constants';
 import {convertResultsToParameters} from '../../api/investments/investmentsAPI.helpers';
+import {loginError} from '../../contexts/authAction.types';
+import {authFailed} from '../../contexts/authHelpers';
+import {useAuthDispatch} from '../../contexts/authContext';
+import {Routes} from '../../helpers/routes';
 
 export function useInvestments() {
     const location = useLocation();
+    const authDispatch = useAuthDispatch();
+    const history = useHistory();
 
     const urlParameters = new URLSearchParams(location.search);
     const investmentId = urlParameters.get('investmentId') as number | null;
@@ -32,6 +38,14 @@ export function useInvestments() {
             setFetching(true);
             getInvestment(investmentId)
                 .then(updateResults)
+                // todo I realize axios interceptors are a better solution, but for now this is faster to write
+                .catch(error => {
+                    const status = error.response.status;
+                    if (status === 403) {
+                        authDispatch(loginError(authFailed(status)));
+                        history.push(Routes.LOGIN);
+                    }
+                })
                 .finally(() => setFetching(false));
         } else {
             recalculate(parameters);
