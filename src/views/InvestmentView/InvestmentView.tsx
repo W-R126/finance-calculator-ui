@@ -27,6 +27,7 @@ import {InvestmentResults} from '../../components/InvestmentResults/InvestmentRe
 import {RangeInput} from '../../components/RangeInput/RangeInput';
 import {FrequencySelector} from '../../components/FrequencySelector/FrequencySelector';
 import {InvestmentParameters} from '../../api/investments/investmentsAPI.types';
+import {useUserState} from '../../contexts/authContext';
 
 export const InvestmentView: React.FC = () => {
     const history = useHistory();
@@ -116,7 +117,12 @@ export const InvestmentView: React.FC = () => {
         if (portfolios) setPortfoliosNames(portfolios.map(({name}) => name));
     }, [portfolios]);
 
+    const isAuth = useUserState().isAuth;
     const openDialog = () => {
+        // todo we need to save the info user input to send request after user authorizes himself
+        if (!isAuth) {
+            history.push(Routes.LOGIN);
+        }
         setDialogOpen(true);
     };
 

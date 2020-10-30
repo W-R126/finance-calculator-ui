@@ -32,10 +32,20 @@ export function readLocalStorage(): AuthUser {
     };
 }
 
+export function authFailed(error_response: string | number): AuthUser {
+    clearAxiosAuth();
+    clearLocalStorage();
+    return {
+        isAuth: false,
+        username: '',
+        error: error_response,
+    };
+}
+
 export function setAxiosAuth(token: string) {
     axios.defaults.headers.common['AuthorizationJwt'] = `Bearer ${token}`;
 }
 
 export function clearAxiosAuth() {
-    delete axios.defaults.headers.common['AuthorizationJwt']; // todo make sure this is how it's supposed to be done
+    delete axios.defaults.headers.common['AuthorizationJwt'];
 }

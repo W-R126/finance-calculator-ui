@@ -4,7 +4,7 @@ import {getAuth} from '../api/authAPI';
 import {AuthUser} from '../contexts/authContext.types';
 import {useAuthDispatch} from '../contexts/authContext';
 import {loginError, loginSuccess} from '../contexts/authAction.types';
-import {clearLocalStorage, setLocalStorage} from '../contexts/authHelpers';
+import {authFailed, setLocalStorage} from '../contexts/authHelpers';
 import {useHistory} from 'react-router';
 import {Routes} from '../helpers/routes';
 
@@ -23,20 +23,12 @@ export function useAuthAPI(): [(params: AuthParameters) => void, boolean] {
                         username: params.data.username,
                         error: '',
                     };
-                    console.log('TOKEN AAAAAAAAA IS');
-                    console.log(token);
                     setLocalStorage(params.data.username, token);
                     authDispatch(loginSuccess(user));
                     history.push(Routes.PORTFOLIOS);
                 })
                 .catch(error => {
-                    const user: AuthUser = {
-                        isAuth: false,
-                        username: '',
-                        error: error.response.status,
-                    };
-                    clearLocalStorage();
-                    authDispatch(loginError(user));
+                    authDispatch(loginError(authFailed(error.response.status)));
                 })
                 .finally(() => {
                     setFetching(false);
