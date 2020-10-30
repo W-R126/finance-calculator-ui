@@ -4,7 +4,7 @@ import {getAuth} from '../api/authAPI';
 import {AuthUser} from '../contexts/authContext.types';
 import {useAuthDispatch} from '../contexts/authContext';
 import {loginError, loginSuccess} from '../contexts/authAction.types';
-import {authFailed, clearAxiosAuth, clearLocalStorage, setLocalStorage} from '../contexts/authHelpers';
+import {authFailed, setLocalStorage} from '../contexts/authHelpers';
 import {useHistory} from 'react-router';
 import {Routes} from '../helpers/routes';
 
